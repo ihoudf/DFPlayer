@@ -128,6 +128,15 @@
 
 
 
-
+- (void)showAlertOfAlbum{
+    [self showAlertWithTitle:@"本应用无访问相机的权限,是否前去设置？" message:nil noBlock:^{
+        
+    } yseBlock:^{
+        NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+        if ([[UIApplication sharedApplication] canOpenURL:url]) {
+            [[UIApplication sharedApplication] openURL:url];
+        }
+    }];
+}
 
 @end

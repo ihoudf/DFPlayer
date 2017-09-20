@@ -1,6 +1,6 @@
 //
-//  DFPLayerDemoTests.m
-//  DFPLayerDemoTests
+//  DFPlayerDemoTests.m
+//  DFPlayerDemoTests
 //
 //  Created by Faroe on 2017/9/20.
 //  Copyright © 2017年 HDF. All rights reserved.
@@ -8,11 +8,11 @@
 
 #import <XCTest/XCTest.h>
 
-@interface DFPLayerDemoTests : XCTestCase
+@interface DFPlayerDemoTests : XCTestCase
 
 @end
 
-@implementation DFPLayerDemoTests
+@implementation DFPlayerDemoTests
 
 - (void)setUp {
     [super setUp];

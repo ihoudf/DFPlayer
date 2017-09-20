@@ -1,6 +1,6 @@
 //
 //  main.m
-//  DFPLayerDemo
+//  DFPlayerDemo
 //
 //  Created by Faroe on 2017/9/20.
 //  Copyright © 2017年 HDF. All rights reserved.
