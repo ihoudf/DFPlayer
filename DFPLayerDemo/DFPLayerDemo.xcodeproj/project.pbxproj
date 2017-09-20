@@ -1,0 +1,753 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		06B33A9B1F7255AB003A559C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33A9A1F7255AB003A559C /* main.m */; };
+		06B33AA41F7255AB003A559C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 06B33AA21F7255AB003A559C /* Main.storyboard */; };
+		06B33AA61F7255AB003A559C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 06B33AA51F7255AB003A559C /* Assets.xcassets */; };
+		06B33AA91F7255AB003A559C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 06B33AA71F7255AB003A559C /* LaunchScreen.storyboard */; };
+		06B33AB41F7255AB003A559C /* DFPLayerDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33AB31F7255AB003A559C /* DFPLayerDemoTests.m */; };
+		06B33ABF1F7255AB003A559C /* DFPLayerDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33ABE1F7255AB003A559C /* DFPLayerDemoUITests.m */; };
+		06B33AE51F7255CD003A559C /* DFPlayer.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 06B33ACD1F7255CD003A559C /* DFPlayer.bundle */; };
+		06B33AE61F7255CD003A559C /* DFPlayerControlManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33AD01F7255CD003A559C /* DFPlayerControlManager.m */; };
+		06B33AE71F7255CD003A559C /* DFPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33AD21F7255CD003A559C /* DFPlayerManager.m */; };
+		06B33AE81F7255CD003A559C /* DFPlayerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33AD41F7255CD003A559C /* DFPlayerModel.m */; };
+		06B33AE91F7255CD003A559C /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33AD71F7255CD003A559C /* AFNetworkReachabilityManager.m */; };
+		06B33AEA1F7255CD003A559C /* DFPlayerFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33AD91F7255CD003A559C /* DFPlayerFileManager.m */; };
+		06B33AEB1F7255CD003A559C /* DFPlayerLyricsTableview.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33ADB1F7255CD003A559C /* DFPlayerLyricsTableview.m */; };
+		06B33AEC1F7255CD003A559C /* DFPlayerRemoteApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33ADE1F7255CD003A559C /* DFPlayerRemoteApplication.m */; };
+		06B33AED1F7255CD003A559C /* DFPlayerRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33AE01F7255CD003A559C /* DFPlayerRequestManager.m */; };
+		06B33AEE1F7255CD003A559C /* DFPlayerResourceLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33AE21F7255CD003A559C /* DFPlayerResourceLoader.m */; };
+		06B33AEF1F7255CD003A559C /* DFPlayerTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33AE41F7255CD003A559C /* DFPlayerTool.m */; };
+		06B33B131F7255EE003A559C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33AF21F7255EE003A559C /* AppDelegate.m */; };
+		06B33B141F7255EE003A559C /* DFLocalAudioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33AF51F7255EE003A559C /* DFLocalAudioViewController.m */; };
+		06B33B151F7255EE003A559C /* DFMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33AF81F7255EE003A559C /* DFMineViewController.m */; };
+		06B33B161F7255EE003A559C /* NSObject+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33AFC1F7255EE003A559C /* NSObject+Alert.m */; };
+		06B33B171F7255EE003A559C /* UIImage+Blur.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33AFE1F7255EE003A559C /* UIImage+Blur.m */; };
+		06B33B181F7255EE003A559C /* DFCacheListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33B011F7255EE003A559C /* DFCacheListViewController.m */; };
+		06B33B191F7255EE003A559C /* DFRemoteAudioDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33B031F7255EE003A559C /* DFRemoteAudioDetailViewController.m */; };
+		06B33B1A1F7255EE003A559C /* DFRemoteAudioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33B051F7255EE003A559C /* DFRemoteAudioViewController.m */; };
+		06B33B1B1F7255EE003A559C /* addAudio.plist in Resources */ = {isa = PBXBuildFile; fileRef = 06B33B071F7255EE003A559C /* addAudio.plist */; };
+		06B33B1C1F7255EE003A559C /* default_bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 06B33B081F7255EE003A559C /* default_bg.jpg */; };
+		06B33B1D1F7255EE003A559C /* dfplayer_control_skin.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 06B33B091F7255EE003A559C /* dfplayer_control_skin.jpg */; };
+		06B33B1E1F7255EE003A559C /* freeloop.lrc in Resources */ = {isa = PBXBuildFile; fileRef = 06B33B0A1F7255EE003A559C /* freeloop.lrc */; };
+		06B33B1F1F7255EE003A559C /* localAudio.plist in Resources */ = {isa = PBXBuildFile; fileRef = 06B33B0B1F7255EE003A559C /* localAudio.plist */; };
+		06B33B201F7255EE003A559C /* migong.lrc in Resources */ = {isa = PBXBuildFile; fileRef = 06B33B0C1F7255EE003A559C /* migong.lrc */; };
+		06B33B211F7255EE003A559C /* remoteAudio.plist in Resources */ = {isa = PBXBuildFile; fileRef = 06B33B0D1F7255EE003A559C /* remoteAudio.plist */; };
+		06B33B221F7255EE003A559C /* T002R300x300M000003dlwFv4HfhpO.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 06B33B0E1F7255EE003A559C /* T002R300x300M000003dlwFv4HfhpO.jpg */; };
+		06B33B231F7255EE003A559C /* wYYBAFXmyCCAKUp0AFbZo90_y-E483.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 06B33B0F1F7255EE003A559C /* wYYBAFXmyCCAKUp0AFbZo90_y-E483.mp3 */; };
+		06B33B241F7255EE003A559C /* xiayimiao.lrc in Resources */ = {isa = PBXBuildFile; fileRef = 06B33B101F7255EE003A559C /* xiayimiao.lrc */; };
+		06B33B251F7255EE003A559C /* YourDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33B121F7255EE003A559C /* YourDataModel.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		06B33AB01F7255AB003A559C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 06B33A8E1F7255AA003A559C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 06B33A951F7255AA003A559C;
+			remoteInfo = DFPLayerDemo;
+		};
+		06B33ABB1F7255AB003A559C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 06B33A8E1F7255AA003A559C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 06B33A951F7255AA003A559C;
+			remoteInfo = DFPLayerDemo;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		06B33A961F7255AA003A559C /* DFPLayerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DFPLayerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		06B33A9A1F7255AB003A559C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		06B33AA31F7255AB003A559C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		06B33AA51F7255AB003A559C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		06B33AA81F7255AB003A559C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		06B33AAA1F7255AB003A559C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		06B33AAF1F7255AB003A559C /* DFPLayerDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DFPLayerDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		06B33AB31F7255AB003A559C /* DFPLayerDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DFPLayerDemoTests.m; sourceTree = "<group>"; };
+		06B33AB51F7255AB003A559C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		06B33ABA1F7255AB003A559C /* DFPLayerDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DFPLayerDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		06B33ABE1F7255AB003A559C /* DFPLayerDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DFPLayerDemoUITests.m; sourceTree = "<group>"; };
+		06B33AC01F7255AB003A559C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		06B33ACD1F7255CD003A559C /* DFPlayer.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DFPlayer.bundle; sourceTree = "<group>"; };
+		06B33ACE1F7255CD003A559C /* DFPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPlayer.h; sourceTree = "<group>"; };
+		06B33ACF1F7255CD003A559C /* DFPlayerControlManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPlayerControlManager.h; sourceTree = "<group>"; };
+		06B33AD01F7255CD003A559C /* DFPlayerControlManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFPlayerControlManager.m; sourceTree = "<group>"; };
+		06B33AD11F7255CD003A559C /* DFPlayerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPlayerManager.h; sourceTree = "<group>"; };
+		06B33AD21F7255CD003A559C /* DFPlayerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFPlayerManager.m; sourceTree = "<group>"; };
+		06B33AD31F7255CD003A559C /* DFPlayerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPlayerModel.h; sourceTree = "<group>"; };
+		06B33AD41F7255CD003A559C /* DFPlayerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFPlayerModel.m; sourceTree = "<group>"; };
+		06B33AD61F7255CD003A559C /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
+		06B33AD71F7255CD003A559C /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkReachabilityManager.m; sourceTree = "<group>"; };
+		06B33AD81F7255CD003A559C /* DFPlayerFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPlayerFileManager.h; sourceTree = "<group>"; };
+		06B33AD91F7255CD003A559C /* DFPlayerFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFPlayerFileManager.m; sourceTree = "<group>"; };
+		06B33ADA1F7255CD003A559C /* DFPlayerLyricsTableview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPlayerLyricsTableview.h; sourceTree = "<group>"; };
+		06B33ADB1F7255CD003A559C /* DFPlayerLyricsTableview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFPlayerLyricsTableview.m; sourceTree = "<group>"; };
+		06B33ADC1F7255CD003A559C /* DFPLayerMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPLayerMacro.h; sourceTree = "<group>"; };
+		06B33ADD1F7255CD003A559C /* DFPlayerRemoteApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPlayerRemoteApplication.h; sourceTree = "<group>"; };
+		06B33ADE1F7255CD003A559C /* DFPlayerRemoteApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFPlayerRemoteApplication.m; sourceTree = "<group>"; };
+		06B33ADF1F7255CD003A559C /* DFPlayerRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPlayerRequestManager.h; sourceTree = "<group>"; };
+		06B33AE01F7255CD003A559C /* DFPlayerRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFPlayerRequestManager.m; sourceTree = "<group>"; };
+		06B33AE11F7255CD003A559C /* DFPlayerResourceLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPlayerResourceLoader.h; sourceTree = "<group>"; };
+		06B33AE21F7255CD003A559C /* DFPlayerResourceLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFPlayerResourceLoader.m; sourceTree = "<group>"; };
+		06B33AE31F7255CD003A559C /* DFPlayerTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPlayerTool.h; sourceTree = "<group>"; };
+		06B33AE41F7255CD003A559C /* DFPlayerTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFPlayerTool.m; sourceTree = "<group>"; };
+		06B33AF11F7255EE003A559C /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		06B33AF21F7255EE003A559C /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		06B33AF41F7255EE003A559C /* DFLocalAudioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFLocalAudioViewController.h; sourceTree = "<group>"; };
+		06B33AF51F7255EE003A559C /* DFLocalAudioViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFLocalAudioViewController.m; sourceTree = "<group>"; };
+		06B33AF71F7255EE003A559C /* DFMineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFMineViewController.h; sourceTree = "<group>"; };
+		06B33AF81F7255EE003A559C /* DFMineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFMineViewController.m; sourceTree = "<group>"; };
+		06B33AFA1F7255EE003A559C /* DFMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFMacro.h; sourceTree = "<group>"; };
+		06B33AFB1F7255EE003A559C /* NSObject+Alert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Alert.h"; sourceTree = "<group>"; };
+		06B33AFC1F7255EE003A559C /* NSObject+Alert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Alert.m"; sourceTree = "<group>"; };
+		06B33AFD1F7255EE003A559C /* UIImage+Blur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Blur.h"; sourceTree = "<group>"; };
+		06B33AFE1F7255EE003A559C /* UIImage+Blur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Blur.m"; sourceTree = "<group>"; };
+		06B33B001F7255EE003A559C /* DFCacheListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFCacheListViewController.h; sourceTree = "<group>"; };
+		06B33B011F7255EE003A559C /* DFCacheListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFCacheListViewController.m; sourceTree = "<group>"; };
+		06B33B021F7255EE003A559C /* DFRemoteAudioDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFRemoteAudioDetailViewController.h; sourceTree = "<group>"; };
+		06B33B031F7255EE003A559C /* DFRemoteAudioDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFRemoteAudioDetailViewController.m; sourceTree = "<group>"; };
+		06B33B041F7255EE003A559C /* DFRemoteAudioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFRemoteAudioViewController.h; sourceTree = "<group>"; };
+		06B33B051F7255EE003A559C /* DFRemoteAudioViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFRemoteAudioViewController.m; sourceTree = "<group>"; };
+		06B33B071F7255EE003A559C /* addAudio.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = addAudio.plist; sourceTree = "<group>"; };
+		06B33B081F7255EE003A559C /* default_bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = default_bg.jpg; sourceTree = "<group>"; };
+		06B33B091F7255EE003A559C /* dfplayer_control_skin.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dfplayer_control_skin.jpg; sourceTree = "<group>"; };
+		06B33B0A1F7255EE003A559C /* freeloop.lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = freeloop.lrc; sourceTree = "<group>"; };
+		06B33B0B1F7255EE003A559C /* localAudio.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = localAudio.plist; sourceTree = "<group>"; };
+		06B33B0C1F7255EE003A559C /* migong.lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = migong.lrc; sourceTree = "<group>"; };
+		06B33B0D1F7255EE003A559C /* remoteAudio.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = remoteAudio.plist; sourceTree = "<group>"; };
+		06B33B0E1F7255EE003A559C /* T002R300x300M000003dlwFv4HfhpO.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = T002R300x300M000003dlwFv4HfhpO.jpg; sourceTree = "<group>"; };
+		06B33B0F1F7255EE003A559C /* wYYBAFXmyCCAKUp0AFbZo90_y-E483.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "wYYBAFXmyCCAKUp0AFbZo90_y-E483.mp3"; sourceTree = "<group>"; };
+		06B33B101F7255EE003A559C /* xiayimiao.lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = xiayimiao.lrc; sourceTree = "<group>"; };
+		06B33B111F7255EE003A559C /* YourDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YourDataModel.h; sourceTree = "<group>"; };
+		06B33B121F7255EE003A559C /* YourDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YourDataModel.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		06B33A931F7255AA003A559C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		06B33AAC1F7255AB003A559C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		06B33AB71F7255AB003A559C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		06B33A8D1F7255AA003A559C = {
+			isa = PBXGroup;
+			children = (
+				06B33A981F7255AA003A559C /* DFPLayerDemo */,
+				06B33AB21F7255AB003A559C /* DFPLayerDemoTests */,
+				06B33ABD1F7255AB003A559C /* DFPLayerDemoUITests */,
+				06B33A971F7255AA003A559C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		06B33A971F7255AA003A559C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				06B33A961F7255AA003A559C /* DFPLayerDemo.app */,
+				06B33AAF1F7255AB003A559C /* DFPLayerDemoTests.xctest */,
+				06B33ABA1F7255AB003A559C /* DFPLayerDemoUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		06B33A981F7255AA003A559C /* DFPLayerDemo */ = {
+			isa = PBXGroup;
+			children = (
+				06B33ACC1F7255CD003A559C /* DFPlayer */,
+				06B33AF01F7255EE003A559C /* Src */,
+				06B33AA21F7255AB003A559C /* Main.storyboard */,
+				06B33AA51F7255AB003A559C /* Assets.xcassets */,
+				06B33AA71F7255AB003A559C /* LaunchScreen.storyboard */,
+				06B33AAA1F7255AB003A559C /* Info.plist */,
+				06B33A991F7255AB003A559C /* Supporting Files */,
+			);
+			path = DFPLayerDemo;
+			sourceTree = "<group>";
+		};
+		06B33A991F7255AB003A559C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				06B33A9A1F7255AB003A559C /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		06B33AB21F7255AB003A559C /* DFPLayerDemoTests */ = {
+			isa = PBXGroup;
+			children = (
+				06B33AB31F7255AB003A559C /* DFPLayerDemoTests.m */,
+				06B33AB51F7255AB003A559C /* Info.plist */,
+			);
+			path = DFPLayerDemoTests;
+			sourceTree = "<group>";
+		};
+		06B33ABD1F7255AB003A559C /* DFPLayerDemoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				06B33ABE1F7255AB003A559C /* DFPLayerDemoUITests.m */,
+				06B33AC01F7255AB003A559C /* Info.plist */,
+			);
+			path = DFPLayerDemoUITests;
+			sourceTree = "<group>";
+		};
+		06B33ACC1F7255CD003A559C /* DFPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				06B33ACD1F7255CD003A559C /* DFPlayer.bundle */,
+				06B33ACE1F7255CD003A559C /* DFPlayer.h */,
+				06B33ACF1F7255CD003A559C /* DFPlayerControlManager.h */,
+				06B33AD01F7255CD003A559C /* DFPlayerControlManager.m */,
+				06B33AD11F7255CD003A559C /* DFPlayerManager.h */,
+				06B33AD21F7255CD003A559C /* DFPlayerManager.m */,
+				06B33AD31F7255CD003A559C /* DFPlayerModel.h */,
+				06B33AD41F7255CD003A559C /* DFPlayerModel.m */,
+				06B33AD51F7255CD003A559C /* supplement */,
+			);
+			path = DFPlayer;
+			sourceTree = "<group>";
+		};
+		06B33AD51F7255CD003A559C /* supplement */ = {
+			isa = PBXGroup;
+			children = (
+				06B33AD61F7255CD003A559C /* AFNetworkReachabilityManager.h */,
+				06B33AD71F7255CD003A559C /* AFNetworkReachabilityManager.m */,
+				06B33AD81F7255CD003A559C /* DFPlayerFileManager.h */,
+				06B33AD91F7255CD003A559C /* DFPlayerFileManager.m */,
+				06B33ADA1F7255CD003A559C /* DFPlayerLyricsTableview.h */,
+				06B33ADB1F7255CD003A559C /* DFPlayerLyricsTableview.m */,
+				06B33ADC1F7255CD003A559C /* DFPLayerMacro.h */,
+				06B33ADD1F7255CD003A559C /* DFPlayerRemoteApplication.h */,
+				06B33ADE1F7255CD003A559C /* DFPlayerRemoteApplication.m */,
+				06B33ADF1F7255CD003A559C /* DFPlayerRequestManager.h */,
+				06B33AE01F7255CD003A559C /* DFPlayerRequestManager.m */,
+				06B33AE11F7255CD003A559C /* DFPlayerResourceLoader.h */,
+				06B33AE21F7255CD003A559C /* DFPlayerResourceLoader.m */,
+				06B33AE31F7255CD003A559C /* DFPlayerTool.h */,
+				06B33AE41F7255CD003A559C /* DFPlayerTool.m */,
+			);
+			path = supplement;
+			sourceTree = "<group>";
+		};
+		06B33AF01F7255EE003A559C /* Src */ = {
+			isa = PBXGroup;
+			children = (
+				06B33AF11F7255EE003A559C /* AppDelegate.h */,
+				06B33AF21F7255EE003A559C /* AppDelegate.m */,
+				06B33AF31F7255EE003A559C /* localAudio */,
+				06B33AF61F7255EE003A559C /* mine */,
+				06B33AF91F7255EE003A559C /* other */,
+				06B33AFF1F7255EE003A559C /* remoteAudio */,
+				06B33B061F7255EE003A559C /* Resource */,
+				06B33B111F7255EE003A559C /* YourDataModel.h */,
+				06B33B121F7255EE003A559C /* YourDataModel.m */,
+			);
+			path = Src;
+			sourceTree = "<group>";
+		};
+		06B33AF31F7255EE003A559C /* localAudio */ = {
+			isa = PBXGroup;
+			children = (
+				06B33AF41F7255EE003A559C /* DFLocalAudioViewController.h */,
+				06B33AF51F7255EE003A559C /* DFLocalAudioViewController.m */,
+			);
+			path = localAudio;
+			sourceTree = "<group>";
+		};
+		06B33AF61F7255EE003A559C /* mine */ = {
+			isa = PBXGroup;
+			children = (
+				06B33AF71F7255EE003A559C /* DFMineViewController.h */,
+				06B33AF81F7255EE003A559C /* DFMineViewController.m */,
+			);
+			path = mine;
+			sourceTree = "<group>";
+		};
+		06B33AF91F7255EE003A559C /* other */ = {
+			isa = PBXGroup;
+			children = (
+				06B33AFA1F7255EE003A559C /* DFMacro.h */,
+				06B33AFB1F7255EE003A559C /* NSObject+Alert.h */,
+				06B33AFC1F7255EE003A559C /* NSObject+Alert.m */,
+				06B33AFD1F7255EE003A559C /* UIImage+Blur.h */,
+				06B33AFE1F7255EE003A559C /* UIImage+Blur.m */,
+			);
+			path = other;
+			sourceTree = "<group>";
+		};
+		06B33AFF1F7255EE003A559C /* remoteAudio */ = {
+			isa = PBXGroup;
+			children = (
+				06B33B001F7255EE003A559C /* DFCacheListViewController.h */,
+				06B33B011F7255EE003A559C /* DFCacheListViewController.m */,
+				06B33B021F7255EE003A559C /* DFRemoteAudioDetailViewController.h */,
+				06B33B031F7255EE003A559C /* DFRemoteAudioDetailViewController.m */,
+				06B33B041F7255EE003A559C /* DFRemoteAudioViewController.h */,
+				06B33B051F7255EE003A559C /* DFRemoteAudioViewController.m */,
+			);
+			path = remoteAudio;
+			sourceTree = "<group>";
+		};
+		06B33B061F7255EE003A559C /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				06B33B071F7255EE003A559C /* addAudio.plist */,
+				06B33B081F7255EE003A559C /* default_bg.jpg */,
+				06B33B091F7255EE003A559C /* dfplayer_control_skin.jpg */,
+				06B33B0A1F7255EE003A559C /* freeloop.lrc */,
+				06B33B0B1F7255EE003A559C /* localAudio.plist */,
+				06B33B0C1F7255EE003A559C /* migong.lrc */,
+				06B33B0D1F7255EE003A559C /* remoteAudio.plist */,
+				06B33B0E1F7255EE003A559C /* T002R300x300M000003dlwFv4HfhpO.jpg */,
+				06B33B0F1F7255EE003A559C /* wYYBAFXmyCCAKUp0AFbZo90_y-E483.mp3 */,
+				06B33B101F7255EE003A559C /* xiayimiao.lrc */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		06B33A951F7255AA003A559C /* DFPLayerDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 06B33AC31F7255AB003A559C /* Build configuration list for PBXNativeTarget "DFPLayerDemo" */;
+			buildPhases = (
+				06B33A921F7255AA003A559C /* Sources */,
+				06B33A931F7255AA003A559C /* Frameworks */,
+				06B33A941F7255AA003A559C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DFPLayerDemo;
+			productName = DFPLayerDemo;
+			productReference = 06B33A961F7255AA003A559C /* DFPLayerDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		06B33AAE1F7255AB003A559C /* DFPLayerDemoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 06B33AC61F7255AB003A559C /* Build configuration list for PBXNativeTarget "DFPLayerDemoTests" */;
+			buildPhases = (
+				06B33AAB1F7255AB003A559C /* Sources */,
+				06B33AAC1F7255AB003A559C /* Frameworks */,
+				06B33AAD1F7255AB003A559C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				06B33AB11F7255AB003A559C /* PBXTargetDependency */,
+			);
+			name = DFPLayerDemoTests;
+			productName = DFPLayerDemoTests;
+			productReference = 06B33AAF1F7255AB003A559C /* DFPLayerDemoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		06B33AB91F7255AB003A559C /* DFPLayerDemoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 06B33AC91F7255AB003A559C /* Build configuration list for PBXNativeTarget "DFPLayerDemoUITests" */;
+			buildPhases = (
+				06B33AB61F7255AB003A559C /* Sources */,
+				06B33AB71F7255AB003A559C /* Frameworks */,
+				06B33AB81F7255AB003A559C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				06B33ABC1F7255AB003A559C /* PBXTargetDependency */,
+			);
+			name = DFPLayerDemoUITests;
+			productName = DFPLayerDemoUITests;
+			productReference = 06B33ABA1F7255AB003A559C /* DFPLayerDemoUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		06B33A8E1F7255AA003A559C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = HDF;
+				TargetAttributes = {
+					06B33A951F7255AA003A559C = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = FH4BN6VSX2;
+						ProvisioningStyle = Automatic;
+					};
+					06B33AAE1F7255AB003A559C = {
+						CreatedOnToolsVersion = 8.3.3;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 06B33A951F7255AA003A559C;
+					};
+					06B33AB91F7255AB003A559C = {
+						CreatedOnToolsVersion = 8.3.3;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 06B33A951F7255AA003A559C;
+					};
+				};
+			};
+			buildConfigurationList = 06B33A911F7255AA003A559C /* Build configuration list for PBXProject "DFPLayerDemo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 06B33A8D1F7255AA003A559C;
+			productRefGroup = 06B33A971F7255AA003A559C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				06B33A951F7255AA003A559C /* DFPLayerDemo */,
+				06B33AAE1F7255AB003A559C /* DFPLayerDemoTests */,
+				06B33AB91F7255AB003A559C /* DFPLayerDemoUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		06B33A941F7255AA003A559C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				06B33B201F7255EE003A559C /* migong.lrc in Resources */,
+				06B33B1C1F7255EE003A559C /* default_bg.jpg in Resources */,
+				06B33B241F7255EE003A559C /* xiayimiao.lrc in Resources */,
+				06B33B1D1F7255EE003A559C /* dfplayer_control_skin.jpg in Resources */,
+				06B33AA91F7255AB003A559C /* LaunchScreen.storyboard in Resources */,
+				06B33B211F7255EE003A559C /* remoteAudio.plist in Resources */,
+				06B33B1F1F7255EE003A559C /* localAudio.plist in Resources */,
+				06B33AA61F7255AB003A559C /* Assets.xcassets in Resources */,
+				06B33B221F7255EE003A559C /* T002R300x300M000003dlwFv4HfhpO.jpg in Resources */,
+				06B33B1B1F7255EE003A559C /* addAudio.plist in Resources */,
+				06B33B231F7255EE003A559C /* wYYBAFXmyCCAKUp0AFbZo90_y-E483.mp3 in Resources */,
+				06B33AE51F7255CD003A559C /* DFPlayer.bundle in Resources */,
+				06B33AA41F7255AB003A559C /* Main.storyboard in Resources */,
+				06B33B1E1F7255EE003A559C /* freeloop.lrc in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		06B33AAD1F7255AB003A559C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		06B33AB81F7255AB003A559C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		06B33A921F7255AA003A559C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				06B33B171F7255EE003A559C /* UIImage+Blur.m in Sources */,
+				06B33AE71F7255CD003A559C /* DFPlayerManager.m in Sources */,
+				06B33B141F7255EE003A559C /* DFLocalAudioViewController.m in Sources */,
+				06B33B151F7255EE003A559C /* DFMineViewController.m in Sources */,
+				06B33AEA1F7255CD003A559C /* DFPlayerFileManager.m in Sources */,
+				06B33AED1F7255CD003A559C /* DFPlayerRequestManager.m in Sources */,
+				06B33B251F7255EE003A559C /* YourDataModel.m in Sources */,
+				06B33AE91F7255CD003A559C /* AFNetworkReachabilityManager.m in Sources */,
+				06B33B181F7255EE003A559C /* DFCacheListViewController.m in Sources */,
+				06B33B131F7255EE003A559C /* AppDelegate.m in Sources */,
+				06B33B161F7255EE003A559C /* NSObject+Alert.m in Sources */,
+				06B33B191F7255EE003A559C /* DFRemoteAudioDetailViewController.m in Sources */,
+				06B33AEC1F7255CD003A559C /* DFPlayerRemoteApplication.m in Sources */,
+				06B33AE61F7255CD003A559C /* DFPlayerControlManager.m in Sources */,
+				06B33AE81F7255CD003A559C /* DFPlayerModel.m in Sources */,
+				06B33AEE1F7255CD003A559C /* DFPlayerResourceLoader.m in Sources */,
+				06B33AEF1F7255CD003A559C /* DFPlayerTool.m in Sources */,
+				06B33AEB1F7255CD003A559C /* DFPlayerLyricsTableview.m in Sources */,
+				06B33B1A1F7255EE003A559C /* DFRemoteAudioViewController.m in Sources */,
+				06B33A9B1F7255AB003A559C /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		06B33AAB1F7255AB003A559C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				06B33AB41F7255AB003A559C /* DFPLayerDemoTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		06B33AB61F7255AB003A559C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				06B33ABF1F7255AB003A559C /* DFPLayerDemoUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		06B33AB11F7255AB003A559C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 06B33A951F7255AA003A559C /* DFPLayerDemo */;
+			targetProxy = 06B33AB01F7255AB003A559C /* PBXContainerItemProxy */;
+		};
+		06B33ABC1F7255AB003A559C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 06B33A951F7255AA003A559C /* DFPLayerDemo */;
+			targetProxy = 06B33ABB1F7255AB003A559C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		06B33AA21F7255AB003A559C /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				06B33AA31F7255AB003A559C /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		06B33AA71F7255AB003A559C /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				06B33AA81F7255AB003A559C /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		06B33AC11F7255AB003A559C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		06B33AC21F7255AB003A559C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		06B33AC41F7255AB003A559C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = FH4BN6VSX2;
+				INFOPLIST_FILE = DFPLayerDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = HDF.DFPLayerDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		06B33AC51F7255AB003A559C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = FH4BN6VSX2;
+				INFOPLIST_FILE = DFPLayerDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = HDF.DFPLayerDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		06B33AC71F7255AB003A559C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = DFPLayerDemoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = HDF.DFPLayerDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DFPLayerDemo.app/DFPLayerDemo";
+			};
+			name = Debug;
+		};
+		06B33AC81F7255AB003A559C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = DFPLayerDemoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = HDF.DFPLayerDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DFPLayerDemo.app/DFPLayerDemo";
+			};
+			name = Release;
+		};
+		06B33ACA1F7255AB003A559C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = DFPLayerDemoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = HDF.DFPLayerDemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = DFPLayerDemo;
+			};
+			name = Debug;
+		};
+		06B33ACB1F7255AB003A559C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = DFPLayerDemoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = HDF.DFPLayerDemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = DFPLayerDemo;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		06B33A911F7255AA003A559C /* Build configuration list for PBXProject "DFPLayerDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				06B33AC11F7255AB003A559C /* Debug */,
+				06B33AC21F7255AB003A559C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		06B33AC31F7255AB003A559C /* Build configuration list for PBXNativeTarget "DFPLayerDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				06B33AC41F7255AB003A559C /* Debug */,
+				06B33AC51F7255AB003A559C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		06B33AC61F7255AB003A559C /* Build configuration list for PBXNativeTarget "DFPLayerDemoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				06B33AC71F7255AB003A559C /* Debug */,
+				06B33AC81F7255AB003A559C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		06B33AC91F7255AB003A559C /* Build configuration list for PBXNativeTarget "DFPLayerDemoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				06B33ACA1F7255AB003A559C /* Debug */,
+				06B33ACB1F7255AB003A559C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 06B33A8E1F7255AA003A559C /* Project object */;
+}

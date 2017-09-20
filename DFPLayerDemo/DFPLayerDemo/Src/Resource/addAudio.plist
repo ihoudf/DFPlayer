@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>audioUrl</key>
+		<string>http://qqma.tingge123.com:83/123/2015/01/%E6%9D%8E%E8%8D%A3%E6%B5%A9%20-%20%E8%80%81%E8%A1%97.mp3</string>
+		<key>audioName</key>
+		<string>老街</string>
+		<key>audioSinger</key>
+		<string>李荣浩</string>
+		<key>audioAlbum</key>
+		<string>小黄</string>
+		<key>audioImage</key>
+		<string>https://y.gtimg.cn/music/photo_new/T002R300x300M000001LP8hk0a6pOp.jpg?max_age=2592000</string>
+	</dict>
+	<dict>
+		<key>audioUrl</key>
+		<string>http://data.5sing.kgimg.com/G032/M06/11/1D/wIYBAFXwMx-APrKsAFPB4PwOeWs761.mp3</string>
+		<key>audioName</key>
+		<string>皇冠一刻钟</string>
+		<key>audioSinger</key>
+		<string>dj</string>
+		<key>audioAlbum</key>
+		<string>欧美大碟</string>
+		<key>audioImage</key>
+		<string></string>
+	</dict>
+	<dict>
+		<key>audioUrl</key>
+		<string>http://qqma.tingge123.com:83/123/2016/06/%E7%94%B0%E9%A6%A5%E7%94%84%20-%20%E5%B0%8F%E5%B9%B8%E8%BF%90.mp3</string>
+		<key>audioName</key>
+		<string>小幸运</string>
+		<key>audioSinger</key>
+		<string>田馥甄</string>
+		<key>audioAlbum</key>
+		<string>未知</string>
+		<key>audioImage</key>
+		<string></string>
+	</dict>
+	<dict>
+		<key>audioUrl</key>
+		<string>http://data.5sing.kgimg.com/G036/M07/07/15/ZA0DAFX0xjmAaF8MADtDNuViBbQ799.mp3</string>
+		<key>audioName</key>
+		<string>I miss you</string>
+		<key>audioSinger</key>
+		<string>未知</string>
+		<key>audioAlbum</key>
+		<string>舞动人生</string>
+		<key>audioImage</key>
+		<string>https://y.gtimg.cn/music/photo_new/T002R300x300M000004gOmmO3VaCYO.jpg?max_age=2592000</string>
+	</dict>
+</array>
+</plist>
