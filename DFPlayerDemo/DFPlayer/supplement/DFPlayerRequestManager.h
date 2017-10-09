@@ -7,8 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-
-
 @protocol DFPlayerRequestDelegate <NSObject>
 /**
  得到服务器响应
@@ -32,7 +30,6 @@
 
 @end
 
-
 /**
  DFPlayer请求管理器
  */
@@ -43,11 +40,8 @@
 @property (nonatomic, assign) NSInteger requestOffset;//请求起始位置
 @property (nonatomic, assign) NSInteger fileLength;//文件长度
 @property (nonatomic, assign) NSInteger cacheLength;//缓冲长度
-@property (nonatomic, assign) BOOL isCanCache;//是否能够缓存文件
 @property (nonatomic, assign) BOOL cancel;//是否取消请求
 @property (nonatomic, assign) BOOL isHaveCache;//是否有缓存
 @property (nonatomic, assign) BOOL isObserveLastModified;//是否观察修改时间
-
-
 - (void)requestStart;
 @end

@@ -8,14 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#define kWeakSelf __weak __typeof(&*self)weakSelf = self;
 /**
  DFPlayer工具类
  */
 @interface DFPlayerTool : NSObject
-
-//打印
-+ (void)setLogEnabled:(BOOL)isNeedLog;
-+ (BOOL)logEnable;
 
 //链接
 + (NSURL *)customUrlWithUrl:(NSURL *)url;

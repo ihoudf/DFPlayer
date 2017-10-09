@@ -22,20 +22,4 @@
     UIGraphicsEndImageContext();
     return smallImage;
 }
-
-
-- (UIImage *)blurImageUseCoreImageWithBlurLevel:(CGFloat)blurLevel{
-    CIContext *context = [CIContext contextWithOptions:nil];
-    CIImage *inputImage = [[CIImage alloc] initWithImage:self];
-    CIFilter *filter = [CIFilter filterWithName:@"CIGaussianBlur"];
-    [filter setValue:inputImage forKey:kCIInputImageKey];
-    [filter setValue:[NSNumber numberWithFloat:blurLevel] forKey:@"inputRadius"];
-    CIImage *result=[filter outputImage];
-    CGImageRef cgImage = [context createCGImage:result fromRect:[inputImage extent]];
-    UIImage *image1 = [UIImage imageWithCGImage:cgImage];
-    CGImageRelease(cgImage);
-    return image1;
-}
-
-
 @end

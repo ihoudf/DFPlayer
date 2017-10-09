@@ -7,7 +7,6 @@
 //
 
 #import "DFPlayerFileManager.h"
-#import "DFPLayerMacro.h"
 #import "DFPlayerTool.h"
 static NSString *DFPlayer_fileId            = @"cacheFileId";
 static NSString *DFPlayer_fileName          = @"DFPlayerCache";//所有缓存文件都放在了沙盒Cache文件夹下DFPlayerCache文件夹里
@@ -26,10 +25,10 @@ static NSString *DFPlayer_modelArchiverName = @"DFPlayerInfoModel.archiver";
         if (Id.length != 0) {
             uniqueId = Id;
         }else{
-            DFLog(@"warning:The length of userId is zero,DFPlayer use unified cache file named user_public.");
+            NSLog(@"warning:The length of userId is zero,DFPlayer use unified cache file named user_public.");
         }
     }else{
-         DFLog(@"DFPlayer use unified cache file named user_public.");
+         NSLog(@"DFPlayer use unified cache file named user_public.");
     }
     [[NSUserDefaults standardUserDefaults] setObject:uniqueId forKey:DFPlayer_fileId];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -98,7 +97,7 @@ static NSString *DFPlayer_modelArchiverName = @"DFPlayerInfoModel.archiver";
         NSNumber *numberId = [NSNumber numberWithInt:[DFPlayer_fileId intValue]];
         [manager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:@{NSFileOwnerAccountID:numberId} error:&error];
         if (error) {
-            DFLog(@"error--:%@",[error localizedDescription]);
+            NSLog(@"error--:%@",[error localizedDescription]);
         }
     }
     NSString *audioName = [url.path lastPathComponent];

@@ -7,23 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-@interface DFPlayerLyricsTableViewCell : UITableViewCell
-
-@property (nonatomic, strong) UILabel *backgroundLrcLabel;
-@property (nonatomic, strong) UILabel *ForegroundLrcLabel;
-@property (nonatomic, strong) CALayer *lrcMasklayer;
-
-@end
-
+static NSString *DFPLayerNotificationDragStatus = @"DFPlayerNotificationDragStatus";
 
 @interface DFPlayerLyricsTableview : UITableView
 
+@property (nonatomic, assign) CGFloat cellRowHeight;
 @property (nonatomic, strong) UIColor *cellBackgroundColor;
 @property (nonatomic, strong) UIColor *currentLineLrcForegroundTextColor;
 @property (nonatomic, strong) UIColor *currentLineLrcBackgroundTextColor;
 @property (nonatomic, strong) UIColor *otherLineLrcBackgroundTextColor;
 @property (nonatomic, strong) UIFont *currentLineLrcFont;
 @property (nonatomic, strong) UIFont *otherLineLrcFont;
-@property (nonatomic, assign) CGRect lrcLabelFrame;
+@property (nonatomic, copy) void(^block)(NSIndexPath *indexPath);
+@property (nonatomic, strong) NSString *DFPlayerLyricTableviewStopUpdateNotification;
+@property (nonatomic, strong) NSString *DFPlayerLyricTableviewResumeUpdateNotification;
 
 @end

@@ -26,23 +26,22 @@
 		06B33B881F725829003A559C /* DFPlayerTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33B7D1F725829003A559C /* DFPlayerTool.m */; };
 		06B33BAC1F72582F003A559C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33B8B1F72582F003A559C /* AppDelegate.m */; };
 		06B33BAD1F725830003A559C /* DFLocalAudioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33B8E1F72582F003A559C /* DFLocalAudioViewController.m */; };
-		06B33BAE1F725830003A559C /* DFMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33B911F72582F003A559C /* DFMineViewController.m */; };
 		06B33BAF1F725830003A559C /* NSObject+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33B951F72582F003A559C /* NSObject+Alert.m */; };
 		06B33BB01F725830003A559C /* UIImage+Blur.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33B971F72582F003A559C /* UIImage+Blur.m */; };
-		06B33BB11F725830003A559C /* DFCacheListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33B9A1F72582F003A559C /* DFCacheListViewController.m */; };
-		06B33BB21F725830003A559C /* DFRemoteAudioDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33B9C1F72582F003A559C /* DFRemoteAudioDetailViewController.m */; };
-		06B33BB31F725830003A559C /* DFRemoteAudioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33B9E1F72582F003A559C /* DFRemoteAudioViewController.m */; };
 		06B33BB41F725830003A559C /* addAudio.plist in Resources */ = {isa = PBXBuildFile; fileRef = 06B33BA01F72582F003A559C /* addAudio.plist */; };
 		06B33BB51F725830003A559C /* default_bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 06B33BA11F72582F003A559C /* default_bg.jpg */; };
-		06B33BB61F725830003A559C /* dfplayer_control_skin.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 06B33BA21F72582F003A559C /* dfplayer_control_skin.jpg */; };
-		06B33BB71F725830003A559C /* freeloop.lrc in Resources */ = {isa = PBXBuildFile; fileRef = 06B33BA31F72582F003A559C /* freeloop.lrc */; };
-		06B33BB81F725830003A559C /* localAudio.plist in Resources */ = {isa = PBXBuildFile; fileRef = 06B33BA41F72582F003A559C /* localAudio.plist */; };
-		06B33BB91F725830003A559C /* migong.lrc in Resources */ = {isa = PBXBuildFile; fileRef = 06B33BA51F72582F003A559C /* migong.lrc */; };
-		06B33BBA1F725830003A559C /* remoteAudio.plist in Resources */ = {isa = PBXBuildFile; fileRef = 06B33BA61F72582F003A559C /* remoteAudio.plist */; };
-		06B33BBB1F725830003A559C /* T002R300x300M000003dlwFv4HfhpO.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 06B33BA71F72582F003A559C /* T002R300x300M000003dlwFv4HfhpO.jpg */; };
-		06B33BBC1F725830003A559C /* wYYBAFXmyCCAKUp0AFbZo90_y-E483.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 06B33BA81F72582F003A559C /* wYYBAFXmyCCAKUp0AFbZo90_y-E483.mp3 */; };
-		06B33BBD1F725830003A559C /* xiayimiao.lrc in Resources */ = {isa = PBXBuildFile; fileRef = 06B33BA91F72582F003A559C /* xiayimiao.lrc */; };
+		06B33BB81F725830003A559C /* LocalAudio.plist in Resources */ = {isa = PBXBuildFile; fileRef = 06B33BA41F72582F003A559C /* LocalAudio.plist */; };
+		06B33BBA1F725830003A559C /* NetAudio.plist in Resources */ = {isa = PBXBuildFile; fileRef = 06B33BA61F72582F003A559C /* NetAudio.plist */; };
 		06B33BBE1F725830003A559C /* YourDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33BAB1F72582F003A559C /* YourDataModel.m */; };
+		F954784B1F88D07A00D85D46 /* DFNetAudioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F954784A1F88D07A00D85D46 /* DFNetAudioViewController.m */; };
+		F954784E1F88D15400D85D46 /* DFCacheViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F954784D1F88D15400D85D46 /* DFCacheViewController.m */; };
+		F95478511F88DAB900D85D46 /* 权志龙-MISSING YOU.lrc in Resources */ = {isa = PBXBuildFile; fileRef = F95478501F88DAB900D85D46 /* 权志龙-MISSING YOU.lrc */; };
+		F95478531F88DBF800D85D46 /* 王若琳-迷宫.lrc in Resources */ = {isa = PBXBuildFile; fileRef = F95478521F88DBF800D85D46 /* 王若琳-迷宫.lrc */; };
+		F95478551F892DD700D85D46 /* 许嵩(Vae)-有何不可.lrc in Resources */ = {isa = PBXBuildFile; fileRef = F95478541F892DD700D85D46 /* 许嵩(Vae)-有何不可.lrc */; };
+		F9D6E97D1F8A37C300069376 /* 徐良&小凌-321对不起.lrc in Resources */ = {isa = PBXBuildFile; fileRef = F9D6E97C1F8A37C300069376 /* 徐良&小凌-321对不起.lrc */; };
+		F9D6E97F1F8A4C2600069376 /* 刘依朵-醉红颜.lrc in Resources */ = {isa = PBXBuildFile; fileRef = F9D6E97E1F8A4C2600069376 /* 刘依朵-醉红颜.lrc */; };
+		F9D6E9811F8A854700069376 /* Maroon 5-don't wanna know.lrc in Resources */ = {isa = PBXBuildFile; fileRef = F9D6E9801F8A854700069376 /* Maroon 5-don't wanna know.lrc */; };
+		F9D6E9831F8A87BB00069376 /* Dragon Pig-全部都是你.lrc in Resources */ = {isa = PBXBuildFile; fileRef = F9D6E9821F8A87BB00069376 /* Dragon Pig-全部都是你.lrc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,7 +88,6 @@
 		06B33B721F725829003A559C /* DFPlayerFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFPlayerFileManager.m; sourceTree = "<group>"; };
 		06B33B731F725829003A559C /* DFPlayerLyricsTableview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPlayerLyricsTableview.h; sourceTree = "<group>"; };
 		06B33B741F725829003A559C /* DFPlayerLyricsTableview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFPlayerLyricsTableview.m; sourceTree = "<group>"; };
-		06B33B751F725829003A559C /* DFPLayerMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPLayerMacro.h; sourceTree = "<group>"; };
 		06B33B761F725829003A559C /* DFPlayerRemoteApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPlayerRemoteApplication.h; sourceTree = "<group>"; };
 		06B33B771F725829003A559C /* DFPlayerRemoteApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFPlayerRemoteApplication.m; sourceTree = "<group>"; };
 		06B33B781F725829003A559C /* DFPlayerRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPlayerRequestManager.h; sourceTree = "<group>"; };
@@ -102,31 +100,29 @@
 		06B33B8B1F72582F003A559C /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		06B33B8D1F72582F003A559C /* DFLocalAudioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFLocalAudioViewController.h; sourceTree = "<group>"; };
 		06B33B8E1F72582F003A559C /* DFLocalAudioViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFLocalAudioViewController.m; sourceTree = "<group>"; };
-		06B33B901F72582F003A559C /* DFMineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFMineViewController.h; sourceTree = "<group>"; };
-		06B33B911F72582F003A559C /* DFMineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFMineViewController.m; sourceTree = "<group>"; };
 		06B33B931F72582F003A559C /* DFMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFMacro.h; sourceTree = "<group>"; };
 		06B33B941F72582F003A559C /* NSObject+Alert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Alert.h"; sourceTree = "<group>"; };
 		06B33B951F72582F003A559C /* NSObject+Alert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Alert.m"; sourceTree = "<group>"; };
 		06B33B961F72582F003A559C /* UIImage+Blur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Blur.h"; sourceTree = "<group>"; };
 		06B33B971F72582F003A559C /* UIImage+Blur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Blur.m"; sourceTree = "<group>"; };
-		06B33B991F72582F003A559C /* DFCacheListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFCacheListViewController.h; sourceTree = "<group>"; };
-		06B33B9A1F72582F003A559C /* DFCacheListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFCacheListViewController.m; sourceTree = "<group>"; };
-		06B33B9B1F72582F003A559C /* DFRemoteAudioDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFRemoteAudioDetailViewController.h; sourceTree = "<group>"; };
-		06B33B9C1F72582F003A559C /* DFRemoteAudioDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFRemoteAudioDetailViewController.m; sourceTree = "<group>"; };
-		06B33B9D1F72582F003A559C /* DFRemoteAudioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFRemoteAudioViewController.h; sourceTree = "<group>"; };
-		06B33B9E1F72582F003A559C /* DFRemoteAudioViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFRemoteAudioViewController.m; sourceTree = "<group>"; };
 		06B33BA01F72582F003A559C /* addAudio.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = addAudio.plist; sourceTree = "<group>"; };
 		06B33BA11F72582F003A559C /* default_bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = default_bg.jpg; sourceTree = "<group>"; };
-		06B33BA21F72582F003A559C /* dfplayer_control_skin.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dfplayer_control_skin.jpg; sourceTree = "<group>"; };
-		06B33BA31F72582F003A559C /* freeloop.lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = freeloop.lrc; sourceTree = "<group>"; };
-		06B33BA41F72582F003A559C /* localAudio.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = localAudio.plist; sourceTree = "<group>"; };
-		06B33BA51F72582F003A559C /* migong.lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = migong.lrc; sourceTree = "<group>"; };
-		06B33BA61F72582F003A559C /* remoteAudio.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = remoteAudio.plist; sourceTree = "<group>"; };
-		06B33BA71F72582F003A559C /* T002R300x300M000003dlwFv4HfhpO.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = T002R300x300M000003dlwFv4HfhpO.jpg; sourceTree = "<group>"; };
-		06B33BA81F72582F003A559C /* wYYBAFXmyCCAKUp0AFbZo90_y-E483.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "wYYBAFXmyCCAKUp0AFbZo90_y-E483.mp3"; sourceTree = "<group>"; };
-		06B33BA91F72582F003A559C /* xiayimiao.lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = xiayimiao.lrc; sourceTree = "<group>"; };
+		06B33BA41F72582F003A559C /* LocalAudio.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = LocalAudio.plist; sourceTree = "<group>"; };
+		06B33BA61F72582F003A559C /* NetAudio.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = NetAudio.plist; sourceTree = "<group>"; };
 		06B33BAA1F72582F003A559C /* YourDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YourDataModel.h; sourceTree = "<group>"; };
 		06B33BAB1F72582F003A559C /* YourDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YourDataModel.m; sourceTree = "<group>"; };
+		F95478441F88CE6C00D85D46 /* 大圈圈.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "大圈圈.mp3"; sourceTree = "<group>"; };
+		F95478491F88D07A00D85D46 /* DFNetAudioViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFNetAudioViewController.h; sourceTree = "<group>"; };
+		F954784A1F88D07A00D85D46 /* DFNetAudioViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DFNetAudioViewController.m; sourceTree = "<group>"; };
+		F954784C1F88D15400D85D46 /* DFCacheViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFCacheViewController.h; sourceTree = "<group>"; };
+		F954784D1F88D15400D85D46 /* DFCacheViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DFCacheViewController.m; sourceTree = "<group>"; };
+		F95478501F88DAB900D85D46 /* 权志龙-MISSING YOU.lrc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "权志龙-MISSING YOU.lrc"; sourceTree = "<group>"; };
+		F95478521F88DBF800D85D46 /* 王若琳-迷宫.lrc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "王若琳-迷宫.lrc"; sourceTree = "<group>"; };
+		F95478541F892DD700D85D46 /* 许嵩(Vae)-有何不可.lrc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "许嵩(Vae)-有何不可.lrc"; sourceTree = "<group>"; };
+		F9D6E97C1F8A37C300069376 /* 徐良&小凌-321对不起.lrc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "徐良&小凌-321对不起.lrc"; sourceTree = "<group>"; };
+		F9D6E97E1F8A4C2600069376 /* 刘依朵-醉红颜.lrc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "刘依朵-醉红颜.lrc"; sourceTree = "<group>"; };
+		F9D6E9801F8A854700069376 /* Maroon 5-don't wanna know.lrc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Maroon 5-don't wanna know.lrc"; sourceTree = "<group>"; };
+		F9D6E9821F8A87BB00069376 /* Dragon Pig-全部都是你.lrc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Dragon Pig-全部都是你.lrc"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,10 +175,8 @@
 			children = (
 				06B33B891F72582F003A559C /* Src */,
 				06B33B651F725829003A559C /* DFPlayer */,
-				06B33B3B1F725814003A559C /* Main.storyboard */,
 				06B33B3E1F725814003A559C /* Assets.xcassets */,
 				06B33B401F725814003A559C /* LaunchScreen.storyboard */,
-				06B33B431F725814003A559C /* Info.plist */,
 				06B33B321F725814003A559C /* Supporting Files */,
 			);
 			path = DFPlayerDemo;
@@ -191,6 +185,8 @@
 		06B33B321F725814003A559C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				06B33B431F725814003A559C /* Info.plist */,
+				06B33B3B1F725814003A559C /* Main.storyboard */,
 				06B33B331F725814003A559C /* main.m */,
 			);
 			name = "Supporting Files";
@@ -239,7 +235,6 @@
 				06B33B721F725829003A559C /* DFPlayerFileManager.m */,
 				06B33B731F725829003A559C /* DFPlayerLyricsTableview.h */,
 				06B33B741F725829003A559C /* DFPlayerLyricsTableview.m */,
-				06B33B751F725829003A559C /* DFPLayerMacro.h */,
 				06B33B761F725829003A559C /* DFPlayerRemoteApplication.h */,
 				06B33B771F725829003A559C /* DFPlayerRemoteApplication.m */,
 				06B33B781F725829003A559C /* DFPlayerRequestManager.h */,
@@ -257,33 +252,16 @@
 			children = (
 				06B33B8A1F72582F003A559C /* AppDelegate.h */,
 				06B33B8B1F72582F003A559C /* AppDelegate.m */,
-				06B33B8C1F72582F003A559C /* localAudio */,
-				06B33B8F1F72582F003A559C /* mine */,
-				06B33B921F72582F003A559C /* other */,
-				06B33B981F72582F003A559C /* remoteAudio */,
-				06B33B9F1F72582F003A559C /* Resource */,
-				06B33BAA1F72582F003A559C /* YourDataModel.h */,
-				06B33BAB1F72582F003A559C /* YourDataModel.m */,
-			);
-			path = Src;
-			sourceTree = "<group>";
-		};
-		06B33B8C1F72582F003A559C /* localAudio */ = {
-			isa = PBXGroup;
-			children = (
+				F954784C1F88D15400D85D46 /* DFCacheViewController.h */,
+				F954784D1F88D15400D85D46 /* DFCacheViewController.m */,
 				06B33B8D1F72582F003A559C /* DFLocalAudioViewController.h */,
 				06B33B8E1F72582F003A559C /* DFLocalAudioViewController.m */,
+				F95478491F88D07A00D85D46 /* DFNetAudioViewController.h */,
+				F954784A1F88D07A00D85D46 /* DFNetAudioViewController.m */,
+				06B33B921F72582F003A559C /* other */,
+				06B33B9F1F72582F003A559C /* Resource */,
 			);
-			path = localAudio;
-			sourceTree = "<group>";
-		};
-		06B33B8F1F72582F003A559C /* mine */ = {
-			isa = PBXGroup;
-			children = (
-				06B33B901F72582F003A559C /* DFMineViewController.h */,
-				06B33B911F72582F003A559C /* DFMineViewController.m */,
-			);
-			path = mine;
+			path = Src;
 			sourceTree = "<group>";
 		};
 		06B33B921F72582F003A559C /* other */ = {
@@ -294,38 +272,45 @@
 				06B33B951F72582F003A559C /* NSObject+Alert.m */,
 				06B33B961F72582F003A559C /* UIImage+Blur.h */,
 				06B33B971F72582F003A559C /* UIImage+Blur.m */,
+				06B33BAA1F72582F003A559C /* YourDataModel.h */,
+				06B33BAB1F72582F003A559C /* YourDataModel.m */,
 			);
 			path = other;
-			sourceTree = "<group>";
-		};
-		06B33B981F72582F003A559C /* remoteAudio */ = {
-			isa = PBXGroup;
-			children = (
-				06B33B991F72582F003A559C /* DFCacheListViewController.h */,
-				06B33B9A1F72582F003A559C /* DFCacheListViewController.m */,
-				06B33B9B1F72582F003A559C /* DFRemoteAudioDetailViewController.h */,
-				06B33B9C1F72582F003A559C /* DFRemoteAudioDetailViewController.m */,
-				06B33B9D1F72582F003A559C /* DFRemoteAudioViewController.h */,
-				06B33B9E1F72582F003A559C /* DFRemoteAudioViewController.m */,
-			);
-			path = remoteAudio;
 			sourceTree = "<group>";
 		};
 		06B33B9F1F72582F003A559C /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				F95478431F88CE6C00D85D46 /* LocalAudio */,
+				F95478451F88CE7300D85D46 /* LRC */,
 				06B33BA01F72582F003A559C /* addAudio.plist */,
 				06B33BA11F72582F003A559C /* default_bg.jpg */,
-				06B33BA21F72582F003A559C /* dfplayer_control_skin.jpg */,
-				06B33BA31F72582F003A559C /* freeloop.lrc */,
-				06B33BA41F72582F003A559C /* localAudio.plist */,
-				06B33BA51F72582F003A559C /* migong.lrc */,
-				06B33BA61F72582F003A559C /* remoteAudio.plist */,
-				06B33BA71F72582F003A559C /* T002R300x300M000003dlwFv4HfhpO.jpg */,
-				06B33BA81F72582F003A559C /* wYYBAFXmyCCAKUp0AFbZo90_y-E483.mp3 */,
-				06B33BA91F72582F003A559C /* xiayimiao.lrc */,
+				06B33BA41F72582F003A559C /* LocalAudio.plist */,
+				06B33BA61F72582F003A559C /* NetAudio.plist */,
 			);
 			path = Resource;
+			sourceTree = "<group>";
+		};
+		F95478431F88CE6C00D85D46 /* LocalAudio */ = {
+			isa = PBXGroup;
+			children = (
+				F95478441F88CE6C00D85D46 /* 大圈圈.mp3 */,
+			);
+			path = LocalAudio;
+			sourceTree = "<group>";
+		};
+		F95478451F88CE7300D85D46 /* LRC */ = {
+			isa = PBXGroup;
+			children = (
+				F95478501F88DAB900D85D46 /* 权志龙-MISSING YOU.lrc */,
+				F95478521F88DBF800D85D46 /* 王若琳-迷宫.lrc */,
+				F95478541F892DD700D85D46 /* 许嵩(Vae)-有何不可.lrc */,
+				F9D6E97C1F8A37C300069376 /* 徐良&小凌-321对不起.lrc */,
+				F9D6E97E1F8A4C2600069376 /* 刘依朵-醉红颜.lrc */,
+				F9D6E9801F8A854700069376 /* Maroon 5-don't wanna know.lrc */,
+				F9D6E9821F8A87BB00069376 /* Dragon Pig-全部都是你.lrc */,
+			);
+			path = LRC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -390,12 +375,18 @@
 		06B33B271F725814003A559C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = HDF;
 				TargetAttributes = {
 					06B33B2E1F725814003A559C = {
 						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = 3YCJES5329;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					06B33B471F725814003A559C = {
 						CreatedOnToolsVersion = 8.3.3;
@@ -434,20 +425,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				06B33BB91F725830003A559C /* migong.lrc in Resources */,
 				06B33BB51F725830003A559C /* default_bg.jpg in Resources */,
-				06B33BBD1F725830003A559C /* xiayimiao.lrc in Resources */,
-				06B33BB61F725830003A559C /* dfplayer_control_skin.jpg in Resources */,
 				06B33B421F725814003A559C /* LaunchScreen.storyboard in Resources */,
-				06B33BBA1F725830003A559C /* remoteAudio.plist in Resources */,
-				06B33BB81F725830003A559C /* localAudio.plist in Resources */,
+				06B33BBA1F725830003A559C /* NetAudio.plist in Resources */,
+				F95478531F88DBF800D85D46 /* 王若琳-迷宫.lrc in Resources */,
+				F95478511F88DAB900D85D46 /* 权志龙-MISSING YOU.lrc in Resources */,
+				06B33BB81F725830003A559C /* LocalAudio.plist in Resources */,
 				06B33B3F1F725814003A559C /* Assets.xcassets in Resources */,
-				06B33BBB1F725830003A559C /* T002R300x300M000003dlwFv4HfhpO.jpg in Resources */,
 				06B33BB41F725830003A559C /* addAudio.plist in Resources */,
-				06B33BBC1F725830003A559C /* wYYBAFXmyCCAKUp0AFbZo90_y-E483.mp3 in Resources */,
+				F9D6E97F1F8A4C2600069376 /* 刘依朵-醉红颜.lrc in Resources */,
 				06B33B7E1F725829003A559C /* DFPlayer.bundle in Resources */,
 				06B33B3D1F725814003A559C /* Main.storyboard in Resources */,
-				06B33BB71F725830003A559C /* freeloop.lrc in Resources */,
+				F95478551F892DD700D85D46 /* 许嵩(Vae)-有何不可.lrc in Resources */,
+				F9D6E9831F8A87BB00069376 /* Dragon Pig-全部都是你.lrc in Resources */,
+				F9D6E9811F8A854700069376 /* Maroon 5-don't wanna know.lrc in Resources */,
+				F9D6E97D1F8A37C300069376 /* 徐良&小凌-321对不起.lrc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -477,20 +469,18 @@
 				06B33B7F1F725829003A559C /* DFPlayerControlManager.m in Sources */,
 				06B33B881F725829003A559C /* DFPlayerTool.m in Sources */,
 				06B33B341F725814003A559C /* main.m in Sources */,
-				06B33BB11F725830003A559C /* DFCacheListViewController.m in Sources */,
 				06B33B821F725829003A559C /* AFNetworkReachabilityManager.m in Sources */,
 				06B33B841F725829003A559C /* DFPlayerLyricsTableview.m in Sources */,
 				06B33BAD1F725830003A559C /* DFLocalAudioViewController.m in Sources */,
-				06B33BB21F725830003A559C /* DFRemoteAudioDetailViewController.m in Sources */,
 				06B33B861F725829003A559C /* DFPlayerRequestManager.m in Sources */,
 				06B33B851F725829003A559C /* DFPlayerRemoteApplication.m in Sources */,
 				06B33BAC1F72582F003A559C /* AppDelegate.m in Sources */,
 				06B33BB01F725830003A559C /* UIImage+Blur.m in Sources */,
 				06B33B811F725829003A559C /* DFPlayerModel.m in Sources */,
-				06B33BB31F725830003A559C /* DFRemoteAudioViewController.m in Sources */,
 				06B33BAF1F725830003A559C /* NSObject+Alert.m in Sources */,
-				06B33BAE1F725830003A559C /* DFMineViewController.m in Sources */,
+				F954784B1F88D07A00D85D46 /* DFNetAudioViewController.m in Sources */,
 				06B33B801F725829003A559C /* DFPlayerManager.m in Sources */,
+				F954784E1F88D15400D85D46 /* DFCacheViewController.m in Sources */,
 				06B33B871F725829003A559C /* DFPlayerResourceLoader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -556,7 +546,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -564,7 +556,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -605,7 +601,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -613,7 +611,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -642,7 +644,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 3YCJES5329;
 				INFOPLIST_FILE = DFPlayerDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = HDF.DFPlayerDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -653,7 +657,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 3YCJES5329;
 				INFOPLIST_FILE = DFPlayerDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = HDF.DFPlayerDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -725,6 +731,7 @@
 				06B33B5E1F725814003A559C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		06B33B5F1F725814003A559C /* Build configuration list for PBXNativeTarget "DFPlayerDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -733,6 +740,7 @@
 				06B33B611F725814003A559C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		06B33B621F725814003A559C /* Build configuration list for PBXNativeTarget "DFPlayerDemoUITests" */ = {
 			isa = XCConfigurationList;
@@ -741,6 +749,7 @@
 				06B33B641F725814003A559C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

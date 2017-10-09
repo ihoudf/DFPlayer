@@ -7,7 +7,7 @@
 //
 
 #import "DFPlayerControlManager.h"
-#import "DFPLayerMacro.h"
+#import "DFPlayerManager.h"
 #import <objc/runtime.h>
 #import "DFPlayerTool.h"
 #import "DFPlayerLyricsTableview.h"
@@ -45,13 +45,25 @@ static NSString * key_EventBlock = @"key_EventBlock";
 @end
 
 #pragma mark -  DFPlayer控制管理器
+//KEY
 NSString * const DFStateKey          = @"state";
 NSString * const DFBufferProgressKey = @"bufferProgress";
 NSString * const DFProgressKey       = @"progress";
 NSString * const DFCurrentTimeKey    = @"currentTime";
 NSString * const DFTotalTimeKey      = @"totalTime";
-#define DF_SCREEN_HEIGHT  [UIScreen mainScreen].bounds.size.height
+
+//NOTIFICATION
+NSString * const DFPlayerLyricTableviewStopUpdateNotification = @"DFPlayerLyricTableviewStopUpdateNotification";
+NSString * const DFPlayerLyricTableviewResumeUpdateNotification = @"DFPlayerLyricTableviewResumeUpdateNotification";
+
+//DEFINE
+#define DF_SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
 #define DF_FONTSIZE(size) ((size)/1334.0)*DF_SCREEN_HEIGHT
+#define DF_GREENCOLOR [UIColor colorWithRed:66.0/255.0 green:196.0/255.0 blue:133.0/255.0 alpha:1]
+// 图片路径
+#define DFPlayerSrcName(file) [@"DFPlayer.bundle" stringByAppendingPathComponent:file]
+#define DFPlayerFrameworkSrcName(file) [@"Frameworks/DFPlayer.framework/DFPlayer.bundle" stringByAppendingPathComponent:file]
+#define DFPlayerImage(file) [UIImage imageNamed:DFPlayerSrcName(file)] ? :[UIImage imageNamed:DFPlayerFrameworkSrcName(file)]
 @interface DFPlayerControlManager()
 @property (nonatomic, strong) UIButton          *playBtn;
 @property (nonatomic, strong) UIImage           *playImage;
@@ -119,23 +131,31 @@ NSString * const DFTotalTimeKey      = @"totalTime";
  */
 - (UIButton *)df_playPauseBtnWithFrame:(CGRect)frame
                              superView:(UIView *)superView
-                                 block:(void(^)())block
+                                 block:(void(^)(void))block
 {
     self.playBtn    = [self btnWithFrame:frame superView:superView];
     self.playImage  = DFPlayerImage(@"dfplayer_play");
     self.pauseImage = DFPlayerImage(@"dfplayer_pause");
+
     if ([DFPlayerManager shareInstance].state == DFPlayerStatePlaying) {
         [self.playBtn setBackgroundImage:self.playImage forState:(UIControlStateNormal)];
     }else{
         [self.playBtn setBackgroundImage:self.pauseImage forState:(UIControlStateNormal)];
     }
     [[DFPlayerManager shareInstance] addObserver:self forKeyPath:DFStateKey options:NSKeyValueObservingOptionNew context:nil];
-    
     self.playBtn.handleJFEventBlock = ^(UIButton *sender) {
-        if ([DFPlayerManager shareInstance].state == DFPlayerStatePlaying) {
-            [[DFPlayerManager shareInstance] df_audioPause];
+        if ([DFPlayerManager shareInstance].currentAudioModel.audioUrl) {
+            if ([DFPlayerManager shareInstance].state == DFPlayerStatePlaying) {
+                [[DFPlayerManager shareInstance] df_audioPause];
+            }else{
+                static dispatch_once_t onceToken;
+                dispatch_once(&onceToken, ^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"DFPlayerLoadPreviousAudioModelNotification" object:nil];
+                });
+                [[DFPlayerManager shareInstance] df_audioPlay];
+            }
         }else{
-            [[DFPlayerManager shareInstance] df_audioPlay];
+            NSLog(@"--没有可播放的音频");
         }
         if (block) {
             block();
@@ -155,7 +175,7 @@ NSString * const DFTotalTimeKey      = @"totalTime";
  */
 - (UIButton *)df_lastAudioBtnWithFrame:(CGRect)frame
                              superView:(UIView *)superView
-                                 block:(void(^)())block
+                                 block:(void(^)(void))block
 {
     UIButton *lastBtn = [self btnWithFrame:frame superView:superView];
     [lastBtn setBackgroundImage:DFPlayerImage(@"dfplayer_last") forState:(UIControlStateNormal)];
@@ -179,7 +199,7 @@ NSString * const DFTotalTimeKey      = @"totalTime";
  */
 - (UIButton *)df_nextAudioBtnWithFrame:(CGRect)frame
                              superView:(UIView *)superView
-                                 block:(void(^)())block
+                                 block:(void(^)(void))block
 {
     UIButton *nextBtn = [self btnWithFrame:frame superView:superView];
     [nextBtn setBackgroundImage:DFPlayerImage(@"dfplayer_next") forState:(UIControlStateNormal)];
@@ -204,13 +224,13 @@ NSString * const DFTotalTimeKey      = @"totalTime";
  * 注意：当设置了DFPlayer的播放类型以后，DFPlayer将为您记录用户的选择，并在下次启动app时选择用户设置的播放类型。
  如需每次启动都设置固定某一个播放类型，请在初始化播放器后，调用[DFPlayerManager shareInstance].type = XX;重置播放类型。
  */
-- (UIButton *_Nonnull)df_typeControlBtnWithFrame:(CGRect)frame
+- (UIButton *_Nullable)df_typeControlBtnWithFrame:(CGRect)frame
                                        superView:(UIView *_Nonnull)superView
-                                           block:(void(^_Nullable)(DFPlayerType type))block
+                                            block:(void(^_Nullable)(void))block
 {
     UIButton *button = [self btnWithFrame:frame superView:superView];
     switch ([DFPlayerManager shareInstance].type) {
-        case DFPlayerTypeSingleCycle:
+        case DFPlayerTypeSingleCycle | DFPlayerTypeOnlyOnce:
             [button setBackgroundImage:DFPlayerImage(@"dfplayer_single") forState:(UIControlStateNormal)];
             break;
         case DFPlayerTypeOrderCycle:
@@ -240,7 +260,7 @@ NSString * const DFTotalTimeKey      = @"totalTime";
                 break;
         }
         if (block) {
-            block([DFPlayerManager shareInstance].type);
+            block();
         }
     };
     return button;
@@ -281,7 +301,7 @@ NSString * const DFTotalTimeKey      = @"totalTime";
  @param superView 进度条父视图
  @return 进度条
  */
-- (UISlider *_Nonnull)df_sliderWithFrame:(CGRect)frame
+- (UISlider *_Nullable)df_sliderWithFrame:(CGRect)frame
                    minimumTrackTintColor:(UIColor *_Nonnull)minimumTrackTintColor
                    maximumTrackTintColor:(UIColor *_Nonnull)maximumTrackTintColor
                              trackHeight:(CGFloat)trackHeight
@@ -339,8 +359,9 @@ NSString * const DFTotalTimeKey      = @"totalTime";
 
 - (void)progressSliderTouchEnded:(UISlider *)sender {
     self.isDraging = NO;
+    [[NSNotificationCenter defaultCenter] postNotificationName:DFPLayerNotificationDragStatus object:nil];
     [[DFPlayerManager shareInstance] df_seekToTimeWithValue:self.progressSlider.value];
-
+    
 }
 
 - (void)tapSliderAction:(UITapGestureRecognizer *)tap {
@@ -366,9 +387,10 @@ NSString * const DFTotalTimeKey      = @"totalTime";
     self.currentTimeLabel = [[UILabel alloc] init];
     self.currentTimeLabel.frame = frame;
     self.currentTimeLabel.textColor = [UIColor whiteColor];
-    self.currentTimeLabel.textAlignment = NSTextAlignmentCenter;
-    self.currentTimeLabel.font = [UIFont systemFontOfSize:DF_FONTSIZE(26)];
+    self.currentTimeLabel.font = [UIFont systemFontOfSize:DF_FONTSIZE(24)];
     self.currentTimeLabel.text = @"00:00";
+    self.currentTimeLabel.textColor = DF_GREENCOLOR;
+    self.currentTimeLabel.textAlignment = NSTextAlignmentCenter;
     if ([DFPlayerManager shareInstance].isObservePreviousAudioModel) {
         CGFloat currentTime = [DFPlayerManager shareInstance].previousAudioModel.currentTime;
         [self setUpCurrentTimeLabelTextWithCurrentTime:currentTime];
@@ -391,9 +413,10 @@ NSString * const DFTotalTimeKey      = @"totalTime";
     
     self.totalTimeLabel = [[UILabel alloc] init];
     self.totalTimeLabel.frame = frame;
-    self.totalTimeLabel.textAlignment = NSTextAlignmentCenter;
-    self.totalTimeLabel.font = [UIFont systemFontOfSize:DF_FONTSIZE(26)];
+    self.totalTimeLabel.font = [UIFont systemFontOfSize:DF_FONTSIZE(24)];
     self.totalTimeLabel.text = @"00:00";
+    self.totalTimeLabel.textColor = DF_GREENCOLOR;
+    self.totalTimeLabel.textAlignment = NSTextAlignmentCenter;
     if ([DFPlayerManager shareInstance].isObservePreviousAudioModel) {
         CGFloat totalTime = [DFPlayerManager shareInstance].previousAudioModel.totalTime;
         [self setUpTotalTimeLabelTextWithTotalTime:totalTime];
@@ -448,11 +471,11 @@ NSString * const DFTotalTimeKey      = @"totalTime";
         }else if ([keyPath isEqualToString:DFProgressKey]){
 //            if ([DFPlayerManager shareInstance].state == DFPlayerStateBuffering ||
 //                [DFPlayerManager shareInstance].state == DFPlayerStatePlaying) {
+            dispatch_async(dispatch_get_main_queue(), ^{
                 if (self.progressSlider.state != UIControlStateHighlighted) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
                         self.progressSlider.value = [DFPlayerManager shareInstance].progress;
-                    });
                 }
+           });
 //            }
         }else if ([keyPath isEqualToString:DFCurrentTimeKey]){
             if (!self.isDraging) {
@@ -477,41 +500,48 @@ NSString * const DFTotalTimeKey      = @"totalTime";
 
 #pragma mark - 歌词tableView
 /**
- 歌词tableview采用lrc标准格式编写->"[分钟:秒.毫秒] 歌词" 或 "[分钟:秒] 歌词" 或 "[分钟:秒:毫秒] 歌词"
- 
- @param frame tableview frame
- @param lrcRowHeight tableview 单行rowHeight
- @param lrcLabelFrame 显示歌词的label的frame
- @param cellBackgroundColor cell背景色
- @param currentLineLrcForegroundTextColor 当前行歌词文字前景色（此属性不为空时，采用卡拉OK模式显示）
- @param currentLineLrcBackgroundTextColor 当前行歌词文字背景色
- @param otherLineLrcBackgroundTextColor 其他行歌词文字颜色
- @param currentLineLrcFont 当前行歌词字体
- @param otherLineLrcFont 其他行歌词字体
- @param superView 父视图
- @return 歌词tableView
- */
+歌词tableview
 
-- (UITableView *_Nonnull)df_lyricTableViewWithFrame:(CGRect)frame
-                                       lrcRowHeight:(CGFloat)lrcRowHeight
-                                      lrcLabelFrame:(CGRect)lrcLabelFrame
-                                cellBackgroundColor:(UIColor *_Nullable)cellBackgroundColor
-                  currentLineLrcForegroundTextColor:(UIColor *_Nullable)currentLineLrcForegroundTextColor
-                  currentLineLrcBackgroundTextColor:(UIColor *_Nonnull)currentLineLrcBackgroundTextColor
-                    otherLineLrcBackgroundTextColor:(UIColor *_Nonnull)otherLineLrcBackgroundTextColor
-                                 currentLineLrcFont:(UIFont *_Nonnull)currentLineLrcFont
-                                   otherLineLrcFont:(UIFont *_Nonnull)otherLineLrcFont
-                                          superView:(UIView *_Nonnull)superView{
+@param frame tableview frame
+@param cellRowHeight tableview 单行rowHeight
+@param cellBackgroundColor cell背景色
+@param currentLineLrcForegroundTextColor 当前行歌词文字前景色（此属性不为空时，采用卡拉OK模式显示）
+@param currentLineLrcBackgroundTextColor 当前行歌词文字背景色
+@param otherLineLrcBackgroundTextColor 其他行歌词文字颜色
+@param currentLineLrcFont 当前行歌词字体
+@param otherLineLrcFont 其他行歌词字体
+@param superView 父视图
+@param block 点击某个歌词cell。indexpath：该行cell的indexpath
+@return 歌词tableView
+*/
+- (UITableView *_Nullable)df_lyricTableViewWithFrame:(CGRect)frame
+                                       cellRowHeight:(CGFloat)cellRowHeight
+                                 cellBackgroundColor:(UIColor *_Nullable)cellBackgroundColor
+                   currentLineLrcForegroundTextColor:(UIColor *_Nullable)currentLineLrcForegroundTextColor
+                   currentLineLrcBackgroundTextColor:(UIColor *_Nonnull)currentLineLrcBackgroundTextColor
+                     otherLineLrcBackgroundTextColor:(UIColor *_Nonnull)otherLineLrcBackgroundTextColor
+                                  currentLineLrcFont:(UIFont *_Nonnull)currentLineLrcFont
+                                    otherLineLrcFont:(UIFont *_Nonnull)otherLineLrcFont
+                                           superView:(UIView *_Nonnull)superView
+                                               block:(void(^_Nullable)(NSIndexPath * _Nullable indexpath))block{
     self.lyricsTableView.frame                             = frame;
-    self.lyricsTableView.rowHeight                         = lrcRowHeight;
+    self.lyricsTableView.cellRowHeight                     = cellRowHeight;
+    CGFloat insets = frame.size.height/2-cellRowHeight/2;
+    self.lyricsTableView.contentInset                      = UIEdgeInsetsMake(insets, 0, insets, 0);
     self.lyricsTableView.cellBackgroundColor               = cellBackgroundColor;
-    self.lyricsTableView.lrcLabelFrame                     = lrcLabelFrame;
     self.lyricsTableView.currentLineLrcForegroundTextColor = currentLineLrcForegroundTextColor;
     self.lyricsTableView.currentLineLrcBackgroundTextColor = currentLineLrcBackgroundTextColor;
     self.lyricsTableView.otherLineLrcBackgroundTextColor   = otherLineLrcBackgroundTextColor;
     self.lyricsTableView.currentLineLrcFont                = currentLineLrcFont;
     self.lyricsTableView.otherLineLrcFont                  = otherLineLrcFont;
+    self.lyricsTableView.DFPlayerLyricTableviewStopUpdateNotification = DFPlayerLyricTableviewStopUpdateNotification;
+    self.lyricsTableView.DFPlayerLyricTableviewResumeUpdateNotification = DFPlayerLyricTableviewResumeUpdateNotification;
     [superView addSubview:self.lyricsTableView];
+    self.lyricsTableView.block = ^(NSIndexPath *indexPath) {
+        if (block) {
+            block(indexPath);
+        }
+    };
     return self.lyricsTableView;
 }
 - (DFPlayerLyricsTableview *)lyricsTableView{

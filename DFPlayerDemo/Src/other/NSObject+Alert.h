@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void(^YesBlock)();
-typedef void(^NoBlock)();
+typedef void(^YesBlock)(void);
+typedef void(^NoBlock)(void);
 
-typedef void(^ActionSheetBlock1)();
-typedef void(^ActionSheetBlock2)();
+typedef void(^ActionSheetBlock1)(void);
+typedef void(^ActionSheetBlock2)(void);
 
 @interface NSObject (Alert)
 

@@ -25,7 +25,6 @@
 
 @property (nonatomic, weak) id<DFPlayerResourceLoaderDelegate> delegate;
 @property (nonatomic, copy) void(^checkStatusBlock)(NSInteger statusCode);
-@property (nonatomic, assign) BOOL seekRequired;//Seek标识
 @property (nonatomic, assign) BOOL isHaveCache;//是否有缓存
 @property (nonatomic, assign) BOOL isObserveLastModified;//是否观察修改时间
 /**退出播放器和切换歌曲时调用该方法*/

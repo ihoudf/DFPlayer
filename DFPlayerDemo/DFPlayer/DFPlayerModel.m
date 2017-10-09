@@ -11,17 +11,14 @@
 
 @implementation DFPlayerModel
 
+@end
+
+@implementation DFPlayerInfoModel
 
 @end
 
 NSString *const DFPlayerCurrentAudioInfoModelAudioId        = @"DFPlayerCurrentAudioInfoModelAudioId";
 NSString *const DFPlayerCurrentAudioInfoModelAudioUrl       = @"DFPlayerCurrentAudioInfoModelAudioUrl";
-NSString *const DFPlayerCurrentAudioInfoModelAudioLyric     = @"DFPlayerCurrentAudioInfoModelAudioLyric";
-NSString *const DFPlayerCurrentAudioInfoModelAudioName      = @"DFPlayerCurrentAudioInfoModelAudioName";
-NSString *const DFPlayerCurrentAudioInfoModelAudioAlbum     = @"DFPlayerCurrentAudioInfoModelAudioAlbum";
-NSString *const DFPlayerCurrentAudioInfoModelAudioSinger    = @"DFPlayerCurrentAudioInfoModelAudioSinger";
-NSString *const DFPlayerCurrentAudioInfoModelAudioImage     = @"DFPlayerCurrentAudioInfoModelAudioImage";
-NSString *const DFPlayerCurrentAudioInfoModelIsCached       = @"DFPlayerCurrentAudioInfoModelIsCached";
 NSString *const DFPlayerCurrentAudioInfoModelCurrentTime    = @"DFPlayerCurrentAudioInfoModelCurrentTime";
 NSString *const DFPlayerCurrentAudioInfoModelTotalTime      = @"DFPlayerCurrentAudioInfoModelTotalTime";
 NSString *const DFPlayerCurrentAudioInfoModelProgress       = @"DFPlayerCurrentAudioInfoModelProgress";
@@ -36,24 +33,6 @@ NSString *const DFPlayerCurrentAudioInfoModelProgress       = @"DFPlayerCurrentA
 }
 - (NSURL *)audioUrl{
     return [NSURL URLWithString:[[self infoDic] objectForKey:DFPlayerCurrentAudioInfoModelAudioUrl]];
-}
-- (NSString *)audioLyric{
-    return [[self infoDic] objectForKey:DFPlayerCurrentAudioInfoModelAudioLyric];
-}
-- (NSString *)audioName{
-    return [[self infoDic] objectForKey:DFPlayerCurrentAudioInfoModelAudioName];
-}
-- (NSString *)audioAlbum{
-    return [[self infoDic] objectForKey:DFPlayerCurrentAudioInfoModelAudioAlbum];
-}
-- (NSString *)audioSinger{
-    return [[self infoDic] objectForKey:DFPlayerCurrentAudioInfoModelAudioSinger];
-}
-- (UIImage *)audioImage{
-    return [[self infoDic] objectForKey:DFPlayerCurrentAudioInfoModelAudioImage];
-}
-- (BOOL)isCached{
-    return [[[self infoDic] objectForKey:DFPlayerCurrentAudioInfoModelIsCached] boolValue];
 }
 - (CGFloat)currentTime{
     return [[[self infoDic] objectForKey:DFPlayerCurrentAudioInfoModelCurrentTime] floatValue];

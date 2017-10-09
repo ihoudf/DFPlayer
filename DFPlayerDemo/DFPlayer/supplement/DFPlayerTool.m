@@ -8,16 +8,7 @@
 
 #import "DFPlayerTool.h"
 #import "AFNetworkReachabilityManager.h"
-static BOOL DFPlayer_Log_Switch = NO;
 @implementation DFPlayerTool
-
-+ (void)setLogEnabled:(BOOL)isNeedLog{
-    DFPlayer_Log_Switch = isNeedLog;
-}
-
-+ (BOOL)logEnable {
-    return DFPlayer_Log_Switch;
-}
 
 + (NSURL *)customUrlWithUrl:(NSURL *)url{
     NSString *urlStr = [url absoluteString];
@@ -63,6 +54,7 @@ static BOOL DFPlayer_Log_Switch = NO;
     }];
     [mgr startMonitoring];
 }
+
 @end
 
 @implementation UIImage (DFImage)

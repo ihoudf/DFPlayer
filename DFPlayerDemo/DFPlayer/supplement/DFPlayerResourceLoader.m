@@ -15,8 +15,6 @@
 @property (nonatomic, strong) DFPlayerRequestManager *requestManager;
 @end
 
-
-
 @implementation DFPlayerResourceLoader
 
 - (instancetype)init {
@@ -41,7 +39,6 @@
 }
 
 - (void)requestManagerDidCompleteWithError:(NSString *)errorDescription isCached:(BOOL)isCached{
-    
     if (self.delegate && [self.delegate respondsToSelector:@selector(loader:isCached:)]) {
         [self.delegate loader:self isCached:isCached];
     }
@@ -50,12 +47,8 @@
     }
 }
 
-
-
 #pragma mark - AVAssetResourceLoaderDelegate
 - (BOOL)resourceLoader:(AVAssetResourceLoader *)resourceLoader shouldWaitForLoadingOfRequestedResource:(AVAssetResourceLoadingRequest *)loadingRequest {
-//    self.currentUrlAbsoluteString = loadingRequest.request.URL.absoluteString;
-    
 //    NSLog(@"WaitingLoadingRequest < requestedOffset = %lld, currentOffset = %lld, requestedLength = %ld >", loadingRequest.dataRequest.requestedOffset, loadingRequest.dataRequest.currentOffset, loadingRequest.dataRequest.requestedLength);
     [self addLoadingRequest:loadingRequest];
     return YES;
@@ -80,10 +73,6 @@
                 [self processRequestList];
             }else {
                 //数据还没缓存，则等待数据下载；如果是Seek操作，则重新请求
-                if (self.seekRequired) {
-                    //Seek操作，则重新请求
-                    [self newTaskWithLoadingRequest:loadingRequest cache:NO];
-                }
             }
         }else {
             [self newTaskWithLoadingRequest:loadingRequest cache:YES];
@@ -92,6 +81,7 @@
 }
 
 - (void)newTaskWithLoadingRequest:(AVAssetResourceLoadingRequest *)loadingRequest cache:(BOOL)cache {
+    
     NSUInteger fileLength = 0;
     if (self.requestManager) {
         fileLength = self.requestManager.fileLength;
@@ -99,7 +89,6 @@
     }
     self.requestManager = [[DFPlayerRequestManager alloc] initWithUrl:loadingRequest.request.URL];
     self.requestManager.requestOffset = (long)loadingRequest.dataRequest.requestedOffset;
-    self.requestManager.isCanCache = cache;
     if (fileLength > 0) {
         self.requestManager.fileLength = fileLength;
     }
@@ -109,7 +98,6 @@
     self.requestManager.isObserveLastModified = self.isObserveLastModified;
     
     [self.requestManager requestStart];
-    self.seekRequired = NO;
 }
 
 
@@ -131,16 +119,16 @@
     loadingRequest.contentInformationRequest.contentLength = self.requestManager.fileLength;
     
     //读文件，填充数据
-    NSUInteger cacheLength = self.requestManager.cacheLength;
+    NSUInteger cacheLength = self.requestManager.cacheLength;//已经缓存的数据长度
     NSUInteger requestedOffset = (long)loadingRequest.dataRequest.requestedOffset;
-    if (loadingRequest.dataRequest.currentOffset != 0) {
+    if (loadingRequest.dataRequest.currentOffset != 0) {//如果当前下载长度不为0
         requestedOffset = (long)loadingRequest.dataRequest.currentOffset;
     }
+    
+    //当前下载长度-要请求的长度
     NSUInteger canReadLength = cacheLength - (requestedOffset - self.requestManager.requestOffset);
     NSUInteger respondLength = MIN(canReadLength, loadingRequest.dataRequest.requestedLength);
-    
-    //    NSLog(@"cacheLength %ld, requestedOffset %lld, currentOffset %lld, canReadLength %ld, requestedLength %ld", cacheLength, loadingRequest.dataRequest.requestedOffset, loadingRequest.dataRequest.currentOffset,canReadLength, loadingRequest.dataRequest.requestedLength);
-    
+ 
     [loadingRequest.dataRequest respondWithData:[DFPlayerFileManager df_readTempFileDataWithOffset:requestedOffset - self.requestManager.requestOffset length:respondLength]];
     
     //如果完全响应了所需要的数据，则完成
@@ -152,7 +140,6 @@
     }
     return NO;
 }
-
 
 @end
 

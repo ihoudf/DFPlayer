@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface UIImage (Blur)
--(UIImage*)getSubImage:(CGRect)rect;
-- (UIImage *)blurImageUseCoreImageWithBlurLevel:(CGFloat)blurLevel;
+-(nullable UIImage *)getSubImage:(CGRect)rect;
+
 @end
