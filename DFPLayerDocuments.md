@@ -10,6 +10,7 @@
 
 <div id="DFPlayerManager"></div>
 #### DFPlayerManager(DFPlayer音频播放管理器)
+<br>
 ```
     //播放器类别
     typedef NS_ENUM(NSInteger,DFPlayerAudioSessionCategory){
