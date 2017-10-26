@@ -19,7 +19,7 @@
 
 <iframe src="http://open.iqiyi.com/developer/player_js/coopPlayerIndex.html?vid=80114ec64060b6d255688f7639e0d6eb&tvId=9708975509&accessToken=2.f22860a2479ad60d8da7697274de9346&appKey=3955c3425820435e86d0f4cdfe56f5e7&appId=1368&height=100%&width=100%" frameborder="1" allowfullscreen="true" width="853" height="480"></iframe>
 
-<!-- <embed src="http://player.video.qiyi.com/80114ec64060b6d255688f7639e0d6eb/0/0/w_19ruzdl7nd.swf-albumId=9708975509-tvId=9708975509-isPurchase=0-cnId=30" allowFullScreen="true" quality="high" width="853" height="480" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed> -->
+<embed src="http://player.video.qiyi.com/80114ec64060b6d255688f7639e0d6eb/0/0/w_19ruzdl7nd.swf-albumId=9708975509-tvId=9708975509-isPurchase=0-cnId=30" allowFullScreen="true" quality="high" width="853" height="480" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>
 
 
 ### 安装
@@ -151,7 +151,7 @@ The use of DFPlayer is so easy.
 provided under the MIT license. See <a href="https://github.com/ihoudf/DFPlayer/blob/master/LICENSE">LICENSE</a>  file for details.
 
 <br>
-# THANKS!
+## THANKS!
 <br>
 <font color="#42C485">qq交流群，bug提交群：479873475</font>
 <br>
