@@ -4,51 +4,63 @@
 <array>
 	<dict>
 		<key>audioUrl</key>
-		<string>http://qqma.tingge123.com:83/123/2015/01/%E6%9D%8E%E8%8D%A3%E6%B5%A9%20-%20%E8%80%81%E8%A1%97.mp3</string>
+		<string>http://vip.baidu190.com/uploads/2017/201710a3565fb3e616fcef595f1a555beaf096.mp3</string>
 		<key>audioName</key>
-		<string>老街</string>
+		<string>We Don&apos;t Talk Anymore</string>
 		<key>audioSinger</key>
-		<string>李荣浩</string>
-		<key>audioAlbum</key>
-		<string>小黄</string>
+		<string>双笙</string>
 		<key>audioImage</key>
-		<string>https://y.gtimg.cn/music/photo_new/T002R300x300M000001LP8hk0a6pOp.jpg?max_age=2592000</string>
+		<string>https://y.gtimg.cn/music/photo_new/T002R300x300M0000001QUHr0ZY6kM.jpg?max_age=2592000</string>
+		<key>audioAlbum</key>
+		<string>Nine Track Mind </string>
 	</dict>
 	<dict>
 		<key>audioUrl</key>
-		<string>http://data.5sing.kgimg.com/G032/M06/11/1D/wIYBAFXwMx-APrKsAFPB4PwOeWs761.mp3</string>
+		<string>http://vip.baidu190.com/uploads/2017/201710fd1acda10b72d0a639f8e570eca9c6b5.mp3</string>
 		<key>audioName</key>
-		<string>皇冠一刻钟</string>
+		<string>大圈圈</string>
 		<key>audioSinger</key>
-		<string>dj</string>
+		<string>安瑞兮</string>
 		<key>audioAlbum</key>
-		<string>欧美大碟</string>
+		<string>大圈圈</string>
 		<key>audioImage</key>
-		<string></string>
+		<string>https://y.gtimg.cn/music/photo_new/T002R300x300M000003dlwFv4HfhpO.jpg?max_age=2592000</string>
 	</dict>
 	<dict>
 		<key>audioUrl</key>
-		<string>http://qqma.tingge123.com:83/123/2016/06/%E7%94%B0%E9%A6%A5%E7%94%84%20-%20%E5%B0%8F%E5%B9%B8%E8%BF%90.mp3</string>
+		<string>http://vip.baidu190.com/uploads/2017/201710f1ebcce08c0dd49cce8c35105b707231.mp3</string>
 		<key>audioName</key>
-		<string>小幸运</string>
+		<string>残忍的温柔</string>
 		<key>audioSinger</key>
-		<string>田馥甄</string>
+		<string>阿悄</string>
 		<key>audioAlbum</key>
-		<string>未知</string>
+		<string>世界上另外的自己</string>
 		<key>audioImage</key>
-		<string></string>
+		<string>https://y.gtimg.cn/music/photo_new/T002R300x300M000004VIhSj0gRU3C.jpg?max_age=2592000</string>
 	</dict>
 	<dict>
 		<key>audioUrl</key>
-		<string>http://data.5sing.kgimg.com/G036/M07/07/15/ZA0DAFX0xjmAaF8MADtDNuViBbQ799.mp3</string>
+		<string>http://vip.baidu190.com/uploads/2017/20171092444caf61a907b303c93771994ecf21.mp3</string>
 		<key>audioName</key>
-		<string>I miss you</string>
+		<string>幻化成风</string>
 		<key>audioSinger</key>
-		<string>未知</string>
+		<string>じあやの </string>
 		<key>audioAlbum</key>
-		<string>舞动人生</string>
+		<string>風になる</string>
 		<key>audioImage</key>
-		<string>https://y.gtimg.cn/music/photo_new/T002R300x300M000004gOmmO3VaCYO.jpg?max_age=2592000</string>
+		<string>https://y.gtimg.cn/music/photo_new/T002R300x300M0000045LIxh199HN6.jpg?max_age=2592000</string>
+	</dict>
+	<dict>
+		<key>audioUrl</key>
+		<string>http://vip.baidu190.com/uploads/2017/201710e804117ab2cd437005895a6bc8a24dd5.mp3</string>
+		<key>audioName</key>
+		<string>Rather Be</string>
+		<key>audioSinger</key>
+		<string>Clean Bandit / Jess Glynne </string>
+		<key>audioImage</key>
+		<string>https://y.gtimg.cn/music/photo_new/T002R300x300M000003taZd901jM5C.jpg?max_age=2592000</string>
+		<key>audioAlbum</key>
+		<string>New Eyes</string>
 	</dict>
 </array>
 </plist>

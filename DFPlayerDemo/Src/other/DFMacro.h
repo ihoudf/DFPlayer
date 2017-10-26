@@ -11,7 +11,7 @@
 #define  SCREEN_HEIGHT  [UIScreen mainScreen].bounds.size.height
 //有关距离、位置
 #define CountWidth(w)  ((w)/750.0)*SCREEN_WIDTH
-#define CountHeight(h) ((h)/1334.0)*SCREEN_HEIGHT
+#define CountHeight(hh) ([UIScreen mainScreen].bounds.size.height==812.0?((hh)/1334.0)*667.0:((hh)/1334.0)*SCREEN_HEIGHT)
 
 
 //圆角

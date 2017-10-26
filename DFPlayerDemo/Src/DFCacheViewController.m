@@ -7,8 +7,9 @@
 //
 
 #import "DFCacheViewController.h"
-#import "DFPlayerManager.h"
+#import "DFPlayer.h"
 #import "NSObject+Alert.h"
+#import "DFMacro.h"
 @interface DFCacheViewController ()
 
 @end
@@ -22,34 +23,37 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
     currentLabel = [[UILabel alloc] init];
-    currentLabel.frame = CGRectMake(30, 100, 150, 40);
-    currentLabel.backgroundColor = [UIColor yellowColor];
+    currentLabel.frame = CGRectMake(25, 200, 160, 40);
+    currentLabel.backgroundColor = HDFGreenColor;
+    currentLabel.textColor = [UIColor whiteColor];
     currentLabel.textAlignment = NSTextAlignmentCenter;
     currentLabel.font = [UIFont systemFontOfSize:15];
     [self.view addSubview:currentLabel];
     
     UIButton *button = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    button.frame = CGRectMake(200, 100, 150, 40);
-    button.backgroundColor = [UIColor yellowColor];
+    button.frame = CGRectMake(200, 200, 150, 40);
+    button.backgroundColor = HDFGreenColor;
     button.tag = 100;
     [button setTitle:@"清除当前用户缓存" forState:(UIControlStateNormal)];
+    [button setTitleColor:[UIColor whiteColor] forState:(UIControlStateNormal)];
     [button addTarget:self action:@selector(clearCache:) forControlEvents:(UIControlEventTouchUpInside)];
     [self.view addSubview:button];
     
     allLabel = [[UILabel alloc] init];
-    allLabel.frame = CGRectMake(30, 220, 150, 40);
-    allLabel.backgroundColor = [UIColor yellowColor];
+    allLabel.frame = CGRectMake(25, 320, 160, 40);
+    allLabel.backgroundColor = HDFGreenColor;
+    allLabel.textColor = [UIColor whiteColor];
     allLabel.textAlignment = NSTextAlignmentCenter;
     allLabel.font = [UIFont systemFontOfSize:15];
     [self.view addSubview:allLabel];
     
     UIButton *button1 = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    button1.frame = CGRectMake(200, 220, 150, 40);
-    button1.backgroundColor = [UIColor yellowColor];
+    button1.frame = CGRectMake(200, 320, 150, 40);
+    button1.backgroundColor = HDFGreenColor;
     button1.tag = 200;
-    [button1 setTitle:@"清除所有缓存" forState:(UIControlStateNormal)];
+    [button1 setTitle:@"清除所有用户缓存" forState:(UIControlStateNormal)];
+    [button1 setTitleColor:[UIColor whiteColor] forState:(UIControlStateNormal)];
     [button1 addTarget:self action:@selector(clearCache:) forControlEvents:(UIControlEventTouchUpInside)];
     [self.view addSubview:button1];
     
@@ -60,8 +64,8 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    allLabel.text = [NSString stringWithFormat:@"所有cache:%.2lfM",[DFPlayerManager df_playerCountCacheSizeForCurrentUser:NO]];
-    currentLabel.text = [NSString stringWithFormat:@"当前cache:%.2lfM",[DFPlayerManager df_playerCountCacheSizeForCurrentUser:YES]];
+    allLabel.text = [NSString stringWithFormat:@"所有用户缓存:%.2lfM",[DFPlayer df_playerCountCacheSizeForCurrentUser:NO]];
+    currentLabel.text = [NSString stringWithFormat:@"当前用户缓存:%.2lfM",[DFPlayer df_playerCountCacheSizeForCurrentUser:YES]];
     
 }
 
@@ -72,10 +76,10 @@
         isCurrentUser = NO;
     }
     
-    [DFPlayerManager df_playerClearCacheForCurrentUser:isCurrentUser block:^(BOOL isSuccess, NSError *error) {
+    [DFPlayer df_playerClearCacheForCurrentUser:isCurrentUser block:^(BOOL isSuccess, NSError *error) {
         [self shAlertViewWithTitle:@"清除成功"];
-        currentLabel.text = [NSString stringWithFormat:@"当前cache:%.2lfM",[DFPlayerManager df_playerCountCacheSizeForCurrentUser:YES]];
-        allLabel.text = [NSString stringWithFormat:@"所有cache:%.2lfM",[DFPlayerManager df_playerCountCacheSizeForCurrentUser:NO]];
+        currentLabel.text = [NSString stringWithFormat:@"当前cache:%.2lfM",[DFPlayer df_playerCountCacheSizeForCurrentUser:YES]];
+        allLabel.text = [NSString stringWithFormat:@"所有cache:%.2lfM",[DFPlayer df_playerCountCacheSizeForCurrentUser:NO]];
     }];
 }
 
