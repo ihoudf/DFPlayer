@@ -1,4 +1,4 @@
-# <img src="https://github.com/ihoudf/DFPlayer/blob/master/image/dfplayer_logo750x120.png?raw=true" width="375">
+# <img src="https://github.com/ihoudf/DFPlayer/blob/master/image/dfplayer_logo388x83.png?raw=true" width="280">
 <a href="https://github.com/ihoudf/DFPlayer"><img src="https://img.shields.io/badge/build-passing-green.svg"></a>
 <a href="https://github.com/ihoudf/DFPlayer"><img src="https://img.shields.io/badge/pod-1.0.0-yellow.svg"></a>
 <a href="https://github.com/ihoudf/DFPlayer/blob/master/LICENSE" target="blank"><img src="https://img.shields.io/badge/license-MIT-brightgreen.svg"></a>
@@ -16,6 +16,7 @@
 <br>(4) DFPlayer支持一人一个账户体系，缓存地址不混用。提供了清理缓存的接口。
 使用AFNetworkReachabilityManager监测网络状态，处理各种网络状态下的播放情况。（使用AFNetWorking组件的小伙伴可直接删除DFPlayer中的AFNetworkReachabilityManager相关文件。）
 
+<embed src="http://player.video.qiyi.com/80114ec64060b6d255688f7639e0d6eb/0/0/w_19ruzdl7nd.swf-albumId=9708975509-tvId=9708975509-isPurchase=0-cnId=30" allowFullScreen="true" quality="high" width="853" height="480" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>
 
 
 ### 安装
@@ -37,7 +38,7 @@
 
 ### 使用
 DFPlayer的使用十分简单。
-##### 详细文档：
+##### 详细文档：[DFPlayer详细文档](https://ihoudf.github.io/2017/10/18/DFPLayer%E8%AF%A6%E7%BB%86%E6%96%87%E6%A1%A3/)
 ##### 简要说明：
 1.初始化DFPlayer，设置数据源（必须）
 ```
@@ -101,7 +102,7 @@ DFPlayer的使用十分简单。
 
 ### Use
 The use of DFPlayer is so easy.
-##### Detailed documentation：
+##### Detailed documentation：[DFPlayer documents](https://ihoudf.github.io/2017/10/18/DFPLayer%E8%AF%A6%E7%BB%86%E6%96%87%E6%A1%A3/)
 ##### Use Statement：
 1. Init DFPlayer,and set dataSource（required）
 ```

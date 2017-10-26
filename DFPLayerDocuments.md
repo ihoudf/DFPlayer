@@ -1,8 +1,8 @@
 ## DFPlayer详细文档
 
-###<a href="https://github.com/ihoudf/DFPlayer">-->DFPlayer github</a>
+### <a href="https://github.com/ihoudf/DFPlayer">-->DFPlayer github</a>
 
-#####If possible, please give me a star in github.
+##### If possible, please give me a star in github.
 <br>
 你可能需要用到以下三个类：<br>
 <br>
@@ -311,7 +311,7 @@
 ```
 <br>
 <div id="DFPlayerModel"></div>
-#### DFPlayerModel(DFPlayer数据model类)
+####  DFPlayerModel(DFPlayer数据model类)
 ```
     /**
         数据model类（必传属性） - IMPORTANT
@@ -357,7 +357,7 @@
 
 <br>
 <div id="DFPlayerControlManager"></div>
-#### DFPlayerControlManager(DFPlayer控制管理器)
+####  DFPlayerControlManager(DFPlayer控制管理器)
 ```
     /**
         DFPlayer控制管理器
