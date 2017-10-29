@@ -10,9 +10,7 @@
 - ##### 观看两分钟视频介绍:[http://www.iqiyi.com/w_19ruzcqjqh.html](http://www.iqiyi.com/w_19ruzcqjqh.html)
 - ##### 截图展示：
 
-<img width="280" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPLayerImage1.png?raw=true">
-<img width="280" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerImage2.png?raw=true">
-<img width="280" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerImage3.png?raw=true">
+<img width="280" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPLayerImage1.png?raw=true">&nbsp;<img width="280" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerImage2.png?raw=true">&nbsp;<img width="280" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerImage3.png?raw=true">
 
 
 #
