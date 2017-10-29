@@ -15,9 +15,7 @@
     return YES;
 }
 
--(void)remoteControlReceivedWithEvent:(UIEvent *)event{
-    NSLog(@"event tyipe:::%ld   subtype:::%ld",(long)event.type,(long)event.subtype);
-    
+-(void)remoteControlReceivedWithEvent:(UIEvent *)event{    
     if (event.type == UIEventTypeRemoteControl) {
         switch (event.subtype) {
             case UIEventSubtypeRemoteControlPlay:

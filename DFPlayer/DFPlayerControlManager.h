@@ -60,7 +60,7 @@
                                           block:(void(^_Nullable)(void))block;
 
 /**
- 播放类型设置按钮(单曲循环，顺序循环，随机循环)
+ 播放模式按钮(单曲循环，顺序循环，随机循环) （DFPlayerType为DFPlayerTypeOnlyOnce时此按钮无效）
  
  @param frame 按钮frame
  @param superView 按钮父视图

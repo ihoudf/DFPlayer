@@ -1,6 +1,6 @@
 # <img src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerLogo/dfplayer_logo388x83.png?raw=true" width="260">
 <a href="https://github.com/ihoudf/DFPlayer"><img src="https://img.shields.io/badge/build-passing-green.svg"></a>
-<a href="https://github.com/ihoudf/DFPlayer"><img src="https://img.shields.io/badge/pod-1.0.1-yellow.svg"></a>
+<a href="https://github.com/ihoudf/DFPlayer"><img src="https://img.shields.io/badge/pod-1.0.2-yellow.svg"></a>
 <a href="https://github.com/ihoudf/DFPlayer/blob/master/LICENSE" target="blank"><img src="https://img.shields.io/badge/license-MIT-brightgreen.svg"></a>
 <a href="https://github.com/ihoudf/DFPlayer"><img src="https://img.shields.io/badge/platform-iOS-blue.svg"></a>
 <a href="https://github.com/ihoudf/DFPlayer"><img src="https://img.shields.io/badge/support-iOS%207%2B-yellowgreen.svg"></a>
@@ -17,7 +17,7 @@
 ### 安装（最低支持 iOS 7.0）
 ###### CocoaPods
 ```
-    1.在 Podfile 中添加:  pod 'DFPlayer', '~> 1.0.1'
+    1.在 Podfile 中添加:  pod 'DFPlayer'
     2.执行 pod install 或 pod update
     3.import "DFPlayer.h"
 ```
@@ -81,7 +81,7 @@ DFPlayer的使用十分简单。
 ### Installation（required iOS 7.0+）
 ###### CocoaPods
 ```
-    1.Podfile: pod 'DFPlayer', '~> 1.0.1'
+    1.Podfile: pod 'DFPlayer'
     2.Run pod install or pod update.
     3.import "DFPlayer.h"
 ```

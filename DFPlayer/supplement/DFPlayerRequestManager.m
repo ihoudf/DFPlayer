@@ -61,7 +61,7 @@
             NSMutableDictionary *dic = [DFPlayerArchiverManager df_hasArchivedFileDictionary];
             [dic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
                 if ([key isEqualToString:self.requestUrl.absoluteString]) {
-                    NSLog(@"--已经存在归档");
+                    NSLog(@"-- DFPlayer： 已经存在归档");
                     model = (DFPlayerRequestModel *)obj;
                     *stop = YES;
                 }
@@ -115,7 +115,6 @@
         [DFPlayerArchiverManager df_archiveValue:model forKey:self.requestUrl.absoluteString];
         
         //如果没归档成功 如果本地有缓存则还是播放网络文件
-//        NSLog(@"归档是否成功=======%d",isSuccess);
     }else if(statusCode == 206){//带有Range请求头的返回
         
     }else{
@@ -142,7 +141,7 @@
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
     
     if (self.cancel) {
-        NSLog(@"--下载取消");
+        NSLog(@"-- DFPlayer： 下载取消");
         if (self.delegate && [self.delegate respondsToSelector:@selector(requestManagerDidCompleteWithError:isCached:)]) {
             [self.delegate requestManagerDidCompleteWithError:nil isCached:NO];
         }
@@ -155,9 +154,9 @@
             //可以缓存则保存文件
             [DFPlayerFileManager df_moveAudioFileFromTempPathToCachePath:self.requestUrl blcok:^(BOOL isSuccess,NSError *error) {
                 if (isSuccess) {
-                    NSLog(@"--保存成功");
+                    NSLog(@"-- DFPlayer： 保存成功");
                 }else{
-                    NSLog(@"--保存失败：%@",[error localizedDescription]);
+                    NSLog(@"-- DFPlayer： 保存失败：%@",[error localizedDescription]);
                 }
                 if (self.delegate && [self.delegate respondsToSelector:@selector(requestManagerDidCompleteWithError:isCached:)]) {
                     [self.delegate requestManagerDidCompleteWithError:[error localizedDescription] isCached:isSuccess];

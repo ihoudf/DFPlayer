@@ -22,11 +22,17 @@ static NSString *DFPlayerWarning_UnavailableNewwork = @"没有网络连接";
 
 //播放器类别
 typedef NS_ENUM(NSInteger,DFPlayerAudioSessionCategory){
-    DFPlayerAudioSessionCategoryAmbient,        //用于播放。随静音键和屏幕关闭而静音。不终止其它应用播放声音
-    DFPlayerAudioSessionCategorySoloAmbient,    //用于播放。随静音键和屏幕关闭而静音。终止其它应用播放声音
-    DFPlayerAudioSessionCategoryPlayback,       //用于播放。不随静音键和屏幕关闭而静音。终止其它应用播放声音
-    DFPlayerAudioSessionCategoryPlayAndRecord,  //用于播放和录音。不随着静音键和屏幕关闭而静音。终止其他应用播放声音
-    DFPlayerAudioSessionCategoryMultiRoute      //用于播放和录音。不随着静音键和屏幕关闭而静音。可多设备输出
+    //用于播放。随静音键和屏幕关闭而静音。不终止其它应用播放声音
+    DFPlayerAudioSessionCategoryAmbient,
+    //用于播放。随静音键和屏幕关闭而静音。终止其它应用播放声音
+    DFPlayerAudioSessionCategorySoloAmbient,
+    //用于播放。不随静音键和屏幕关闭而静音。终止其它应用播放声音
+    //需要在工程里设置targets->capabilities->选择backgrounds modes->勾选audio,airplay,and picture in picture
+    DFPlayerAudioSessionCategoryPlayback,
+    //用于播放和录音。不随着静音键和屏幕关闭而静音。终止其他应用播放声音
+    DFPlayerAudioSessionCategoryPlayAndRecord,
+    //用于播放和录音。不随着静音键和屏幕关闭而静音。可多设备输出
+    DFPlayerAudioSessionCategoryMultiRoute
 };
 
 //播放器状态
@@ -41,7 +47,7 @@ typedef NS_ENUM(NSInteger, DFPlayerState) {
 //播放类型
 typedef NS_ENUM(NSInteger, DFPlayerType){
     DFPlayerTypeOnlyOnce,       //单曲只播放一次
-    DFPlayerTypeSingleCycle,    //单曲循环
+    DFPlayerTypeSingleCycle,    //单曲循环。默认。
     DFPlayerTypeOrderCycle,     //顺序循环
     DFPlayerTypeShuffleCycle    //随机循环
 };
@@ -242,12 +248,17 @@ typedef NS_ENUM(NSInteger, DFPlayerType){
  2.userId为nil或@""时，统一使用DFPlayerCache文件夹下的user_public文件夹作为缓存目录。
  isNeedCache为NO时,userId设置无效，此时不会在沙盒创建缓存目录
  */
-- (void)initPlayerWithUserId:(NSString *)userId;
+- (void)df_initPlayerWithUserId:(NSString *)userId;
 
 /**刷新数据源数据*/
 - (void)df_reloadData;
 
-/**选择audioId对应的音频开始播放*/
+/**
+ 选择audioId对应的音频开始播放。
+ 说明：DFPlayer通过数据源方法提前获取数据，通过df_playerPlayWithAudioId选择
+ 而在删除、增加音频后需要调用[[DFPlayer shareInstance] df_reloadData];刷新数据。
+ DFPlayer内部实现里做了线程优化，合理范围内的大数据量也毫无压力。
+ */
 - (void)df_playerPlayWithAudioId:(NSUInteger)audioId;
 
 /**播放*/
@@ -278,7 +289,7 @@ typedef NS_ENUM(NSInteger, DFPlayerType){
  @param url 网络音频url
  @return 有缓存返回缓存地址，无缓存返回nil
  */
-+ (NSString *)df_playerCheckIsCachedWithUrl:(NSURL *)url;
++ (NSString *)df_playerCheckIsCachedWithAudioUrl:(NSURL *)url;
 
  /**
  清除url对应的本地缓存
@@ -286,7 +297,7 @@ typedef NS_ENUM(NSInteger, DFPlayerType){
  @param url 网络音频url
  @param block 是否清除成功 错误信息
  */
-+ (void)df_playerClearCacheWithUrl:(NSURL *)url block:(void(^)(BOOL isSuccess, NSError *error))block;
++ (void)df_playerClearCacheWithAudioUrl:(NSURL *)url block:(void(^)(BOOL isSuccess, NSError *error))block;
 
 /**
  计算DFPlayer的缓存大小

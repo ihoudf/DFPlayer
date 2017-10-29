@@ -12,12 +12,7 @@
  数据model类（必传属性） - IMPORTANT
  */
 @interface DFPlayerModel : NSObject
-/**音频Id。仅标识当前音频在数组中的位置。详见demo。
- 
- 说明：鉴于音频播放器有顺序播放、随机播放等功能，DFPLayer需要一次性知道全部数据。
- 而在删除、增加音频后需要调用[[DFPlayer shareInstance] df_reloadData];刷新数据。
- DFPlayer内部实现里做了线程优化，合理范围内的大数据量也毫无压力。
- */
+/**音频Id。从0开始，仅标识当前音频在数组中的位置*/
 @property (nonatomic, assign) NSUInteger audioId;
 /**音频地址*/
 @property (nonatomic, nonnull, strong) NSURL *audioUrl;

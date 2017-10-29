@@ -40,18 +40,6 @@ static NSString *cellId = @"cellId";
     [self initDFPlayer];
     [self initUI];
 }
-- (void)addSongAction{
-    if (self.addIndex >= self.addArray.count) {
-        [self showAlertWithTitle:@"添加完毕，已无更多音频" message:nil yesBlock:nil];
-        return;
-    }
-    YourDataModel *yourModel = [self setDataModelWithDic:self.addArray[self.addIndex]];
-    [self.dataArray insertObject:yourModel atIndex:0];//这里将数据加到第一个
-    [self tableViewReloadData];
-    self.addIndex++;
-    //更新DFPlayer的音频数据
-    [[DFPlayer shareInstance] df_reloadData];
-}
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self tableViewReloadData];
@@ -120,7 +108,7 @@ static NSString *cellId = @"cellId";
     if (![model.yourUrl hasPrefix:@"http"]) {audioType = @"本地音频";}
     cell.textLabel.text = [NSString stringWithFormat:@"%ld--%@-%@(%@)",(long)indexPath.row,audioType,model.yourName,model.yourSinger];
     NSURL *url = [self translateIllegalCharacterWtihUrlStr:model.yourUrl];
-    if ([DFPlayer df_playerCheckIsCachedWithUrl:url]) {
+    if ([DFPlayer df_playerCheckIsCachedWithAudioUrl:url]) {
         cell.tintColor = HDFGreenColor;
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }else{
@@ -140,13 +128,13 @@ static NSString *cellId = @"cellId";
 }
 #pragma mark - 初始化DFPlayer
 - (void)initDFPlayer{
-    [[DFPlayer shareInstance] initPlayerWithUserId:nil];
+    [[DFPlayer shareInstance] df_initPlayerWithUserId:nil];
     [DFPlayer shareInstance].dataSource  = self;
     [DFPlayer shareInstance].delegate    = self;
     [DFPlayer shareInstance].category    = DFPlayerAudioSessionCategoryPlayback;
     [DFPlayer shareInstance].isObserveWWAN = YES;
-//    [DFPlayer shareInstance].type = DFPlayerTypeOnlyOnce;
-        [DFPlayer shareInstance].isObservePreviousAudioModel = YES;
+//    [DFPlayer shareInstance].type = DFPlayerTypeOnlyOnce;//DFPLayer默认单曲循环。
+    [DFPlayer shareInstance].isObservePreviousAudioModel = YES;
     [[DFPlayer shareInstance] df_reloadData];//必须在传入数据源后调用（类似UITableView的reloadData）
     
     CGRect buffRect = CGRectMake(CountWidth(104), topH+CountHeight(28), CountWidth(542), CountHeight(4));
@@ -190,10 +178,10 @@ static NSString *cellId = @"cellId";
     for (int i = 0; i < self.dataArray.count; i++) {
         YourDataModel *yourModel    = self.dataArray[i];
         DFPlayerModel *model        = [[DFPlayerModel alloc] init];
-        model.audioId               = i;//****重要。audioId标识音频在数组中的位置
-        if ([yourModel.yourUrl hasPrefix:@"http"]) {
+        model.audioId               = i;//****重要。AudioId从0开始，仅标识当前音频在数组中的位置。
+        if ([yourModel.yourUrl hasPrefix:@"http"]) {//网络音频
             model.audioUrl              = [self translateIllegalCharacterWtihUrlStr:yourModel.yourUrl];
-        }else{
+        }else{//本地音频
             NSString *path = [[NSBundle mainBundle] pathForResource:yourModel.yourUrl ofType:@""];
             if (path) {model.audioUrl = [NSURL fileURLWithPath:path];}
         }
@@ -319,16 +307,25 @@ static NSString *cellId = @"cellId";
         self.stopUpdate = YES;
     }
 }
-
-
 #pragma mark - action
+- (void)addSongAction{
+    if (self.addIndex >= self.addArray.count) {
+        [self showAlertWithTitle:@"添加完毕，已无更多音频" message:nil yesBlock:nil];
+        return;
+    }
+    YourDataModel *yourModel = [self setDataModelWithDic:self.addArray[self.addIndex]];
+    [self.dataArray insertObject:yourModel atIndex:0];//这里将数据加到第一个
+    [self tableViewReloadData];
+    self.addIndex++;
+    //更新DFPlayer的音频数据
+    [[DFPlayer shareInstance] df_reloadData];
+}
 - (NSURL *)translateIllegalCharacterWtihUrlStr:(NSString *)yourUrl{
     //如果链接中存在中文或某些特殊字符，需要通过以下代码转译
     NSString *encodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)yourUrl, (CFStringRef)@"!NULL,'()*+,-./:;=?@_~%#[]", NULL, kCFStringEncodingUTF8));
     //        NSString *str = [ss stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     return [NSURL URLWithString:encodedString];
 }
-
 - (void)tableViewReloadData{
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];

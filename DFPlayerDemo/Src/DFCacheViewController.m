@@ -56,17 +56,13 @@
     [button1 setTitleColor:[UIColor whiteColor] forState:(UIControlStateNormal)];
     [button1 addTarget:self action:@selector(clearCache:) forControlEvents:(UIControlEventTouchUpInside)];
     [self.view addSubview:button1];
-    
-    
-    
-    
-    
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [[DFPlayer shareInstance] df_dellecPlayer];
+    
     allLabel.text = [NSString stringWithFormat:@"所有用户缓存:%.2lfM",[DFPlayer df_playerCountCacheSizeForCurrentUser:NO]];
     currentLabel.text = [NSString stringWithFormat:@"当前用户缓存:%.2lfM",[DFPlayer df_playerCountCacheSizeForCurrentUser:YES]];
-    
 }
 
 - (void)clearCache:(UIButton *)sender{

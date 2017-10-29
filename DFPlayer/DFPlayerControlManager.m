@@ -141,7 +141,7 @@ NSString * const DFPlayerLyricTableviewResumeUpdateNotification = @"DFPlayerLyri
                 [[DFPlayer shareInstance] df_audioPlay];
             }
         }else{
-            NSLog(@"--没有可播放的音频");
+            NSLog(@"-- DFPlayer： 没有可播放的音频");
         }
         if (block) {
             block();

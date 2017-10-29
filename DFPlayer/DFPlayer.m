@@ -102,7 +102,7 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
 }
 
 #pragma mark - 初始化播放器
-- (void)initPlayerWithUserId:(NSString *)userId{
+- (void)df_initPlayerWithUserId:(NSString *)userId{
     //记录用户
     [self initPlayerCachePathWithUserId:userId];
     //添加观察者
@@ -182,22 +182,22 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
 }
 
 - (void)df_playerDidEnterForeground{
-    NSLog(@"--将要进入前台");
+    NSLog(@"-- DFPlayer： 将要进入前台");
     self.isBackground = NO;
 }
 - (void)df_playerWillResignActive{
-    NSLog(@"--将要进入后台");
+    NSLog(@"-- DFPlayer： 将要进入后台");
     self.isBackground = YES;
 }
 
 - (void)df_playerDidEnterBackground{
-    NSLog(@"--已经进入后台，当前播放模式:%ld",(long)self.category);
+    NSLog(@"-- DFPlayer： 已经进入后台，当前播放模式:%ld",(long)self.category);
     if (self.category != DFPlayerAudioSessionCategoryPlayback) {
         [self recordCurrentAudioInfoModel];
     }
 }
 - (void)df_playerWillTerminate{
-    NSLog(@"--程序将要终止，当前播放模式:%ld",(long)self.category);
+    NSLog(@"-- DFPlayer： 程序将要终止，当前播放模式:%ld",(long)self.category);
     [self df_dellecPlayer];
     if (self.category == DFPlayerAudioSessionCategoryPlayback) {
         [self recordCurrentAudioInfoModel];
@@ -228,7 +228,7 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
                     forKey:DFPlayerCurrentAudioInfoModelProgress];
         }
         [DFPlayerArchiverManager df_archiveInfoModelDictionary:dic];
-        NSLog(@"--播放信息保存完成");
+        NSLog(@"-- DFPlayer： 播放信息保存完成");
     }
 }
 
@@ -262,7 +262,7 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
 - (void)df_playerAudioBeInterrupted:(NSNotification *)notification {
     NSDictionary *dic = notification.userInfo;
     if ([dic[AVAudioSessionInterruptionTypeKey] integerValue] == 1) {//打断开始
-        NSLog(@"--音频被打断开始");
+        NSLog(@"-- DFPlayer： 音频被打断开始");
         [self recordCurrentAudioInfoModel];//打断时也要记录信息
         if (self.delegate && [self.delegate respondsToSelector:@selector(df_player:isInterruptedBegin:)]) {
             [self.delegate df_player:self isInterruptedBegin:YES];
@@ -270,12 +270,12 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
             [self df_audioPause];
         }
     }else {//打断结束
-        NSLog(@"--音频被打断结束");
+        NSLog(@"-- DFPlayer： 音频被打断结束");
         if (self.delegate && [self.delegate respondsToSelector:@selector(df_player:isInterruptedBegin:)]) {
             [self.delegate df_player:self isInterruptedBegin:NO];
         }else{
             if ([notification.userInfo[AVAudioSessionInterruptionOptionKey] unsignedIntegerValue] == 1) {
-                NSLog(@"---能够恢复播放");
+                NSLog(@"-- DFPlayer： -能够恢复播放");
                 [self df_audioPlay];
             }
         }
@@ -285,9 +285,9 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
 - (void)df_playerSecondaryAudioHint:(NSNotification *)notification{
     NSInteger type = [notification.userInfo[AVAudioSessionSilenceSecondaryAudioHintTypeKey] integerValue];
     if (type == 1) {//开始被其他音频占据
-        NSLog(@"--其他音频占据开始");
+        NSLog(@"-- DFPlayer： 其他音频占据开始");
     }else{//占据结束
-        NSLog(@"--其他音频占据结束");
+        NSLog(@"-- DFPlayer： 其他音频占据结束");
     }
 }
 
@@ -309,12 +309,10 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
         if (self.playerModelArray.count != 0) {
             [self.playerModelArray removeAllObjects];
         }
-        NSLog(@"开始添加数据");
         dispatch_group_enter(self.dataGroupQueue);
         dispatch_group_async(self.dataGroupQueue, self.HighGlobalQueue, ^{
             dispatch_async(self.HighGlobalQueue, ^{
                 [self.playerModelArray addObjectsFromArray:[self.dataSource df_playerModelArray]];
-                NSLog(@"数据添加完毕：%lu",(unsigned long)self.playerModelArray.count);
 
                 //更新数据时更新audioId
                 if (self.currentAudioModel.audioUrl) {
@@ -347,7 +345,7 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
             [self.playerModelArray enumerateObjectsWithOptions:(NSEnumerationConcurrent) usingBlock:^(DFPlayerModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 //如果数据源中有previousAudioModel中的url
                 if ([self.previousAudioModel.audioUrl.absoluteString isEqualToString:obj.audioUrl.absoluteString]) {
-                    NSLog(@"--当前数据源中存在此数据");
+                    NSLog(@"-- DFPlayer： 当前数据源中存在此数据");
                     dispatch_async(self.defaultGlobalQueue, ^{
                         self.currentAudioModel          = [[DFPlayerModel alloc] init];
                         self.currentAudioModel.audioUrl = self.previousAudioModel.audioUrl;
@@ -377,7 +375,7 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
     dispatch_group_notify(self.dataGroupQueue, self.HighGlobalQueue, ^{
         if (self.playerModelArray.count > audioId) {
             self.currentAudioModel = self.playerModelArray[audioId];
-            NSLog(@"--点击了音频Id:%ld   url：%@",(unsigned long)self.currentAudioModel.audioId,self.currentAudioModel.audioUrl);
+            NSLog(@"-- DFPlayer： 点击了音频Id:%ld   url：%@",(unsigned long)self.currentAudioModel.audioId,self.currentAudioModel.audioUrl);
             self.currentAudioTag = audioId;
             [self audioPrePlay];
         }else{
@@ -450,7 +448,7 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
     //播放本地音频
     if ([currentAudioUrl.scheme isEqualToString:@"file"])
     {
-        NSLog(@"--播放本地音频");
+        NSLog(@"-- DFPlayer： 播放本地音频");
         [self loadPlayerWithItemUrl:currentAudioUrl];
         self.isCached = YES;
     }
@@ -458,7 +456,7 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
     else{
         dispatch_group_notify(self.netGroupQueue, self.defaultGlobalQueue, ^{
             NSString *cacheFilePath = [DFPlayerFileManager df_isExistAudioFileWithURL:currentAudioUrl];
-            NSLog(@"--是否有缓存：%@",cacheFilePath);
+            NSLog(@"-- DFPlayer： 是否有缓存：%@",cacheFilePath);
             self.isCached = cacheFilePath?YES:NO;
             
             //如果监听WWAN，本地无缓存，网络状态是WWAN，三种情况同时存在时发起代理8
@@ -469,7 +467,7 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
                 {
                     [self.delegate df_playerNetworkDidChangeToWWAN:self];
                 }else{
-                    NSLog(@"--未实现df_playerNetworkDidChangeToWWAN代理方法，或将isObserveWWAN置为NO");
+                    NSLog(@"-- DFPlayer： 未实现df_playerNetworkDidChangeToWWAN代理方法，或将isObserveWWAN置为NO");
                 }
             }
             else
@@ -490,7 +488,7 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
     {
         if (cacheFilePath)//无网络 有缓存
         {
-            NSLog(@"--当前无网络，有缓存，即将播放缓存文件");
+            NSLog(@"-- DFPlayer： 当前无网络，有缓存，即将播放缓存文件");
             [self loadPlayerWithItemUrl:[NSURL fileURLWithPath:cacheFilePath]];
         }
         else//无网络 无缓存
@@ -538,7 +536,7 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
             weakSelf.bufferProgress = 0;
             [weakSelf loadPlayerWithAsset:asset];
         }else if (statusCode == 304) {
-            NSLog(@"--服务器音频资源未更新，播放本地");
+            NSLog(@"-- DFPlayer： 服务器音频资源未更新，播放本地");
             [weakSelf loadPlayerWithItemUrl:[NSURL fileURLWithPath:cacheFilePath]];
         }else if(statusCode == 206){
             
@@ -589,7 +587,7 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
                     [self playfailureWithErrorMessage:DFPlayerWarning_UnknownError];
                     break;
                 case AVPlayerItemStatusReadyToPlay://准备播放
-                    NSLog(@"--准备播放");
+                    NSLog(@"-- DFPlayer： 准备播放");
                     [self seekTotimeOfPreviousAudioModelWhenInitDFPlayer];
                     if (self.delegate && [self.delegate respondsToSelector:@selector(df_playerDidReadyToPlay:)]) {
                         [self.delegate df_playerDidReadyToPlay:self];
@@ -598,7 +596,7 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
                 case AVPlayerItemStatusFailed://准备失败.
                     self.state = DFPlayerStateFailed;
                     [self playfailureWithErrorMessage:DFPlayerWarning_PlayError];
-                    NSLog(@"--播放失败");
+                    NSLog(@"-- DFPlayer： 播放失败");
                     break;
                 default:
                     break;
@@ -613,7 +611,7 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
                 self.state = DFPlayerStateBuffering;
             }
         } else if ([keyPath isEqualToString:DFPlaybackLikelyToKeepUpKey]) {
-            NSLog(@"--缓冲达到可播放");
+            NSLog(@"-- DFPlayer： 缓冲达到可播放");
         }
     }else{
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
@@ -947,7 +945,7 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
         }
     }
     
-    NSLog(@"--index:%@",arr);
+    NSLog(@"-- DFPlayer： index:%@",arr);
     
     return arr;
 }
@@ -972,7 +970,7 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
     }
 }
 - (void)setCategory:(DFPlayerAudioSessionCategory)category{
-    NSLog(@"--设置了播放器类型:%ld",(long)category);
+    NSLog(@"-- DFPlayer： 设置了播放器类型:%ld",(long)category);
     _category = category;
     switch (category) {
         case DFPlayerAudioSessionCategoryAmbient:
@@ -998,17 +996,17 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
     }
 }
 - (void)setType:(DFPlayerType)type{
-    NSLog(@"--设置了播放类型:%ld",(long)type);
+    NSLog(@"-- DFPlayer： 设置了播放类型:%ld",(long)type);
     _type = type;
     [[NSUserDefaults standardUserDefaults] setInteger:type forKey:DFPlayerTypeKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 - (void)setState:(DFPlayerState)state{
-    NSLog(@"--播放器状态:%ld",(long)state);
+    NSLog(@"-- DFPlayer： 播放器状态:%ld",(long)state);
     _state = state;
 }
 - (void)setNetworkStatus:(DFPlayerNetworkStatus)networkStatus{
-    NSLog(@"--网络状态：%ld",(long)networkStatus);
+    NSLog(@"-- DFPlayer： 网络状态：%ld",(long)networkStatus);
     _networkStatus = networkStatus;
 }
 - (void)setIsRemoteControl:(BOOL)isRemoteControl{
@@ -1042,7 +1040,7 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
 }
 
 /**检查当前链接是否缓存*/
-+ (NSString *)df_playerCheckIsCachedWithUrl:(NSURL *)url{
++ (NSString *)df_playerCheckIsCachedWithAudioUrl:(NSURL *)url{
     if (![url isKindOfClass:[NSURL class]]) {return nil;}
     if ([url.scheme isEqualToString:@"file"]) {return nil;}
     if (url) {
@@ -1053,7 +1051,7 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
 }
 
 /**清除url对应的本地缓存*/
-+ (void)df_playerClearCacheWithUrl:(NSURL *)url block:(void(^)(BOOL isSuccess, NSError *error))block{
++ (void)df_playerClearCacheWithAudioUrl:(NSURL *)url block:(void(^)(BOOL isSuccess, NSError *error))block{
     [DFPlayerFileManager df_playerClearCacheWithUrl:url block:^(BOOL isSuccess, NSError *error) {
         if (block) {
             block(isSuccess,error);
@@ -1087,7 +1085,7 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
 #pragma mark - 统一错误代理
 - (void)playfailureWithErrorMessage:(NSString *)errorMessage{
     if (errorMessage) {
-        NSLog(@"--errorMessage:%@",errorMessage);
+        NSLog(@"-- DFPlayer： errorMessage:%@",errorMessage);
         if (self.delegate && [self.delegate respondsToSelector:@selector(df_player:didFailWithErrorMessage:)]) {
             [self.delegate df_player:self didFailWithErrorMessage:errorMessage];
         }
