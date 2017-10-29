@@ -25,9 +25,8 @@ typedef NS_ENUM(NSInteger,DFPlayerAudioSessionCategory){
     DFPlayerAudioSessionCategoryAmbient,        //用于播放。随静音键和屏幕关闭而静音。不终止其它应用播放声音
     DFPlayerAudioSessionCategorySoloAmbient,    //用于播放。随静音键和屏幕关闭而静音。终止其它应用播放声音
     DFPlayerAudioSessionCategoryPlayback,       //用于播放。不随静音键和屏幕关闭而静音。终止其它应用播放声音
-    DFPlayerAudioSessionCategoryPlayAndRecord,  //用于播放和录音。不随着静音键和屏幕关闭而静音。终止其他应用播放声音。
-    DFPlayerAudioSessionCategoryMultiRoute      //用于播放和录音。不随着静音键和屏幕关闭而静音。可多设备输出。
-//    DFPlayerAudioSessionCategoryRecord,         //用于录音。不随静音键和屏幕关闭而静音。终止应用播放声音
+    DFPlayerAudioSessionCategoryPlayAndRecord,  //用于播放和录音。不随着静音键和屏幕关闭而静音。终止其他应用播放声音
+    DFPlayerAudioSessionCategoryMultiRoute      //用于播放和录音。不随着静音键和屏幕关闭而静音。可多设备输出
 };
 
 //播放器状态
@@ -46,15 +45,6 @@ typedef NS_ENUM(NSInteger, DFPlayerType){
     DFPlayerTypeOrderCycle,     //顺序循环
     DFPlayerTypeShuffleCycle    //随机循环
 };
-
-//网络状态
-typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
-    DFPlayerNetworkStatusUnknown          = -1, //未知
-    DFPlayerNetworkStatusNotReachable     = 0,  //无网络链接
-    DFPlayerNetworkStatusReachableViaWWAN = 1,  //2G/3G/4G
-    DFPlayerNetworkStatusReachableViaWiFi = 2   //WIFI
-};
-
 
 @protocol DFPlayerDataSource <NSObject>
 @required
@@ -207,7 +197,7 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
  是否监测WWAN无线广域网（2g/3g/4g）,默认NO。
  播放本地音频（工程目录和沙盒文件）不监测。
  播放网络音频时，DFPlayer为您实现wifi下自动播放，无网络有缓存播放缓存，无网络无缓存返回无网络错误码。
- 基于播放器具有循环播放的功能，开启该属性，无线广域网（WWAN）网络状态通过代理2返回，可在此代理方法下弹窗提示用户，并根据用户选择，若选择继续播放，将此属性置为NO，同时通过代理方法返回的player对象获得currentAudioModel的audioId，执行df_playerPlayWithAudioId:方法继续播放，详见demo。
+ 基于播放器具有循环播放的功能，开启该属性，无线广域网（WWAN）网络状态通过代理2返回。
  */
 @property (nonatomic, assign) BOOL isObserveWWAN;
 /**
@@ -222,8 +212,6 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
 @property (nonatomic, assign) BOOL isObserveFileModifiedTime;
 
 #pragma mark - 状态类
-/**网络状态*/
-@property (nonatomic, readonly, assign) DFPlayerNetworkStatus   networkStatus;
 /**播放器状态*/
 @property (nonatomic, readonly, assign) DFPlayerState           state;
 /**当前正在播放的音频model*/
@@ -290,7 +278,15 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
  @param url 网络音频url
  @return 有缓存返回缓存地址，无缓存返回nil
  */
-- (NSString *)df_playerCheckIsCachedWithUrl:(NSURL *)url;
++ (NSString *)df_playerCheckIsCachedWithUrl:(NSURL *)url;
+
+ /**
+ 清除url对应的本地缓存
+
+ @param url 网络音频url
+ @param block 是否清除成功 错误信息
+ */
++ (void)df_playerClearCacheWithUrl:(NSURL *)url block:(void(^)(BOOL isSuccess, NSError *error))block;
 
 /**
  计算DFPlayer的缓存大小

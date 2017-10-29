@@ -16,6 +16,13 @@
 /**单利方法*/
 + (DFPlayerControlManager *_Nullable)shareInstance;
 
+/**调用该方法将停止更新与进度相关的UI控件（除了歌词tableview）的刷新*/
+- (void)df_stopUpdateProgress;
+
+/**调用该方法将恢复更新与进度相关的UI控件（除了歌词tableview）的刷新*/
+- (void)df_resumeUpdateProgress;
+
+
 /**
  播放暂停按钮(背景图片在DFPlayer.bundle中同名替换相应的图片即可)
  
@@ -120,6 +127,8 @@
 - (UILabel *_Nullable)df_totalTimeLabelWithFrame:(CGRect)frame
                               superView:(UIView *_Nonnull)superView;
 
+
+#pragma mark - 歌词tableView相关
 /**
  lyricTableview
  ①采用lrc标准格式编写，即"[00:00.00]歌词" 或 "[00:00]歌词" 或 "[00:00:00]歌词"

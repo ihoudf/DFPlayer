@@ -35,6 +35,9 @@
 /**是否存在缓存文件 存在：返回文件路径 不存在：返回nil*/
 + (NSString *)df_isExistAudioFileWithURL:(NSURL *)url;
 
+/**清除url对应的本地缓存*/
++ (void)df_playerClearCacheWithUrl:(NSURL *)url block:(void(^)(BOOL isSuccess, NSError *error))block;
+
 /**计算缓存大小*/
 + (CGFloat)df_countCacheSizeForCurrentUser:(BOOL)isCurrentUser;
 

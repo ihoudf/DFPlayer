@@ -21,7 +21,17 @@ NSString * const DFLoadedTimeRangesKey          = @"loadedTimeRanges";
 NSString * const DFPlaybackBufferEmptyKey       = @"playbackBufferEmpty";
 NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
 
+//网络状态
+typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
+    DFPlayerNetworkStatusUnknown          = -1, //未知
+    DFPlayerNetworkStatusNotReachable     = 0,  //无网络链接
+    DFPlayerNetworkStatusReachableViaWWAN = 1,  //2G/3G/4G
+    DFPlayerNetworkStatusReachableViaWiFi = 2   //WIFI
+};
+
 @interface DFPlayer()<DFPlayerResourceLoaderDelegate>
+/**网络状态*/
+@property (nonatomic, assign) DFPlayerNetworkStatus   networkStatus;
 /**其他应用是否正在播放*/
 @property (nonatomic, assign) BOOL              isOthetPlaying;
 /**是否正在播放*/
@@ -56,6 +66,10 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
 @property (nonatomic, assign) BOOL              isDraged;
 /**当前音频是否缓存*/
 @property (nonatomic, assign) BOOL              isCached;
+/**seek 等待*/
+@property (nonatomic, assign) BOOL              isSeekWaiting;
+/**seek value*/
+@property (nonatomic, assign) CGFloat           seekValue;
 /**是否有某个音频播放过*/
 @property (nonatomic, assign) BOOL              isAnAudioPlayed;
 /**是否是自然结束*/
@@ -295,16 +309,15 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
         if (self.playerModelArray.count != 0) {
             [self.playerModelArray removeAllObjects];
         }
-        NSLog(@"------------------开始添加数据");
+        NSLog(@"开始添加数据");
         dispatch_group_enter(self.dataGroupQueue);
         dispatch_group_async(self.dataGroupQueue, self.HighGlobalQueue, ^{
             dispatch_async(self.HighGlobalQueue, ^{
                 [self.playerModelArray addObjectsFromArray:[self.dataSource df_playerModelArray]];
-                NSLog(@"------------------数据添加完毕：%lu",(unsigned long)self.playerModelArray.count);
+                NSLog(@"数据添加完毕：%lu",(unsigned long)self.playerModelArray.count);
 
                 //更新数据时更新audioId
                 if (self.currentAudioModel.audioUrl) {
-                    NSLog(@"--:更新audioID---------------");
                     [self.playerModelArray enumerateObjectsWithOptions:(NSEnumerationConcurrent) usingBlock:^(DFPlayerModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                         if ([obj.audioUrl.absoluteString isEqualToString:self.currentAudioModel.audioUrl.absoluteString]) {
                             self.currentAudioModel.audioId = idx;
@@ -332,8 +345,6 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
     dispatch_once(&onceToken, ^{
         if (self.isObservePreviousAudioModel && self.previousAudioModel.audioUrl) {
             [self.playerModelArray enumerateObjectsWithOptions:(NSEnumerationConcurrent) usingBlock:^(DFPlayerModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                NSLog(@"--------------------idx:%lu-------:刷新previousmodel中的数据",(unsigned long)idx);
-                
                 //如果数据源中有previousAudioModel中的url
                 if ([self.previousAudioModel.audioUrl.absoluteString isEqualToString:obj.audioUrl.absoluteString]) {
                     NSLog(@"--当前数据源中存在此数据");
@@ -363,7 +374,6 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
 
 /**选择audioId对应的音频开始播放*/
 - (void)df_playerPlayWithAudioId:(NSUInteger)audioId{
-    NSLog(@"--audioId:%lu-------------count:%ld",(unsigned long)audioId,(unsigned long)self.playerModelArray.count);
     dispatch_group_notify(self.dataGroupQueue, self.HighGlobalQueue, ^{
         if (self.playerModelArray.count > audioId) {
             self.currentAudioModel = self.playerModelArray[audioId];
@@ -407,6 +417,7 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
     self.bufferProgress = .0f;
     self.currentTime    = .0f;
     self.totalTime      = .0f;
+    self.isSeekWaiting  = NO;
     
     //暂停播放
     if (self.isPlaying) {
@@ -547,9 +558,6 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
     }];
 }
 
-
-
-
 /**加载 AVPlayerItem*/
 - (void)loadPlayerWithAsset:(AVURLAsset *)asset{
     self.playerItem = [AVPlayerItem playerItemWithAsset:asset];
@@ -625,6 +633,13 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
         [self.delegate df_player:self
                   bufferProgress:self.bufferProgress
                        totalTime:self.totalTime];
+    }
+    
+    if (self.isSeekWaiting) {
+        if (self.bufferProgress > self.seekValue) {
+            self.isSeekWaiting = NO;
+            [self didSeekToTimeWithValue:self.seekValue];
+        }
     }
 }
 
@@ -710,24 +725,29 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
 /**音频跳转*/
 - (void)df_seekToTimeWithValue:(CGFloat)value{
     self.isDraged = YES;
-//    NSLog(@"-------%lf",self.bufferProgress);
-//    if (self.bufferProgress < value) {
-//        NSLog(@"===还没缓冲到========= 还没缓冲到");
-//    }
     // 先暂停
     [self df_audioPause];
-    
+    if (self.bufferProgress < value) {
+        self.isSeekWaiting = YES;
+        self.seekValue = value;
+    }else{
+        self.isSeekWaiting = NO;
+        [self didSeekToTimeWithValue:value];
+    }
+}
+
+- (void)didSeekToTimeWithValue:(CGFloat)value{
     if (self.state == DFPlayerStatePlaying || self.state == DFPlayerStatePause) {
         // 跳转
         [self.player seekToTime:CMTimeMake(floorf(self.totalTime * value), 1)
                 toleranceBefore:CMTimeMake(1,1)
                  toleranceAfter:CMTimeMake(1,1)
               completionHandler:^(BOOL finished) {
-            if (finished) {
-                [self df_audioPlay];
-                self.isDraged = NO;
-            }
-        }];
+                  if (finished) {
+                      [self df_audioPlay];
+                      self.isDraged = NO;
+                  }
+              }];
     }else if (self.state == DFPlayerStateStopped){
         [self audioPrePlayToLoadPreviousAudio];
         self.progress = value;
@@ -1006,16 +1026,6 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
         self.previousAudioModel = [[DFPlayerPreviousAudioModel alloc] init];
     }
 }
-//- (void)setIsObserveProgress:(BOOL)isObserveProgress{_isObserveProgress = isObserveProgress;}
-//
-//- (void)setIsObserveBufferProgress:(BOOL)isObserveBufferProgress{_isObserveBufferProgress = isObserveBufferProgress;}
-//
-//- (void)setIsObserveWWAN:(BOOL)isObserveWWAN{_isObserveWWAN = isObserveWWAN;}
-//
-//- (void)setIsHeadPhoneAutoPlay:(BOOL)isHeadPhoneAutoPlay{_isHeadPhoneAutoPlay = isHeadPhoneAutoPlay;}
-//
-//- (void)setIsObserveLastModified:(BOOL)isObserveLastModified{_isObserveLastModified = isObserveLastModified;}
-
 - (void)setCurrentAudioModel:(DFPlayerModel *)currentAudioModel{_currentAudioModel = currentAudioModel;}
 
 - (void)setProgress:(CGFloat)progress{_progress = progress;}
@@ -1032,7 +1042,7 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
 }
 
 /**检查当前链接是否缓存*/
-- (NSString *)df_playerCheckIsCachedWithUrl:(NSURL *)url{
++ (NSString *)df_playerCheckIsCachedWithUrl:(NSURL *)url{
     if (![url isKindOfClass:[NSURL class]]) {return nil;}
     if ([url.scheme isEqualToString:@"file"]) {return nil;}
     if (url) {
@@ -1042,6 +1052,14 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
     return nil;
 }
 
+/**清除url对应的本地缓存*/
++ (void)df_playerClearCacheWithUrl:(NSURL *)url block:(void(^)(BOOL isSuccess, NSError *error))block{
+    [DFPlayerFileManager df_playerClearCacheWithUrl:url block:^(BOOL isSuccess, NSError *error) {
+        if (block) {
+            block(isSuccess,error);
+        }
+    }];
+}
 /**计算DFPlayer缓存大小*/
 + (CGFloat)df_playerCountCacheSizeForCurrentUser:(BOOL)isCurrentUser{
     return [DFPlayerFileManager df_countCacheSizeForCurrentUser:isCurrentUser];

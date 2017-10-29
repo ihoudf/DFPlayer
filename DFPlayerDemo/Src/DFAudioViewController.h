@@ -1,5 +1,5 @@
 //
-//  DFNetAudioViewController.h
+//  DFAudioViewController.h
 //  DFPlayerDemo
 //
 //  Created by HDF on 2017/10/7.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DFNetAudioViewController : UIViewController
+@interface DFAudioViewController : UIViewController
 
 @end

@@ -125,6 +125,19 @@ static NSString *DFPlayer_modelArchiverName = @"DFPlayerInfoModel.archiver";
     return nil;
 }
 
+/**清除url对应的本地缓存*/
++ (void)df_playerClearCacheWithUrl:(NSURL *)url block:(void(^)(BOOL isSuccess, NSError *error))block{
+    NSString *cacheFilePath = [self df_isExistAudioFileWithURL:url];
+    if (cacheFilePath) {
+        NSFileManager *manager = [NSFileManager defaultManager];
+        NSError *error;
+        BOOL isSuccess = [manager removeItemAtPath:cacheFilePath error:&error];
+        if (block) {
+            block(isSuccess,error);
+        }
+    }
+}
+
 + (NSString *)audioFileOfCachePathWithUrl:(NSURL *)url{
     NSString *filePath = [DFPlayerFileManager df_playerUserCachePath];
 

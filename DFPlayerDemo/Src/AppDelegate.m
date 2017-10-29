@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "DFNetAudioViewController.h"
+#import "DFAudioViewController.h"
 #import "DFCacheViewController.h"
 #import "DFPlayer.h"
 #import "DFMacro.h"
@@ -19,7 +19,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    DFNetAudioViewController *remoteVC = [[DFNetAudioViewController alloc] init];
+    DFAudioViewController *remoteVC = [[DFAudioViewController alloc] init];
     UINavigationController *remoteNav = [[UINavigationController alloc] initWithRootViewController:remoteVC];
     remoteVC.title = @"音频";
     

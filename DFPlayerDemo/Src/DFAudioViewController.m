@@ -1,12 +1,12 @@
 //
-//  DFNetAudioViewController.m
+//  DFAudioViewController.m
 //  DFPlayerDemo
 //
 //  Created by HDF on 2017/10/7.
 //  Copyright © 2017年 HDF. All rights reserved.
 //
 
-#import "DFNetAudioViewController.h"
+#import "DFAudioViewController.h"
 #import "DFPlayer.h"
 #import "YourDataModel.h"
 #import "DFMacro.h"
@@ -14,7 +14,7 @@
 #import "UIImage+Blur.h"
 static NSString *cellId = @"cellId";
 #define topH SCREEN_HEIGHT - self.tabBarController.tabBar.frame.size.height-CountHeight(200)
-@interface DFNetAudioViewController ()
+@interface DFAudioViewController ()
 <UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,DFPlayerDelegate,DFPlayerDataSource>
 @property (nonatomic, strong) UIScrollView      *scrollView;
 @property (nonatomic, strong) UITableView       *tableView;
@@ -27,7 +27,7 @@ static NSString *cellId = @"cellId";
 @property (nonatomic, assign) BOOL              stopUpdate;
 @end
 
-@implementation DFNetAudioViewController
+@implementation DFAudioViewController
 #pragma mark - 加载视图
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -94,8 +94,8 @@ static NSString *cellId = @"cellId";
                                                           contentInset:UIEdgeInsetsMake((H-CountHeight(90))/2, 0, (H-CountHeight(90))/2, 0)
                                                          cellRowHeight:CountHeight(90)
                                                    cellBackgroundColor:[UIColor clearColor]
-                                     currentLineLrcForegroundTextColor:nil//HDFGreenColor
-                                     currentLineLrcBackgroundTextColor:HDFGreenColor
+                                     currentLineLrcForegroundTextColor:HDFGreenColor
+                                     currentLineLrcBackgroundTextColor:[UIColor whiteColor]
                                        otherLineLrcBackgroundTextColor:[UIColor whiteColor]
                                                     currentLineLrcFont:HDFSystemFontOfSize(34)
                                                       otherLineLrcFont:HDFSystemFontOfSize(29)
@@ -120,7 +120,7 @@ static NSString *cellId = @"cellId";
     if (![model.yourUrl hasPrefix:@"http"]) {audioType = @"本地音频";}
     cell.textLabel.text = [NSString stringWithFormat:@"%ld--%@-%@(%@)",(long)indexPath.row,audioType,model.yourName,model.yourSinger];
     NSURL *url = [self translateIllegalCharacterWtihUrlStr:model.yourUrl];
-    if ([[DFPlayer shareInstance] df_playerCheckIsCachedWithUrl:url]) {
+    if ([DFPlayer df_playerCheckIsCachedWithUrl:url]) {
         cell.tintColor = HDFGreenColor;
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }else{
@@ -132,9 +132,11 @@ static NSString *cellId = @"cellId";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    DFPlayerModel *model = self.df_ModelArray[indexPath.row];
-    [[DFPlayer shareInstance] df_playerPlayWithAudioId:model.audioId];
-    [self.scrollView setContentOffset:(CGPointMake(SCREEN_WIDTH, 0)) animated:YES];
+    if (self.df_ModelArray.count > indexPath.row) {
+        DFPlayerModel *model = self.df_ModelArray[indexPath.row];
+        [[DFPlayer shareInstance] df_playerPlayWithAudioId:model.audioId];
+        [self.scrollView setContentOffset:(CGPointMake(SCREEN_WIDTH, 0)) animated:YES];
+    }
 }
 #pragma mark - 初始化DFPlayer
 - (void)initDFPlayer{
@@ -310,10 +312,10 @@ static NSString *cellId = @"cellId";
 }
 - (void)stopResumeBtnAction{
     if (self.stopUpdate) {
-        [[DFPlayerControlManager shareInstance] df_playerLyricTableviewResumeUpdate];
+        [[DFPlayerControlManager shareInstance] df_resumeUpdateProgress];
         self.stopUpdate = NO;
     }else{
-        [[DFPlayerControlManager shareInstance] df_playerLyricTableviewStopUpdate];
+        [[DFPlayerControlManager shareInstance] df_stopUpdateProgress];
         self.stopUpdate = YES;
     }
 }

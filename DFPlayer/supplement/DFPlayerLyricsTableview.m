@@ -195,6 +195,10 @@ UIScrollViewDelegate>
     self.timeOffset = 0;
     //获取当前行
     CGFloat currentTime = [DFPlayer shareInstance].currentTime;
+    if (currentTime == 0) {
+        self.lastIndex = -1;
+        self.currentIndex = 0;
+    }
     if (self.isProgressSliderDragEnd || !animation) {
         for (int i = 0; i < self.timeArray.count; i++) {
             int time = [self.timeArray[i] intValue];
@@ -222,7 +226,6 @@ UIScrollViewDelegate>
     if (self.lastIndex >= 0) {self.lastIndexPath = [NSIndexPath indexPathForRow:self.lastIndex inSection:0];}
     self.lastIndex = self.currentIndex;
     self.currentIndexPath = [NSIndexPath indexPathForRow:self.currentIndex inSection:0];
-    NSLog(@"==============%@",self.currentIndexPath);
     //当前行移动到中间
     if (self.isProgressSliderDragEnd || !animation) {
         [self df_scrollToMiddleCellAnimation:NO];
@@ -284,6 +287,7 @@ UIScrollViewDelegate>
             [self resetOldCellIndexPath:self.waitResetIndexpath];
             self.waitResetIndexpath = nil;
         }
+
         //设置当前行
         cell.backgroundLrcLabel.textColor   = self.currentLineLrcBackgroundTextColor;
         cell.backgroundLrcLabel.font        = self.currentLineLrcFont;
@@ -505,7 +509,6 @@ UIScrollViewDelegate>
     });
     
     if (indexPath == self.currentIndexPath) {//当前行
-        NSLog(@"----ccccuuururur==%@",self.currentIndexPath);
         cell.foregroundLrcLabel.hidden      = NO;
         cell.backgroundLrcLabel.textColor   = self.currentLineLrcBackgroundTextColor;
         cell.backgroundLrcLabel.font        = cell.foregroundLrcLabel.font = self.currentLineLrcFont;

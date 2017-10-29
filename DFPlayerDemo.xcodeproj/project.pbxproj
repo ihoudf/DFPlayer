@@ -45,7 +45,7 @@
 		F94493A11FA24423006C605F /* DFPlayerRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F94493941FA24423006C605F /* DFPlayerRequestManager.m */; };
 		F94493A21FA24423006C605F /* DFPlayerResourceLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F94493961FA24423006C605F /* DFPlayerResourceLoader.m */; };
 		F94493A31FA24423006C605F /* DFPlayerTool.m in Sources */ = {isa = PBXBuildFile; fileRef = F94493981FA24423006C605F /* DFPlayerTool.m */; };
-		F954784B1F88D07A00D85D46 /* DFNetAudioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F954784A1F88D07A00D85D46 /* DFNetAudioViewController.m */; };
+		F954784B1F88D07A00D85D46 /* DFAudioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F954784A1F88D07A00D85D46 /* DFAudioViewController.m */; };
 		F954784E1F88D15400D85D46 /* DFCacheViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F954784D1F88D15400D85D46 /* DFCacheViewController.m */; };
 		F95478511F88DAB900D85D46 /* 权志龙-MISSING YOU.lrc in Resources */ = {isa = PBXBuildFile; fileRef = F95478501F88DAB900D85D46 /* 权志龙-MISSING YOU.lrc */; };
 		F95478531F88DBF800D85D46 /* 王若琳-迷宫.lrc in Resources */ = {isa = PBXBuildFile; fileRef = F95478521F88DBF800D85D46 /* 王若琳-迷宫.lrc */; };
@@ -134,8 +134,8 @@
 		F94493961FA24423006C605F /* DFPlayerResourceLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFPlayerResourceLoader.m; sourceTree = "<group>"; };
 		F94493971FA24423006C605F /* DFPlayerTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPlayerTool.h; sourceTree = "<group>"; };
 		F94493981FA24423006C605F /* DFPlayerTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFPlayerTool.m; sourceTree = "<group>"; };
-		F95478491F88D07A00D85D46 /* DFNetAudioViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFNetAudioViewController.h; sourceTree = "<group>"; };
-		F954784A1F88D07A00D85D46 /* DFNetAudioViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DFNetAudioViewController.m; sourceTree = "<group>"; };
+		F95478491F88D07A00D85D46 /* DFAudioViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFAudioViewController.h; sourceTree = "<group>"; };
+		F954784A1F88D07A00D85D46 /* DFAudioViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DFAudioViewController.m; sourceTree = "<group>"; };
 		F954784C1F88D15400D85D46 /* DFCacheViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFCacheViewController.h; sourceTree = "<group>"; };
 		F954784D1F88D15400D85D46 /* DFCacheViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DFCacheViewController.m; sourceTree = "<group>"; };
 		F95478501F88DAB900D85D46 /* 权志龙-MISSING YOU.lrc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "权志龙-MISSING YOU.lrc"; sourceTree = "<group>"; };
@@ -240,8 +240,8 @@
 				06B33B8B1F72582F003A559C /* AppDelegate.m */,
 				F954784C1F88D15400D85D46 /* DFCacheViewController.h */,
 				F954784D1F88D15400D85D46 /* DFCacheViewController.m */,
-				F95478491F88D07A00D85D46 /* DFNetAudioViewController.h */,
-				F954784A1F88D07A00D85D46 /* DFNetAudioViewController.m */,
+				F95478491F88D07A00D85D46 /* DFAudioViewController.h */,
+				F954784A1F88D07A00D85D46 /* DFAudioViewController.m */,
 				06B33B921F72582F003A559C /* other */,
 				06B33B9F1F72582F003A559C /* Resource */,
 			);
@@ -524,7 +524,7 @@
 				F944939A1FA24423006C605F /* DFPlayer.m in Sources */,
 				06B33BAF1F725830003A559C /* NSObject+Alert.m in Sources */,
 				F94493A11FA24423006C605F /* DFPlayerRequestManager.m in Sources */,
-				F954784B1F88D07A00D85D46 /* DFNetAudioViewController.m in Sources */,
+				F954784B1F88D07A00D85D46 /* DFAudioViewController.m in Sources */,
 				F944939D1FA24423006C605F /* AFNetworkReachabilityManager.m in Sources */,
 				F94493A31FA24423006C605F /* DFPlayerTool.m in Sources */,
 				F954784E1F88D15400D85D46 /* DFCacheViewController.m in Sources */,

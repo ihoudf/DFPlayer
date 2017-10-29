@@ -74,6 +74,7 @@ NSString * const DFPlayerLyricTableviewResumeUpdateNotification = @"DFPlayerLyri
 @property (nonatomic, strong) UILabel           *currentTimeLabel;
 @property (nonatomic, strong) UILabel           *totalTimeLabel;
 @property (nonatomic, assign) BOOL              isDraging;
+@property (nonatomic, assign) BOOL              isStopUpdate;
 @property (nonatomic, strong) DFPlayerLyricsTableview *lyricsTableView;
 @end
 
@@ -92,6 +93,16 @@ NSString * const DFPlayerLyricTableviewResumeUpdateNotification = @"DFPlayerLyri
     btn.frame = frame;
     [superView addSubview:btn];
     return btn;
+}
+
+/**调用该方法将停止更新与进度相关的UI控件的刷新*/
+- (void)df_stopUpdateProgress{
+    self.isStopUpdate = YES;
+}
+
+/**调用该方法将恢复更新与进度相关的UI控件的刷新*/
+- (void)df_resumeUpdateProgress{
+    self.isStopUpdate = NO;
 }
 
 #pragma mark - 
@@ -438,27 +449,35 @@ NSString * const DFPlayerLyricTableviewResumeUpdateNotification = @"DFPlayerLyri
                 }
             }
         }else if ([keyPath isEqualToString:DFBufferProgressKey]){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.bufferProgressView setProgress:[DFPlayer shareInstance].bufferProgress];
-            });
-            
+            if (!self.isStopUpdate) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.bufferProgressView setProgress:[DFPlayer shareInstance].bufferProgress];
+                });
+            }
         }else if ([keyPath isEqualToString:DFProgressKey]){
 //            if ([DFPlayer shareInstance].state == DFPlayerStateBuffering ||
 //                [DFPlayer shareInstance].state == DFPlayerStatePlaying) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (self.progressSlider.state != UIControlStateHighlighted) {
+            if (!self.isStopUpdate) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (self.progressSlider.state != UIControlStateHighlighted) {
                         self.progressSlider.value = [DFPlayer shareInstance].progress;
-                }
-           });
+                    }
+                });
+            }
+        
 //            }
         }else if ([keyPath isEqualToString:DFCurrentTimeKey]){
-            if (!self.isDraging) {
-                CGFloat currentTime = [DFPlayer shareInstance].currentTime;
-                [self setUpCurrentTimeLabelTextWithCurrentTime:currentTime];
+            if (!self.isStopUpdate) {
+                if (!self.isDraging) {
+                    CGFloat currentTime = [DFPlayer shareInstance].currentTime;
+                    [self setUpCurrentTimeLabelTextWithCurrentTime:currentTime];
+                }
             }
         }else if ([keyPath isEqualToString:DFTotalTimeKey]){
-            NSInteger totalTime = [DFPlayer shareInstance].totalTime;
-            [self setUpTotalTimeLabelTextWithTotalTime:totalTime];
+            if (!self.isStopUpdate) {
+                NSInteger totalTime = [DFPlayer shareInstance].totalTime;
+                [self setUpTotalTimeLabelTextWithTotalTime:totalTime];
+            }
         }
     }
 }
