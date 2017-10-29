@@ -80,7 +80,7 @@
         [self.request addValue:model.last_modified forHTTPHeaderField:@"If-Modified-Since"];
     }
     if (self.requestOffset > 0) {
-        NSString *value = [NSString stringWithFormat:@"bytes=%ld-%ld", (unsigned long)self.requestOffset, self.fileLength - 1];
+        NSString *value = [NSString stringWithFormat:@"bytes=%ld-%ld", (long)self.requestOffset, self.fileLength - 1];
         [self.request addValue:value forHTTPHeaderField:@"Range"];
     }
     
