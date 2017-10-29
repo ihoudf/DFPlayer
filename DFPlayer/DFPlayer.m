@@ -381,7 +381,7 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
             self.currentAudioTag = audioId;
             [self audioPrePlay];
         }else{
-            [self playfailureWithErrorMessage:[NSString stringWithFormat:@"数组越界%ld==c:%ld",(long)audioId,self.playerModelArray.count]];
+            [self playfailureWithErrorMessage:[NSString stringWithFormat:@"数组越界%ld==c:%lu",(long)audioId,(unsigned long)self.playerModelArray.count]];
         }
     });
 }

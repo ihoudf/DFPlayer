@@ -1,4 +1,5 @@
 Pod::Spec.new do |s|
+  
   s.name         = "DFPlayer"
   s.version      = "1.0.0"
   s.summary      = "A simple and flexible iOS audio playback module."
