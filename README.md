@@ -10,9 +10,9 @@
 - ##### 观看两分钟视频介绍:[http://www.iqiyi.com/w_19ruzcqjqh.html](http://www.iqiyi.com/w_19ruzcqjqh.html)
 - ##### 截图展示：
 
-<img width="300" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPLayerImage1.png?raw=true">
-<img width="300" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerImage2.png?raw=true">
-<img width="300" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerImage3.png?raw=true">
+<img width="280" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPLayerImage1.png?raw=true">
+<img width="280" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerImage2.png?raw=true">
+<img width="280" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerImage3.png?raw=true">
 
 
 #
@@ -124,7 +124,6 @@ The use of DFPlayer is so easy.
 4.Select the method DFPlayer provide，layout your UI（optional）
 
 > DFPlayer provide lyrics tableview,buffering bar,progress bar,type button（single circle、order circle、shuffle circle）、play pause button、next audio button、last audio button、current time Label、total time label.
-<br>
 >> you can
 <br>（1）Exchange the image in DFPlayer.bundle with the same name.
 <br>（2）Using the method exposed in DFPlayerControlManager.h, layout to your own page, you can achieve the corresponding function, without other code.
@@ -148,9 +147,8 @@ The use of DFPlayer is so easy.
 ### License
 provided under the MIT license. See <a href="https://github.com/ihoudf/DFPlayer/blob/master/LICENSE">LICENSE</a>  file for details.
 
-<br>
 # THANKS!
-<br>
+
 <font color="#42C485">qq交流群，bug提交群：479873475</font>
 <br>
 <font color="#42C485">合作qq：188816190</font>
