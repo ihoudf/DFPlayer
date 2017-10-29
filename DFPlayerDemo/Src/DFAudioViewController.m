@@ -170,7 +170,7 @@ static NSString *cellId = @"cellId";
     UILabel *totLabel = [manager df_totalTimeLabelWithFrame:totaRect superView:self.backgroundImageView];
     totLabel.textColor = [UIColor whiteColor];
 
-    //类型类型按钮
+    //播放模式按钮
     [manager df_typeControlBtnWithFrame:typeRect superView:self.backgroundImageView block:nil];
     //播放暂停按钮
     [manager df_playPauseBtnWithFrame:playRect superView:self.backgroundImageView block:nil];
@@ -312,10 +312,10 @@ static NSString *cellId = @"cellId";
 }
 - (void)stopResumeBtnAction{
     if (self.stopUpdate) {
-        [[DFPlayerControlManager shareInstance] df_resumeUpdateProgress];
+        [[DFPlayerControlManager shareInstance] df_playerLyricTableviewResumeUpdate];
         self.stopUpdate = NO;
     }else{
-        [[DFPlayerControlManager shareInstance] df_stopUpdateProgress];
+        [[DFPlayerControlManager shareInstance] df_playerLyricTableviewStopUpdate];
         self.stopUpdate = YES;
     }
 }
