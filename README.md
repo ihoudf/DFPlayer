@@ -6,8 +6,9 @@
 <a href="https://github.com/ihoudf/DFPlayer"><img src="https://img.shields.io/badge/support-iOS%207%2B-yellowgreen.svg"></a>
 <a href="https://ihoudf.github.io/" target="blank"><img src="https://img.shields.io/badge/homepage-ihoudf-brightgreen.svg"></a>
 
-##### A simple and flexible iOS audio playback module. Based on AVPlayer, support local and remote audio playback, with caching, remote control, locking and control center information display, single sequential and random playback and other basic audio player functions, using a few code can realize the function of player.（简单又灵活的iOS音频播放组件。基于AVPlayer，支持本地和远程音频播放，具有缓存、耳机线控、锁频和控制中心信息展示、单曲顺序和随机播放等基本的音频播放器功能，DFPlayer封装了播放按钮、进度条等UI控件，一行代码布局即可实现相应功能。）
+##### A simple and flexible iOS audio playback module. Based on AVPlayer, support local and remote audio playback, with caching, remote control, locking and control center information display, single sequential and random playback,Lyrics sync,and other basic audio player functions, using a few code can realize the function of player.（简单又灵活的iOS音频播放组件。基于AVPlayer，支持本地和远程音频播放，具有缓存、耳机线控、锁频和控制中心信息展示、单曲顺序随机播放、歌词同步、记录上次播放进度等基本的音频播放器功能，DFPlayer封装了播放暂停按钮、进度条等UI控件，一行代码布局即可实现相应功能。）
 
+- ##### DFPlayer：关于iOS音频播放，传音频数据给我就好了🙃
 - ##### 观看两分钟视频介绍:<a href="http://www.iqiyi.com/w_19ruzcqjqh.html" target="blank">http://www.iqiyi.com/w_19ruzcqjqh.html</a>
 - ##### 截图展示：
 
@@ -28,7 +29,7 @@
     2.将 DFPlayer文件夹添加(拖放)到你的工程
     3.import "DFPlayer.h"
 ```
-> DFPLayer使用AFNetworkReachabilityManager进行网络监测，如正在使用AFNetWorking，删除DFPlayer中的相关文件。
+> DFPLayer使用AFNetworkReachabilityManager进行网络监测，如正在使用AFNetworking，删除DFPlayer中的相关文件。
 
 
 ### 使用
