@@ -38,7 +38,7 @@ DFPlayer的使用十分简单。
 ##### 简要说明：
 1.初始化DFPlayer，设置数据源（必须）
 ```
-    [[DFPlayerManager shareInstance] initPlayerWithUserId:nil];//初始化
+    [[DFPlayerManager shareInstance] df_initPlayerWithUserId:nil];//初始化
     [DFPlayerManager shareInstance].dataSource  = self;//设置数据源
     [[DFPlayerManager shareInstance] df_reloadData];//刷新数据源
 ```
@@ -100,7 +100,7 @@ The use of DFPlayer is so easy.
 ##### Use Statement：
 1. Init DFPlayer,and set dataSource（required）
 ```
-    [[DFPlayerManager shareInstance] initPlayerWithUserId:nil];
+    [[DFPlayerManager shareInstance] df_initPlayerWithUserId:nil];
     [DFPlayerManager shareInstance].dataSource  = self;
     [[DFPlayerManager shareInstance] df_reloadData];
 ```
