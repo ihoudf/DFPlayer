@@ -18,7 +18,7 @@
 ##### ps：
 (1). demo中所用歌曲链接由<a href="http://www.baidu190.com/" target="blank">http://www.baidu190.com/</a>提供。本人遇到过一次缓冲特别慢的情况，希望您不会遇到。
 <br>(2). 歌曲配图由<a href="https://y.qq.com/" target="blank">https://y.qq.com/</a>提供。
-<br>(3). 歌词及同步支持由<a href="http://www.lrcgc.com/" target="blank">http://www.lrcgc.com/</a>和<a href="https://y.qq.com/" target="blank">https://y.qq.com/</a>提供。
+<br>(3). 歌词及Lrc制作由<a href="http://www.lrcgc.com/" target="blank">http://www.lrcgc.com/</a>和<a href="https://y.qq.com/" target="blank">https://y.qq.com/</a>提供。
 #
 ### 安装（最低支持 iOS 7.0）
 ###### CocoaPods
