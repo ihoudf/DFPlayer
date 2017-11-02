@@ -6,7 +6,7 @@
 <a href="https://github.com/ihoudf/DFPlayer"><img src="https://img.shields.io/badge/support-iOS%207%2B-yellowgreen.svg"></a>
 <a href="https://ihoudf.github.io/" target="blank"><img src="https://img.shields.io/badge/homepage-ihoudf-brightgreen.svg"></a>
 
-##### A simple and flexible iOS audio playback module. Based on AVPlayer, support local and remote audio playback, with caching, remote control, locking and control center information display, single sequential and random playback,Lyrics sync,and other basic audio player functions, using a few code can realize the function of player.（简单又灵活的iOS音频播放组件。基于AVPlayer，支持本地和远程音频播放，具有缓存、耳机线控、锁频和控制中心信息展示、单曲顺序随机播放、歌词同步、记录上次播放进度等基本的音频播放器功能，DFPlayer封装了播放暂停按钮、进度条等UI控件，一行代码布局即可实现相应功能。）
+##### A simple and flexible iOS audio playback module. Based on AVPlayer, support local and remote audio playback, with caching, remote control, locking and control center information display, single sequential and random playback,Lyrics sync,and other basic audio player functions, using a few code can realize the function of player.（简单又灵活的iOS音频播放组件。基于AVPlayer，支持本地和远程音频播放，具有缓存、耳机线控、锁频和控制中心信息展示、单曲顺序随机播放、歌词同步、记录上次播放进度等基本的音频播放器功能，DFPlayer封装了进度条、缓冲条、播放暂停按钮、下一首按钮、上一首按钮、播放模式按钮、歌词同步的tableview等UI控件，一行代码布局即可实现相应功能。）
 
 - ##### DFPlayer：关于iOS音频播放，传音频数据给我就好了🙃10行代码可播放，50行代码做播放器
 - ##### 观看两分钟视频展示：<a href="http://www.iqiyi.com/w_19ruzcqjqh.html" target="blank">http://www.iqiyi.com/w_19ruzcqjqh.html</a>
@@ -62,7 +62,7 @@ DFPlayer的使用十分简单。
     [[DFPlayerManager shareInstance] df_playerPlayWithAudioId:audioId];
 ```
 4.选择DFPLayer中提供的UI控件，布局到页面（可选）
-> DFPlayer封装了歌词tableview（提供逐句和逐字两种模式的歌词同步）、缓冲条、进度条、播放模式按钮（单曲、顺序、随机）、播放暂停按钮、下一首按钮、上一首按钮、当前时间Label、总时间Label。
+> DFPlayer封装了歌词tableview（提供逐句和逐字两种模式的基于Lrc的歌词同步）、缓冲条、进度条、播放模式按钮（单曲、顺序、随机）、播放暂停按钮、下一首按钮、上一首按钮、当前时间Label、总时间Label。
 >> 你只需要<br>
 （1）同名更换DFPlayer.bundle中的图片<br>
 （2）调用DFPlayerControlManager.h中暴露出来的方法，布局到自己的页面，即可实现相应的功能，无需其他代码。
