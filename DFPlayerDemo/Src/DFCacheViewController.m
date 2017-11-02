@@ -58,9 +58,7 @@
     [self.view addSubview:button1];
 }
 - (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    [[DFPlayer shareInstance] df_dellecPlayer];
-    
+    [super viewWillAppear:animated];    
     allLabel.text = [NSString stringWithFormat:@"所有用户缓存:%.2lfM",[DFPlayer df_playerCountCacheSizeForCurrentUser:NO]];
     currentLabel.text = [NSString stringWithFormat:@"当前用户缓存:%.2lfM",[DFPlayer df_playerCountCacheSizeForCurrentUser:YES]];
 }
