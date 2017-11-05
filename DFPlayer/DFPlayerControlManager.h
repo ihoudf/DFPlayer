@@ -22,6 +22,18 @@
 /**调用该方法将恢复更新与进度相关的UI控件（除了歌词tableview）的刷新*/
 - (void)df_resumeUpdateProgress;
 
+/**
+ AirPlay按钮（背景图片在DFPlayer.bundle中同名替换相应的图片即可）
+ airplay按钮是系统按钮，当系统检测到airplay可用时才会显示。
+ 
+ @param frame AirPlay按钮 frame
+ @param backgroundColor 背景颜色
+ @param superView AirPlayView父视图
+ @return AirPlayView
+ */
+- (UIView *_Nonnull)df_airPlayViewWithFrame:(CGRect)frame
+                            backgroundColor:(UIColor *_Nonnull)backgroundColor
+                                  superView:(UIView *_Nonnull)superView;
 
 /**
  播放暂停按钮(背景图片在DFPlayer.bundle中同名替换相应的图片即可)
@@ -60,15 +72,15 @@
                                           block:(void(^_Nullable)(void))block;
 
 /**
- 播放模式按钮(单曲循环，顺序循环，随机循环) （DFPlayerType为DFPlayerTypeOnlyOnce时此按钮无效）
+ 播放模式按钮(单曲循环，顺序循环，随机循环) （DFPlayerMode为DFPlayerModeOnlyOnce时此按钮无效）
  
  @param frame 按钮frame
  @param superView 按钮父视图
  @param block 按钮action 若无其他操作需求，传nil即可
- @return 播放类型设置按钮
+ @return 播放模式设置按钮
  
- * 注意：当设置了DFPlayer的播放类型以后，DFPlayer将为您记录用户的选择，并在下次启动app时选择用户设置的播放类型。
- 如需每次启动都设置固定某一个播放类型，请在初始化播放器后，调用[DFPlayer shareInstance].type = XX;重置播放类型。
+ * 注意：当设置了DFPlayer的播放模式以后，DFPlayer将为您记录用户的选择，并在下次启动app时选择用户设置的播放模式。
+ 如需每次启动都设置固定某一个播放模式，请在初始化播放器后，调用[DFPlayer shareInstance].playMode = XX;重置播放模式。
  */
 - (UIButton *_Nullable)df_typeControlBtnWithFrame:(CGRect)frame
                                         superView:(UIView *_Nonnull)superView
@@ -140,13 +152,13 @@
  ⑤如果歌词中需要空行，DFPlayer默认时间标签后的“####”是空行标志，如“[00:11.11]####”，DFPlayer将在解析到歌词为####时做空行显示
  详情查看demo中”许嵩(Vae)-有何不可.lrc“文件
  ⑥DFPlayer认为每个时间标签都是一个单元格。只不过时间标签后无歌词时，DFPlayer将该单元格隐藏。
- ⑦DFPlayer不对单句歌词做换行处理，所以单行歌词长度尽量不要超过tableview的宽度，当超出时，DFPlayer用省略号处理。
+ ⑦DFPlayer不对单句歌词做换行处理，所以单行歌词长度尽量不要超过tableview的宽度，当超出时，DFPlayer用末尾省略号处理。
  
  @param frame  tableview frame
  @param contentInset  tableview contentInset
  @param cellRowHeight  tableview 单行rowHeight
  @param cellBackgroundColor cell背景色
- @param currentLineLrcForegroundTextColor 当前行歌词文字前景色（此属性不为空时，采用卡拉OK模式显示）
+ @param currentLineLrcForegroundTextColor 当前行歌词文字前景色（此属性不为nil时，采用卡拉OK模式显示）
  @param currentLineLrcBackgroundTextColor 当前行歌词文字背景色
  @param otherLineLrcBackgroundTextColor 其他行歌词文字颜色
  @param currentLineLrcFont 当前行歌词字体

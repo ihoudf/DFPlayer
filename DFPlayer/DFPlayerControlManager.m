@@ -51,6 +51,7 @@ NSString * const DFBufferProgressKey = @"bufferProgress";
 NSString * const DFProgressKey       = @"progress";
 NSString * const DFCurrentTimeKey    = @"currentTime";
 NSString * const DFTotalTimeKey      = @"totalTime";
+NSString * const DFAlphaKey          = @"alpha";
 
 //NOTIFICATION
 NSString * const DFPlayerLyricTableviewStopUpdateNotification = @"DFPlayerLyricTableviewStopUpdateNotification";
@@ -66,6 +67,8 @@ NSString * const DFPlayerLyricTableviewResumeUpdateNotification = @"DFPlayerLyri
 #define DFPlayerImage(file) [UIImage imageNamed:DFPlayerSrcName(file)] ? :[UIImage imageNamed:DFPlayerFrameworkSrcName(file)]
 @interface DFPlayerControlManager()
 @property (nonatomic, strong) UIButton          *playBtn;
+@property (nonatomic, strong) UIButton          *airplayBtn;
+@property (nonatomic, assign) CGRect            airplayFrame;
 @property (nonatomic, strong) UIImage           *playImage;
 @property (nonatomic, strong) UIImage           *pauseImage;
 @property (nonatomic, strong) UIButton          *typeBtn;
@@ -105,7 +108,37 @@ NSString * const DFPlayerLyricTableviewResumeUpdateNotification = @"DFPlayerLyri
     self.isStopUpdate = NO;
 }
 
-#pragma mark - 
+#pragma mark - AirPlayView
+/**
+ AirPlayView
+ 
+ @param frame AirPlayView frame
+ @param backgroundColor 背景颜色
+ @param superView AirPlayView父视图
+ @return AirPlayView
+ */
+- (UIView *)df_airPlayViewWithFrame:(CGRect)frame
+                    backgroundColor:(UIColor *)backgroundColor
+                          superView:(UIView *)superView{
+    self.airplayFrame = frame;
+    MPVolumeView *volumeView = [[MPVolumeView alloc] initWithFrame:frame];
+    volumeView.backgroundColor = backgroundColor;
+    volumeView.showsRouteButton = YES;
+    volumeView.showsVolumeSlider = NO;
+    for (UIView *item in volumeView.subviews) {
+        if (![item isKindOfClass:NSClassFromString(@"MPButton")]) {
+            [item removeFromSuperview];
+        }else if ([item isKindOfClass:NSClassFromString(@"UIButton")]){
+            self.airplayBtn = (UIButton *)item;
+            [self.airplayBtn setImage:DFPlayerImage(@"dfplayer_airplay") forState:UIControlStateNormal];
+            [self.airplayBtn setBounds:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+            [self.airplayBtn addObserver:self forKeyPath:DFAlphaKey options:NSKeyValueObservingOptionNew context:nil];
+        }
+    }
+    [superView addSubview:volumeView];
+    return volumeView;
+}
+
 #pragma mark - 播放暂停按钮
 /**
  播放暂停按钮
@@ -198,48 +231,48 @@ NSString * const DFPlayerLyricTableviewResumeUpdateNotification = @"DFPlayerLyri
     return nextBtn;
 }
 
-#pragma mark - 播放类型设置按钮
+#pragma mark - 播放模式设置按钮
 /**
- 播放类型设置按钮(单曲循环，顺序循环，随机循环)
+ 播放模式设置按钮(单曲循环，顺序循环，随机循环)
  
  @param frame 按钮frame
  @param superView 按钮父视图
  @param block 按钮action 若无其他操作需求，传nil即可
- @return 播放类型设置按钮
+ @return 播放模式设置按钮
  
- * 注意：当设置了DFPlayer的播放类型以后，DFPlayer将为您记录用户的选择，并在下次启动app时选择用户设置的播放类型。
- 如需每次启动都设置固定某一个播放类型，请在初始化播放器后，调用[DFPlayer shareInstance].type = XX;重置播放类型。
+ * 注意：当设置了DFPlayer的播放模式以后，DFPlayer将为您记录用户的选择，并在下次启动app时选择用户设置的播放模式。
+ 如需每次启动都设置固定某一个播放模式，请在初始化播放器后，调用[DFPlayer shareInstance].playMode = XX;重置播放模式。
  */
 - (UIButton *_Nullable)df_typeControlBtnWithFrame:(CGRect)frame
                                        superView:(UIView *_Nonnull)superView
                                             block:(void(^_Nullable)(void))block
 {
     UIButton *button = [self btnWithFrame:frame superView:superView];
-    switch ([DFPlayer shareInstance].type) {
-        case DFPlayerTypeSingleCycle | DFPlayerTypeOnlyOnce:
+    switch ([DFPlayer shareInstance].playMode) {
+        case DFPlayerModeSingleCycle | DFPlayerModeOnlyOnce:
             [button setBackgroundImage:DFPlayerImage(@"dfplayer_single") forState:(UIControlStateNormal)];
             break;
-        case DFPlayerTypeOrderCycle:
+        case DFPlayerModeOrderCycle:
             [button setBackgroundImage:DFPlayerImage(@"dfplayer_circle") forState:(UIControlStateNormal)];
             break;
-        case DFPlayerTypeShuffleCycle:
+        case DFPlayerModeShuffleCycle:
             [button setBackgroundImage:DFPlayerImage(@"dfplayer_shuffle") forState:(UIControlStateNormal)];
             break;
         default:
             break;
     }
     button.handleJFEventBlock = ^(UIButton *sender) {
-        switch ([DFPlayer shareInstance].type) {
-            case DFPlayerTypeSingleCycle:
-                [DFPlayer shareInstance].type = DFPlayerTypeOrderCycle;
+        switch ([DFPlayer shareInstance].playMode) {
+            case DFPlayerModeSingleCycle:
+                [DFPlayer shareInstance].playMode = DFPlayerModeOrderCycle;
                 [sender setBackgroundImage:DFPlayerImage(@"dfplayer_circle") forState:(UIControlStateNormal)];
                 break;
-            case DFPlayerTypeOrderCycle:
-                [DFPlayer shareInstance].type = DFPlayerTypeShuffleCycle;
+            case DFPlayerModeOrderCycle:
+                [DFPlayer shareInstance].playMode = DFPlayerModeShuffleCycle;
                 [sender setBackgroundImage:DFPlayerImage(@"dfplayer_shuffle") forState:(UIControlStateNormal)];
                 break;
-            case DFPlayerTypeShuffleCycle:
-                [DFPlayer shareInstance].type = DFPlayerTypeSingleCycle;
+            case DFPlayerModeShuffleCycle:
+                [DFPlayer shareInstance].playMode = DFPlayerModeSingleCycle;
                 [sender setBackgroundImage:DFPlayerImage(@"dfplayer_single") forState:(UIControlStateNormal)];
                 break;
             default:
@@ -479,6 +512,9 @@ NSString * const DFPlayerLyricTableviewResumeUpdateNotification = @"DFPlayerLyri
                 [self setUpTotalTimeLabelTextWithTotalTime:totalTime];
             }
         }
+    }else if ([object isKindOfClass:[UIButton class]] && [[change valueForKey:NSKeyValueChangeNewKey] intValue] == 1){
+        [(UIButton *) object setImage:DFPlayerImage(@"dfplayer_airplay") forState:UIControlStateNormal];
+        [(UIButton *) object setBounds:CGRectMake(0, 0, self.airplayFrame.size.width, self.airplayFrame.size.height)];
     }
 }
 
@@ -488,6 +524,7 @@ NSString * const DFPlayerLyricTableviewResumeUpdateNotification = @"DFPlayerLyri
     [[DFPlayer shareInstance] removeObserver:self forKeyPath:DFProgressKey];
     [[DFPlayer shareInstance] removeObserver:self forKeyPath:DFCurrentTimeKey];
     [[DFPlayer shareInstance] removeObserver:self forKeyPath:DFTotalTimeKey];
+    [self.airplayBtn removeObserver:self forKeyPath:DFAlphaKey];
 }
 
 

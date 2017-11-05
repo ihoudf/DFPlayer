@@ -121,9 +121,9 @@ static NSString *cellId = @"cellId";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     if (self.df_ModelArray.count > indexPath.row) {
+        [self.scrollView setContentOffset:(CGPointMake(SCREEN_WIDTH, 0)) animated:YES];
         DFPlayerModel *model = self.df_ModelArray[indexPath.row];
         [[DFPlayer shareInstance] df_playerPlayWithAudioId:model.audioId];
-        [self.scrollView setContentOffset:(CGPointMake(SCREEN_WIDTH, 0)) animated:YES];
     }
 }
 #pragma mark - 初始化DFPlayer
@@ -133,10 +133,9 @@ static NSString *cellId = @"cellId";
     [DFPlayer shareInstance].delegate    = self;
     [DFPlayer shareInstance].category    = DFPlayerAudioSessionCategoryPlayback;
     [DFPlayer shareInstance].isObserveWWAN = YES;
-//    [DFPlayer shareInstance].type = DFPlayerTypeOnlyOnce;//DFPLayer默认单曲循环。
+//    [DFPlayer shareInstance].playMode = DFPlayerModeOnlyOnce;//DFPLayer默认单曲循环。
     [DFPlayer shareInstance].isObservePreviousAudioModel = YES;
     [[DFPlayer shareInstance] df_reloadData];//必须在传入数据源后调用（类似UITableView的reloadData）
-    
     CGRect buffRect = CGRectMake(CountWidth(104), topH+CountHeight(28), CountWidth(542), CountHeight(4));
     CGRect proRect  = CGRectMake(CountWidth(104), topH+CountHeight(10), CountWidth(542), CountHeight(40));
     CGRect currRect = CGRectMake(CountWidth(10), topH+CountHeight(10), CountWidth(90), CountHeight(40));
@@ -145,8 +144,11 @@ static NSString *cellId = @"cellId";
     CGRect nextRext = CGRectMake(CountWidth(490), topH+CountHeight(84), CountWidth(80), CountWidth(80));
     CGRect lastRect = CGRectMake(CountWidth(180), topH+CountHeight(84), CountWidth(80), CountWidth(80));
     CGRect typeRect = CGRectMake(CountWidth(40), topH+CountHeight(100), CountWidth(63), CountHeight(45));
-    
+    CGRect airRect  = CGRectMake(SCREEN_WIDTH-CountWidth(92), topH+CountHeight(100), CountWidth(52), CountHeight(48));
+
     DFPlayerControlManager *manager = [DFPlayerControlManager shareInstance];
+    //airplay按钮
+    [manager df_airPlayViewWithFrame:airRect backgroundColor:[UIColor colorWithWhite:0 alpha:0] superView:self.backgroundImageView];
     //缓冲条
     [manager df_bufferProgressViewWithFrame:buffRect trackTintColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.5] progressTintColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:0.5] superView:self.backgroundImageView];
     //进度条

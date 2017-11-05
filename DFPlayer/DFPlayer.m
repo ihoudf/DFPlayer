@@ -12,7 +12,7 @@
 #import "DFPlayerTool.h"
 #import "DFPlayerRemoteApplication.h"
 /**类型KEY*/
-NSString * const DFPlayerTypeKey                = @"DFPlayerType";
+NSString * const DFPlayerModeKey                = @"DFPlayerMode";
 /**Asset KEY*/
 NSString * const DFPlayableKey                  = @"playable";
 /**PlayerItem KEY*/
@@ -113,8 +113,8 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
 
     self.isOthetPlaying = [AVAudioSession sharedInstance].otherAudioPlaying;
     
-    NSInteger user_playerType = [[NSUserDefaults standardUserDefaults] integerForKey:DFPlayerTypeKey];
-    self.type = user_playerType?user_playerType:DFPlayerTypeSingleCycle;
+    NSInteger user_playerMode = [[NSUserDefaults standardUserDefaults] integerForKey:DFPlayerModeKey];
+    self.playMode = user_playerMode?user_playerMode:DFPlayerModeSingleCycle;
     self.state = DFPlayerStateStopped;
     self.isObserveProgress          = YES;
     self.isObserveBufferProgress    = YES;
@@ -778,11 +778,11 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
 
 /**下一首*/
 - (void)df_audioNext{
-    switch (self.type) {
-        case DFPlayerTypeOnlyOnce:
+    switch (self.playMode) {
+        case DFPlayerModeOnlyOnce:
             self.state = DFPlayerStateStopped;
             break;
-        case DFPlayerTypeSingleCycle:
+        case DFPlayerModeSingleCycle:
             /**解释：单曲循环模式下，如果是自动播放结束，则单曲循环。
              如果手动控制播放下一首或上一首，则根据isManualToPlay的设置判断播放下一首还是重新播放*/
             if (self.isNaturalToEndTime) {
@@ -796,10 +796,10 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
                 }
             }
             break;
-        case DFPlayerTypeOrderCycle:
+        case DFPlayerModeOrderCycle:
             [self audioNextOrderCycle];
             break;
-        case DFPlayerTypeShuffleCycle:{
+        case DFPlayerModeShuffleCycle:{
             self.playIndex2++;
             NSInteger tag = [self audioNextShuffleCycleIndex];
             //去重 避免随机到当前正在播放的音频
@@ -818,21 +818,21 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
 
 /**上一首*/
 - (void)df_audioLast{
-    switch (self.type) {
-        case DFPlayerTypeOnlyOnce:
+    switch (self.playMode) {
+        case DFPlayerModeOnlyOnce:
             self.state = DFPlayerStateStopped;
             break;
-        case DFPlayerTypeSingleCycle:
+        case DFPlayerModeSingleCycle:
             if (self.isManualToPlay) {
                 [self audioLastOrderCycle];
             }else{
                 [self audioPrePlay];
             }
             break;
-        case DFPlayerTypeOrderCycle:
+        case DFPlayerModeOrderCycle:
             [self audioLastOrderCycle];
             break;
-        case DFPlayerTypeShuffleCycle:{
+        case DFPlayerModeShuffleCycle:{
             if (self.playIndex2 == 1) {
                 self.playIndex2 = 0;
                 self.currentAudioModel = self.playerModelArray[self.playIndex1];
@@ -882,7 +882,7 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
     if (self.isOthetPlaying) {
         [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
     }else{
-        [[AVAudioSession sharedInstance]setActive:NO error:nil];
+        [[AVAudioSession sharedInstance] setActive:NO error:nil];
     }
     if (self.player) {
         self.player = nil;
@@ -926,7 +926,7 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
     return tag;
 }
 
--(NSMutableArray*)getRandomPlayerModelIndexArray{
+- (NSMutableArray*)getRandomPlayerModelIndexArray{
     NSInteger startIndex = 0;
     NSInteger length = self.playerModelArray.count;
     NSInteger endIndex = startIndex+length;
@@ -995,10 +995,10 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
             break;
     }
 }
-- (void)setType:(DFPlayerType)type{
-    NSLog(@"-- DFPlayer： 设置了播放类型:%ld",(long)type);
-    _type = type;
-    [[NSUserDefaults standardUserDefaults] setInteger:type forKey:DFPlayerTypeKey];
+- (void)setPlayMode:(DFPlayerMode)playMode{
+    NSLog(@"-- DFPlayer： 设置了播放模式:%ld",(long)playMode);
+    _playMode = playMode;
+    [[NSUserDefaults standardUserDefaults] setInteger:playMode forKey:DFPlayerModeKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 - (void)setState:(DFPlayerState)state{
@@ -1051,7 +1051,8 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
 }
 
 /**清除url对应的本地缓存*/
-+ (void)df_playerClearCacheWithAudioUrl:(NSURL *)url block:(void(^)(BOOL isSuccess, NSError *error))block{
++ (void)df_playerClearCacheWithAudioUrl:(NSURL *)url
+                                  block:(void(^)(BOOL isSuccess, NSError *error))block{
     [DFPlayerFileManager df_playerClearCacheWithUrl:url block:^(BOOL isSuccess, NSError *error) {
         if (block) {
             block(isSuccess,error);

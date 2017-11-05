@@ -44,12 +44,12 @@ typedef NS_ENUM(NSInteger, DFPlayerState) {
     DFPlayerStateStopped     // 停止播放
 };
 
-//播放类型
-typedef NS_ENUM(NSInteger, DFPlayerType){
-    DFPlayerTypeOnlyOnce,       //单曲只播放一次
-    DFPlayerTypeSingleCycle,    //单曲循环。默认。
-    DFPlayerTypeOrderCycle,     //顺序循环
-    DFPlayerTypeShuffleCycle    //随机循环
+//播放模式
+typedef NS_ENUM(NSInteger, DFPlayerMode){
+    DFPlayerModeOnlyOnce,       //单曲只播放一次
+    DFPlayerModeSingleCycle,    //单曲循环。默认。
+    DFPlayerModeOrderCycle,     //顺序循环
+    DFPlayerModeShuffleCycle    //随机循环
 };
 
 @protocol DFPlayerDataSource <NSObject>
@@ -173,10 +173,10 @@ typedef NS_ENUM(NSInteger, DFPlayerType){
 /**播放器类型，默认DFPlayerAudioSessionCategorySoloAmbient*/
 @property (nonatomic, assign) DFPlayerAudioSessionCategory category;
 /**
- 播放类型，首次默认DFPlayerTypeSingleCycle。设置播放类型后，DFPlayer将为您记录用户的选择。
- 如需每次启动都设置固定某一个播放类型，请在初始化播放器后，调用[DFPlayer shareInstance].type = XX;重置播放类型。
+ 播放模式，首次默认DFPlayerModeSingleCycle。设置播放模式后，DFPlayer将为您记录用户的选择。
+ 如需每次启动都设置固定某一个播放模式，请在初始化播放器后，调用[DFPlayer shareInstance].playMode = XX;重置播放模式。
  */
-@property (nonatomic, assign) DFPlayerType type;
+@property (nonatomic, assign) DFPlayerMode playMode;
 /**是否监听播放进度，默认YES*/
 @property (nonatomic, assign) BOOL isObserveProgress;
 /**是否监听缓冲进度，默认YES*/
@@ -185,7 +185,7 @@ typedef NS_ENUM(NSInteger, DFPlayerType){
 @property (nonatomic, assign) BOOL isNeedCache;
 /**是否需要耳机线控功能，默认YES*/
 @property (nonatomic, assign) BOOL isRemoteControl;
-/**是否监测上次关闭app时的音频信息，默认NO*/
+/**是否监测上次关闭app时的音频信息，默认NO。此功能需要真机*/
 @property (nonatomic, assign) BOOL isObservePreviousAudioModel;
 /**
  在单曲循环模式下，点击下一首(上一首)按钮(或使用线控播放下一首、上一首)是重新开始播放当前音频还是播放下一首（上一首）
@@ -195,7 +195,7 @@ typedef NS_ENUM(NSInteger, DFPlayerType){
 @property (nonatomic, assign) BOOL isManualToPlay;
 /**
  当currentAudioModel存在时，是否插入耳机音频自动恢复播放，默认NO
- 当您没有实现代理10的情况下，DFPlaye默认拨出耳机音频自动停止，插入耳机音频不会自动恢复。你可通过此属性控制插入耳机时音频是否可自动恢复
+ 当您没有实现代理10的情况下，DFPlayer默认拨出耳机音频自动停止，插入耳机音频不会自动恢复。你可通过此属性控制插入耳机时音频是否可自动恢复
  当您实现代理10时，耳机插入拔出时的播放暂停逻辑由您处理。
  */
 @property (nonatomic, assign) BOOL isHeadPhoneAutoPlay;
@@ -255,7 +255,7 @@ typedef NS_ENUM(NSInteger, DFPlayerType){
 
 /**
  选择audioId对应的音频开始播放。
- 说明：DFPlayer通过数据源方法提前获取数据，通过df_playerPlayWithAudioId选择
+ 说明：DFPlayer通过数据源方法提前获取数据，通过df_playerPlayWithAudioId选择对应音频播放。
  而在删除、增加音频后需要调用[[DFPlayer shareInstance] df_reloadData];刷新数据。
  DFPlayer内部实现里做了线程优化，合理范围内的大数据量也毫无压力。
  */
@@ -297,7 +297,8 @@ typedef NS_ENUM(NSInteger, DFPlayerType){
  @param url 网络音频url
  @param block 是否清除成功 错误信息
  */
-+ (void)df_playerClearCacheWithAudioUrl:(NSURL *)url block:(void(^)(BOOL isSuccess, NSError *error))block;
++ (void)df_playerClearCacheWithAudioUrl:(NSURL *)url
+                                  block:(void(^)(BOOL isSuccess, NSError *error))block;
 
 /**
  计算DFPlayer的缓存大小

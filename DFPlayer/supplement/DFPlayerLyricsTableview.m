@@ -75,6 +75,8 @@ UIScrollViewDelegate>
 @property (nonatomic, assign) BOOL isResetWaitIndexpath;
 /**是否拖拽歌词*/
 @property (nonatomic, assign) BOOL isDraging;
+/**是否继续滚动*/
+@property (nonatomic, assign) BOOL isDecelerate;
 /**是否拖拽进度结束*/
 @property (nonatomic, assign) BOOL isProgressSliderDragEnd;
 /**遮罩*/
@@ -225,7 +227,11 @@ UIScrollViewDelegate>
     if (self.lastIndex == self.currentIndex) {return;}
     if (self.lastIndex >= 0) {self.lastIndexPath = [NSIndexPath indexPathForRow:self.lastIndex inSection:0];}
     self.lastIndex = self.currentIndex;
+    if (self.isProgressSliderDragEnd) {//进度回滚，恢复正在播放的当前行
+        [self resetOldCellIndexPath:self.currentIndexPath];        
+    }
     self.currentIndexPath = [NSIndexPath indexPathForRow:self.currentIndex inSection:0];
+    
     //当前行移动到中间
     if (self.isProgressSliderDragEnd || !animation) {
         [self df_scrollToMiddleCellAnimation:NO];
@@ -562,9 +568,18 @@ UIScrollViewDelegate>
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     self.isDraging = YES;
 }
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
-    [self performSelector:@selector(delayToReset) withObject:nil afterDelay:0.8];
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    self.isDecelerate = decelerate;
+    if (!self.isDecelerate) {
+        [self performSelector:@selector(delayToReset) withObject:nil afterDelay:1];
+    }
 }
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    if (self.isDecelerate) {
+        [self performSelector:@selector(delayToReset) withObject:nil afterDelay:0.8];
+    }
+}
+
 - (void)delayToReset{
     self.isDraging = NO;
     [self df_scrollToMiddleCellAnimation:YES];
