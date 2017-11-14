@@ -25,9 +25,8 @@
 ### -- 安装（最低支持 iOS 7.0）
 ###### 手动安装
 ```
-    1.下载 DFPlayer 文件夹内的所有内容
-    2.将 DFPlayer文件夹添加(拖放)到你的工程
-    3.import "DFPlayer.h"
+    1.下载，并将DFPlayer文件夹添加(拖放)到工程
+    2.import "DFPlayer.h"
 ```
 ###### CocoaPods
 ```
@@ -55,9 +54,9 @@ DFPlayer的使用十分简单。
 ##### 简要说明：
 1.初始化DFPlayer，设置数据源（必须）
 ```
-    [[DFPlayerManager shareInstance] df_initPlayerWithUserId:nil];//初始化
-    [DFPlayerManager shareInstance].dataSource  = self;//设置数据源
-    [[DFPlayerManager shareInstance] df_reloadData];//刷新数据源
+    [[DFPlayer shareInstance] df_initPlayerWithUserId:nil];//初始化
+    [DFPlayer shareInstance].dataSource  = self;//设置数据源
+    [[DFPlayer shareInstance] df_reloadData];//刷新数据源
 ```
 2.实现数据源，将音频数据传给DFPlayer（必须）
 ```
@@ -67,13 +66,13 @@ DFPlayer的使用十分简单。
     }
 
     //（可选）
-    - (DFPlayerInfoModel *)df_playerAudioInfoModel:(DFPlayerManager *)playerManager{
+    - (DFPlayerInfoModel *)df_playerAudioInfoModel:(DFPlayer *)player{
         //DFPlayer收到某个音频的播放请求时，会调用这个方法请求该音频的音频名、歌手、专辑名、歌词、配图等信息。
     }
 ```
 3.选择AudioId对应的音频加入播放队列准备播放(必须)
 ```
-    [[DFPlayerManager shareInstance] df_playerPlayWithAudioId:audioId];
+    [[DFPlayer shareInstance] df_playerPlayWithAudioId:audioId];
 ```
 4.选择DFPLayer中提供的UI控件，布局到页面（可选）
 > DFPlayer封装了歌词tableview（提供逐句和逐字两种模式的基于Lrc的歌词同步）、缓冲条、进度条、播放暂停按钮、下一首按钮、上一首按钮、播放模式按钮（单曲、顺序、随机）、airplay按钮、当前时间Label、总时间Label。
