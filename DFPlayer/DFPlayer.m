@@ -1042,7 +1042,7 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
 
 #pragma mark - 统一错误代理
 - (void)df_playerStatusWithStatusCode:(NSUInteger)statusCode{
-    NSLog(@"-- DFPlayer： 状态码:%lu",statusCode);
+    NSLog(@"-- DFPlayer： 状态码:%lu",(unsigned long)statusCode);
     if (self.delegate && [self.delegate respondsToSelector:@selector(df_player:didGetStatusCode:)]) {
         [self.delegate df_player:self didGetStatusCode:statusCode];
     }
