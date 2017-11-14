@@ -1,6 +1,6 @@
 # <img src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerLogo/dfplayer_logo388x83.png?raw=true" width="260">
 <a href="https://github.com/ihoudf/DFPlayer"><img src="https://img.shields.io/badge/build-passing-green.svg"></a>
-<a href="https://github.com/ihoudf/DFPlayer"><img src="https://img.shields.io/badge/pod-1.0.3-yellow.svg"></a>
+<a href="https://github.com/ihoudf/DFPlayer"><img src="https://img.shields.io/badge/pod-1.0.4-yellow.svg"></a>
 <a href="https://github.com/ihoudf/DFPlayer/blob/master/LICENSE" target="blank"><img src="https://img.shields.io/badge/license-MIT-brightgreen.svg"></a>
 <a href="https://github.com/ihoudf/DFPlayer"><img src="https://img.shields.io/badge/platform-iOS-blue.svg"></a>
 <a href="https://github.com/ihoudf/DFPlayer"><img src="https://img.shields.io/badge/support-iOS%207%2B-yellowgreen.svg"></a>
@@ -18,7 +18,7 @@
 <a href="https://ihoudf.github.io/2017/10/26/DFPlayer%E6%8E%A5%E5%85%A5%E8%AF%B4%E6%98%8E/" target="blank"><img width="282" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerImage3.png?raw=true"></a>
 <!-- <img width="282" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPLayerImage1.png?raw=true">&nbsp;<img width="282" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerImage2.png?raw=true">&nbsp;<img width="282" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerImage3.png?raw=true"> -->
 ##### ps：
-(1). demo中所用歌曲链接由<a href="http://www.baidu190.com/" target="blank">http://www.baidu190.com/</a>提供。本人遇到过一次缓冲特别慢的情况，希望您不会遇到。
+(1). Demo中歌曲链接由<a href="http://www.kuwo.cn/" target="blank">http://www.kuwo.cn/</a>提供。
 <br>(2). 歌曲配图由<a href="https://y.qq.com/" target="blank">https://y.qq.com/</a>提供。
 <br>(3). 歌词及Lrc制作由<a href="http://www.lrcgc.com/" target="blank">http://www.lrcgc.com/</a>和<a href="https://y.qq.com/" target="blank">https://y.qq.com/</a>提供。
 #
@@ -36,7 +36,17 @@
     3.import "DFPlayer.h"
 ```
 > DFPLayer使用AFNetworkReachabilityManager进行网络监测，如正在使用AFNetworking，删除DFPlayer中的相关文件。
-
+### 版本说明
+##### 当前版本1.0.4，pods同步。<a href="https://github.com/ihoudf/DFPlayer/releases" target="blank">查看更多版本</a> 
+```
+本次更新：
+1.代码解耦
+2.增加运行时断点续传
+3.改用可扩展的状态码提示
+4.播放模式为DFPlayerModeOnlyOnce时，增加下一首（上一首）按钮行为
+5.优化歌词同步
+6.其他逻辑优化
+```
 
 ### 使用
 DFPlayer的使用十分简单。
@@ -154,7 +164,7 @@ The use of DFPlayer is so easy.
 provided under the MIT license. See <a href="https://github.com/ihoudf/DFPlayer/blob/master/LICENSE" target="blank">LICENSE</a>  file for details.
 
 # THANKS!
-如果您对DFPlayer有业务需求改进或发现bug，欢迎在<a href="https://github.com/ihoudf/DFPlayer/issues" target="blank">这里</a>提交。您还可以添加qq交流群：479873475 ，一起探讨iOS开发技术。
+如果您对DFPlayer有业务需求改进或发现bug，欢迎在<a href="https://github.com/ihoudf/DFPlayer/issues" target="blank">这里</a>提交。您还可以添加qq交流群：479873475 ，一起探讨iOS开发技术。关于DFPlayer的bug修复和版本更新也会在群里及时告知。
 <br>
 <font color="#42C485">合作qq：188816190</font>
 <br>

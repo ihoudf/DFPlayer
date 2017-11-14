@@ -21,9 +21,8 @@
 		06B33BBE1F725830003A559C /* YourDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33BAB1F72582F003A559C /* YourDataModel.m */; };
 		06E3FE911F8E07E90063577B /* 阿悄-死皮赖脸.lrc in Resources */ = {isa = PBXBuildFile; fileRef = 06E3FE901F8E07E90063577B /* 阿悄-死皮赖脸.lrc */; };
 		06E3FE951F8E2DC30063577B /* 周渝民-记得我爱你.lrc in Resources */ = {isa = PBXBuildFile; fileRef = 06E3FE941F8E2DC30063577B /* 周渝民-记得我爱你.lrc */; };
-		06E3FE971F8E2FBA0063577B /* 周华健.齐豫 -天下有情人.lrc in Resources */ = {isa = PBXBuildFile; fileRef = 06E3FE961F8E2FBA0063577B /* 周华健.齐豫 -天下有情人.lrc */; };
+		F9037BF61FB482320002F98C /* ihoudf-dfplayer.lrc in Resources */ = {isa = PBXBuildFile; fileRef = F9037BF51FB482320002F98C /* ihoudf-dfplayer.lrc */; };
 		F944936B1FA1CD6D006C605F /* 陈冠希-战争.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F944936A1FA1CD6C006C605F /* 陈冠希-战争.mp3 */; };
-		F944936D1FA1CD75006C605F /* 陈奕迅-不要说话.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F944936C1FA1CD75006C605F /* 陈奕迅-不要说话.mp3 */; };
 		F944936F1FA1D544006C605F /* default_bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F944936E1FA1D544006C605F /* default_bg.jpg */; };
 		F94493711FA1D7C3006C605F /* 911-I Do.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F94493701FA1D7C3006C605F /* 911-I Do.mp3 */; };
 		F94493731FA1D87F006C605F /* 张杰-三生三世.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F94493721FA1D87F006C605F /* 张杰-三生三世.mp3 */; };
@@ -31,7 +30,7 @@
 		F94493771FA1D95F006C605F /* 태양-눈,코,입 (眼，鼻，嘴).mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F94493751FA1D95F006C605F /* 태양-눈,코,입 (眼，鼻，嘴).mp3 */; };
 		F94493791FA1DA29006C605F /* Frankmusik-Wrecking Ball.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F94493781FA1DA29006C605F /* Frankmusik-Wrecking Ball.mp3 */; };
 		F944937B1FA1DC0F006C605F /* Flo Rida-Can't Believe It.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F944937A1FA1DC0F006C605F /* Flo Rida-Can't Believe It.mp3 */; };
-		F944937D1FA1E10F006C605F /* 黑崎子-多幸运.lrc in Resources */ = {isa = PBXBuildFile; fileRef = F944937C1FA1E10F006C605F /* 黑崎子-多幸运.lrc */; };
+		F944937D1FA1E10F006C605F /* 韩安旭-多幸运.lrc in Resources */ = {isa = PBXBuildFile; fileRef = F944937C1FA1E10F006C605F /* 韩安旭-多幸运.lrc */; };
 		F944937F1FA1F09B006C605F /* PRC 巴音汗-80000 !.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F944937E1FA1F09A006C605F /* PRC 巴音汗-80000 !.mp3 */; };
 		F94493811FA1F19E006C605F /* 巴音汗-80000!.lrc in Resources */ = {isa = PBXBuildFile; fileRef = F94493801FA1F19E006C605F /* 巴音汗-80000!.lrc */; };
 		F94493991FA24423006C605F /* DFPlayer.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F94493831FA24423006C605F /* DFPlayer.bundle */; };
@@ -51,6 +50,7 @@
 		F95478531F88DBF800D85D46 /* 王若琳-迷宫.lrc in Resources */ = {isa = PBXBuildFile; fileRef = F95478521F88DBF800D85D46 /* 王若琳-迷宫.lrc */; };
 		F95478551F892DD700D85D46 /* 许嵩(Vae)-有何不可.lrc in Resources */ = {isa = PBXBuildFile; fileRef = F95478541F892DD700D85D46 /* 许嵩(Vae)-有何不可.lrc */; };
 		F95BD25C1FA0982400388ED8 /* 音阙诗听-红昭愿.lrc in Resources */ = {isa = PBXBuildFile; fileRef = F95BD25B1FA0982400388ED8 /* 音阙诗听-红昭愿.lrc */; };
+		F9AACB791FBACEEF00650ED6 /* AudioData1.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9AACB781FBACEEF00650ED6 /* AudioData1.plist */; };
 		F9D6E97D1F8A37C300069376 /* 徐良&小凌-321对不起.lrc in Resources */ = {isa = PBXBuildFile; fileRef = F9D6E97C1F8A37C300069376 /* 徐良&小凌-321对不起.lrc */; };
 		F9D6E97F1F8A4C2600069376 /* 刘依朵-醉红颜.lrc in Resources */ = {isa = PBXBuildFile; fileRef = F9D6E97E1F8A4C2600069376 /* 刘依朵-醉红颜.lrc */; };
 		F9D6E9831F8A87BB00069376 /* Dragon Pig-全部都是你.lrc in Resources */ = {isa = PBXBuildFile; fileRef = F9D6E9821F8A87BB00069376 /* Dragon Pig-全部都是你.lrc */; };
@@ -100,9 +100,8 @@
 		06B33BAB1F72582F003A559C /* YourDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YourDataModel.m; sourceTree = "<group>"; };
 		06E3FE901F8E07E90063577B /* 阿悄-死皮赖脸.lrc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "阿悄-死皮赖脸.lrc"; sourceTree = "<group>"; };
 		06E3FE941F8E2DC30063577B /* 周渝民-记得我爱你.lrc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "周渝民-记得我爱你.lrc"; sourceTree = "<group>"; };
-		06E3FE961F8E2FBA0063577B /* 周华健.齐豫 -天下有情人.lrc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "周华健.齐豫 -天下有情人.lrc"; sourceTree = "<group>"; };
+		F9037BF51FB482320002F98C /* ihoudf-dfplayer.lrc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ihoudf-dfplayer.lrc"; sourceTree = "<group>"; };
 		F944936A1FA1CD6C006C605F /* 陈冠希-战争.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "陈冠希-战争.mp3"; sourceTree = "<group>"; };
-		F944936C1FA1CD75006C605F /* 陈奕迅-不要说话.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "陈奕迅-不要说话.mp3"; sourceTree = "<group>"; };
 		F944936E1FA1D544006C605F /* default_bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = default_bg.jpg; sourceTree = "<group>"; };
 		F94493701FA1D7C3006C605F /* 911-I Do.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "911-I Do.mp3"; sourceTree = "<group>"; };
 		F94493721FA1D87F006C605F /* 张杰-三生三世.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "张杰-三生三世.mp3"; sourceTree = "<group>"; };
@@ -110,7 +109,7 @@
 		F94493751FA1D95F006C605F /* 태양-눈,코,입 (眼，鼻，嘴).mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "태양-눈,코,입 (眼，鼻，嘴).mp3"; sourceTree = "<group>"; };
 		F94493781FA1DA29006C605F /* Frankmusik-Wrecking Ball.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Frankmusik-Wrecking Ball.mp3"; sourceTree = "<group>"; };
 		F944937A1FA1DC0F006C605F /* Flo Rida-Can't Believe It.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Flo Rida-Can't Believe It.mp3"; sourceTree = "<group>"; };
-		F944937C1FA1E10F006C605F /* 黑崎子-多幸运.lrc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "黑崎子-多幸运.lrc"; sourceTree = "<group>"; };
+		F944937C1FA1E10F006C605F /* 韩安旭-多幸运.lrc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "韩安旭-多幸运.lrc"; sourceTree = "<group>"; };
 		F944937E1FA1F09A006C605F /* PRC 巴音汗-80000 !.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "PRC 巴音汗-80000 !.mp3"; sourceTree = "<group>"; };
 		F94493801FA1F19E006C605F /* 巴音汗-80000!.lrc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "巴音汗-80000!.lrc"; sourceTree = "<group>"; };
 		F94493831FA24423006C605F /* DFPlayer.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DFPlayer.bundle; sourceTree = "<group>"; };
@@ -142,6 +141,7 @@
 		F95478521F88DBF800D85D46 /* 王若琳-迷宫.lrc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "王若琳-迷宫.lrc"; sourceTree = "<group>"; };
 		F95478541F892DD700D85D46 /* 许嵩(Vae)-有何不可.lrc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "许嵩(Vae)-有何不可.lrc"; sourceTree = "<group>"; };
 		F95BD25B1FA0982400388ED8 /* 音阙诗听-红昭愿.lrc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "音阙诗听-红昭愿.lrc"; sourceTree = "<group>"; };
+		F9AACB781FBACEEF00650ED6 /* AudioData1.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AudioData1.plist; sourceTree = "<group>"; };
 		F9D6E97C1F8A37C300069376 /* 徐良&小凌-321对不起.lrc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "徐良&小凌-321对不起.lrc"; sourceTree = "<group>"; };
 		F9D6E97E1F8A4C2600069376 /* 刘依朵-醉红颜.lrc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "刘依朵-醉红颜.lrc"; sourceTree = "<group>"; };
 		F9D6E9821F8A87BB00069376 /* Dragon Pig-全部都是你.lrc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Dragon Pig-全部都是你.lrc"; sourceTree = "<group>"; };
@@ -269,6 +269,7 @@
 				F95478431F88CE6C00D85D46 /* LocalAudio */,
 				F95478451F88CE7300D85D46 /* LRC */,
 				06B33BA01F72582F003A559C /* addAudio.plist */,
+				F9AACB781FBACEEF00650ED6 /* AudioData1.plist */,
 				06B33BA61F72582F003A559C /* AudioData.plist */,
 			);
 			path = Resource;
@@ -321,7 +322,6 @@
 				F94493721FA1D87F006C605F /* 张杰-三生三世.mp3 */,
 				F94493701FA1D7C3006C605F /* 911-I Do.mp3 */,
 				F944936A1FA1CD6C006C605F /* 陈冠希-战争.mp3 */,
-				F944936C1FA1CD75006C605F /* 陈奕迅-不要说话.mp3 */,
 			);
 			path = LocalAudio;
 			sourceTree = "<group>";
@@ -332,16 +332,16 @@
 				06E3FE901F8E07E90063577B /* 阿悄-死皮赖脸.lrc */,
 				F9D6E97E1F8A4C2600069376 /* 刘依朵-醉红颜.lrc */,
 				F95478501F88DAB900D85D46 /* 权志龙-MISSING YOU.lrc */,
-				F944937C1FA1E10F006C605F /* 黑崎子-多幸运.lrc */,
+				F944937C1FA1E10F006C605F /* 韩安旭-多幸运.lrc */,
 				F9FA4F5D1F9CC44C0026C284 /* 汪苏泷-追光者.lrc */,
 				F94493801FA1F19E006C605F /* 巴音汗-80000!.lrc */,
 				F95478521F88DBF800D85D46 /* 王若琳-迷宫.lrc */,
 				F9D6E97C1F8A37C300069376 /* 徐良&小凌-321对不起.lrc */,
 				F95478541F892DD700D85D46 /* 许嵩(Vae)-有何不可.lrc */,
 				F95BD25B1FA0982400388ED8 /* 音阙诗听-红昭愿.lrc */,
-				06E3FE961F8E2FBA0063577B /* 周华健.齐豫 -天下有情人.lrc */,
 				06E3FE941F8E2DC30063577B /* 周渝民-记得我爱你.lrc */,
 				F9D6E9821F8A87BB00069376 /* Dragon Pig-全部都是你.lrc */,
+				F9037BF51FB482320002F98C /* ihoudf-dfplayer.lrc */,
 			);
 			path = LRC;
 			sourceTree = "<group>";
@@ -462,11 +462,12 @@
 				F94493991FA24423006C605F /* DFPlayer.bundle in Resources */,
 				F9FA4F5E1F9CC44C0026C284 /* 汪苏泷-追光者.lrc in Resources */,
 				06E3FE951F8E2DC30063577B /* 周渝民-记得我爱你.lrc in Resources */,
-				F944937D1FA1E10F006C605F /* 黑崎子-多幸运.lrc in Resources */,
+				F944937D1FA1E10F006C605F /* 韩安旭-多幸运.lrc in Resources */,
 				F94493711FA1D7C3006C605F /* 911-I Do.mp3 in Resources */,
 				06B33B421F725814003A559C /* LaunchScreen.storyboard in Resources */,
 				F944937F1FA1F09B006C605F /* PRC 巴音汗-80000 !.mp3 in Resources */,
 				F94493731FA1D87F006C605F /* 张杰-三生三世.mp3 in Resources */,
+				F9AACB791FBACEEF00650ED6 /* AudioData1.plist in Resources */,
 				06B33BBA1F725830003A559C /* AudioData.plist in Resources */,
 				F95478531F88DBF800D85D46 /* 王若琳-迷宫.lrc in Resources */,
 				F95478511F88DAB900D85D46 /* 权志龙-MISSING YOU.lrc in Resources */,
@@ -474,15 +475,14 @@
 				F94493771FA1D95F006C605F /* 태양-눈,코,입 (眼，鼻，嘴).mp3 in Resources */,
 				F944937B1FA1DC0F006C605F /* Flo Rida-Can't Believe It.mp3 in Resources */,
 				F944936F1FA1D544006C605F /* default_bg.jpg in Resources */,
-				06E3FE971F8E2FBA0063577B /* 周华健.齐豫 -天下有情人.lrc in Resources */,
 				06B33BB41F725830003A559C /* addAudio.plist in Resources */,
 				F9D6E97F1F8A4C2600069376 /* 刘依朵-醉红颜.lrc in Resources */,
-				F944936D1FA1CD75006C605F /* 陈奕迅-不要说话.mp3 in Resources */,
 				06B33B3D1F725814003A559C /* Main.storyboard in Resources */,
 				F94493761FA1D95F006C605F /* Tez Cadey-Seve (Radio Edit).mp3 in Resources */,
 				F95478551F892DD700D85D46 /* 许嵩(Vae)-有何不可.lrc in Resources */,
 				F94493811FA1F19E006C605F /* 巴音汗-80000!.lrc in Resources */,
 				F9D6E9831F8A87BB00069376 /* Dragon Pig-全部都是你.lrc in Resources */,
+				F9037BF61FB482320002F98C /* ihoudf-dfplayer.lrc in Resources */,
 				F944936B1FA1CD6D006C605F /* 陈冠希-战争.mp3 in Resources */,
 				F95BD25C1FA0982400388ED8 /* 音阙诗听-红昭愿.lrc in Resources */,
 				F9D6E97D1F8A37C300069376 /* 徐良&小凌-321对不起.lrc in Resources */,
@@ -768,7 +768,7 @@
 				06B33B5B1F725814003A559C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		06B33B5C1F725814003A559C /* Build configuration list for PBXNativeTarget "DFPlayerDemo" */ = {
 			isa = XCConfigurationList;
@@ -777,7 +777,7 @@
 				06B33B5E1F725814003A559C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		06B33B5F1F725814003A559C /* Build configuration list for PBXNativeTarget "DFPlayerDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -786,7 +786,7 @@
 				06B33B611F725814003A559C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		06B33B621F725814003A559C /* Build configuration list for PBXNativeTarget "DFPlayerDemoUITests" */ = {
 			isa = XCConfigurationList;
@@ -795,7 +795,7 @@
 				06B33B641F725814003A559C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Foundation/NSURLError.h>
 @protocol DFPlayerRequestDelegate <NSObject>
 /**
  得到服务器响应
@@ -20,13 +21,20 @@
  */
 - (void)requestManagerDidReceiveData;
 
+
+/**
+ 缓存结果
+
+ @param isCached 是否完成了缓存
+ */
+- (void)requestManagerIsCached:(BOOL)isCached;
+
 /**
  接收数据完成
 
- @param errorDescription 如果出错则errorDescription不为nil
- @param isCached 是否完成了缓存
+ @param errorCode 错误码
  */
-- (void)requestManagerDidCompleteWithError:(NSString *)errorDescription isCached:(BOOL)isCached;
+- (void)requestManagerDidCompleteWithError:(NSInteger)errorCode;
 
 @end
 

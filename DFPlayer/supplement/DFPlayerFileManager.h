@@ -45,13 +45,16 @@
 + (void)df_clearCacheForCurrentUser:(BOOL)isClearCurrentUser block:(void(^)(BOOL isSuccess, NSError *error))block;
 
 /**计算系统磁盘空间 剩余可用空间*/
-+ (void)df_countSystemSizeBlock:(void(^)(CGFloat totalSize,CGFloat freeSize,BOOL isSuccess))block;
++ (void)df_countSystemSizeBlock:(void(^)(CGFloat totalSize,CGFloat freeSize))block;
 
 
 @end
 
-
 static NSMutableDictionary *_archiverDic;
+UIKIT_EXTERN NSString * const DFPlayerCurrentAudioInfoModelAudioUrl;
+UIKIT_EXTERN NSString * const DFPlayerCurrentAudioInfoModelCurrentTime;
+UIKIT_EXTERN NSString * const DFPlayerCurrentAudioInfoModelTotalTime;
+UIKIT_EXTERN NSString * const DFPlayerCurrentAudioInfoModelProgress;
 /**
  DFPlayer归档管理器
  */
@@ -72,7 +75,10 @@ static NSMutableDictionary *_archiverDic;
 + (NSDictionary *)df_unarchiveInfoModelDictionary;
 
 /**归档infoModel*/
-+ (BOOL)df_archiveInfoModelDictionary:(NSMutableDictionary *)dic;
++ (BOOL)df_archiveInfoModelWithAudioUrl:(NSURL *)audioUrl
+                            currentTime:(CGFloat)currentTime
+                              totalTime:(CGFloat)totalTime
+                               progress:(CGFloat)progress;
 
 @end
 

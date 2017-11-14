@@ -36,26 +36,18 @@
 @property (nonatomic, nullable, copy) UIImage *audioImage;
 @end
 
-
-
-UIKIT_EXTERN NSString * _Nullable const DFPlayerCurrentAudioInfoModelAudioId;
-UIKIT_EXTERN NSString * _Nullable const DFPlayerCurrentAudioInfoModelAudioUrl;
-UIKIT_EXTERN NSString * _Nullable const DFPlayerCurrentAudioInfoModelCurrentTime;
-UIKIT_EXTERN NSString * _Nullable const DFPlayerCurrentAudioInfoModelTotalTime;
-UIKIT_EXTERN NSString * _Nullable const DFPlayerCurrentAudioInfoModelProgress;
 /**
- 此model主要用于重新进入app时获取上次播放的音频信息
+ 此model用于获取上次播放的音频信息
  */
 @interface DFPlayerPreviousAudioModel : NSObject
 
-/**音频Id*/
-@property (nonatomic, readonly, assign) NSUInteger audioId;
-/**音频地址*/
-@property (nonatomic, readonly, nonnull, strong) NSURL *audioUrl;
-/**音频当前播放到的时间*/
-@property (nonatomic, readonly, assign) CGFloat currentTime;
+/**网络音频地址或本地音频名*/
+@property (nonatomic, readonly, nonnull, copy) NSString *audioUrlAbsoluteString;
 /**音频总时长*/
 @property (nonatomic, readonly, assign) CGFloat totalTime;
+/**以下属性只有缓存过或者本地音频才会配置该属性 */
+/**音频当前播放到的时间*/
+@property (nonatomic, readonly, assign) CGFloat currentTime;
 /**音频播放进度*/
 @property (nonatomic, readonly, assign) CGFloat progress;
 

@@ -6,15 +6,12 @@
 //  Copyright © 2017年 HDF. All rights reserved.
 //
 
-
 #import "DFPlayerLyricsTableview.h"
 #import "DFPlayer.h"
 @interface DFPlayerLyricsTableViewCell : UITableViewCell
-
 @property (nonatomic, strong) UILabel *backgroundLrcLabel;
 @property (nonatomic, strong) UILabel *foregroundLrcLabel;
 @property (nonatomic, strong) CALayer *lrcMasklayer;
-
 @end
 @implementation DFPlayerLyricsTableViewCell
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
@@ -59,6 +56,11 @@ UIScrollViewDelegate>
 @property (nonatomic, strong) NSMutableArray *timeArray;
 /**解析临时字典*/
 @property (nonatomic, strong) NSMutableDictionary *tempLrcDictionary;
+/**提示View*/
+@property (nonatomic, strong) UILabel *noticeLabel;
+/**当前AudioUrl*/
+@property (nonatomic, strong) NSURL *audioUrl;
+
 /**歌词当前行Index数组*/
 @property (nonatomic, strong) NSMutableArray *currentIndexArray;
 /**歌词当前行标记*/
@@ -83,8 +85,6 @@ UIScrollViewDelegate>
 @property (nonatomic, strong) CALayer *maskLayer;
 /**偏移时间。首次进入和拖拽后设置*/
 @property (nonatomic, assign) CGFloat timeOffset;
-/**提示View*/
-@property (nonatomic, strong) UILabel *noticeLabel;
 
 @end
 
@@ -157,7 +157,7 @@ UIScrollViewDelegate>
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(df_progressSliderDragEnd) name:DFPlayerNotificationProgressSliderDragEnd object:nil];
         [[DFPlayer shareInstance] addObserver:self forKeyPath:DFPlayerLyricStateKey options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial context:nil];
-        [[DFPlayer shareInstance] addObserver:self forKeyPath:DFPlayerLyricCurrentTimeKey options:NSKeyValueObservingOptionNew context:nil];
+        [[DFPlayer shareInstance] addObserver:self forKeyPath:DFPlayerLyricCurrentTimeKey options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial context:nil];
         [[DFPlayer shareInstance] addObserver:self forKeyPath:DFPlayerLyricCurrentAudioInfoModelKey options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial context:nil];
     }
     return self;
@@ -172,7 +172,7 @@ UIScrollViewDelegate>
     self.isProgressSliderDragEnd = YES;
     [self df_updateLyricsTextWithAnimation:YES];
 }
-#pragma mark - kvc
+#pragma mark - KVO
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
     if (object == [DFPlayer shareInstance]) {
         if ([keyPath isEqualToString:DFPlayerLyricStateKey]) {
@@ -183,6 +183,7 @@ UIScrollViewDelegate>
             }
         }else if ([keyPath isEqualToString:DFPlayerLyricCurrentTimeKey]){
             [self df_updateLyricsTextWithAnimation:YES];
+            
         }else if ([keyPath isEqualToString:DFPlayerLyricCurrentAudioInfoModelKey]){
             [self df_lyricAnalyze];
         }
@@ -195,19 +196,16 @@ UIScrollViewDelegate>
     if (self.timeArray.count <= 0 || self.lyricArray.count <= 0) {return;}
     if (self.currentIndexArray.count > 0) {[self.currentIndexArray removeAllObjects];}
     self.timeOffset = 0;
+
     //获取当前行
     CGFloat currentTime = [DFPlayer shareInstance].currentTime;
-    if (currentTime == 0) {
-        self.lastIndex = -1;
-        self.currentIndex = 0;
-    }
     if (self.isProgressSliderDragEnd || !animation) {
         for (int i = 0; i < self.timeArray.count; i++) {
             int time = [self.timeArray[i] intValue];
             if (currentTime >= time) {
                 self.currentIndex = i;
                 //获取偏移时间
-                if (self.currentLineLrcForegroundTextColor && [DFPlayer shareInstance].isObservePreviousAudioModel) {
+                if (self.currentLineLrcForegroundTextColor) {
                     self.timeOffset = currentTime - [self.timeArray[i] floatValue];
                 }
             }
@@ -224,9 +222,11 @@ UIScrollViewDelegate>
         }
     }
  
+    
     if (self.lastIndex == self.currentIndex) {return;}
     if (self.lastIndex >= 0) {self.lastIndexPath = [NSIndexPath indexPathForRow:self.lastIndex inSection:0];}
     self.lastIndex = self.currentIndex;
+    
     if (self.isProgressSliderDragEnd) {//进度回滚，恢复正在播放的当前行
         [self resetOldCellIndexPath:self.currentIndexPath];        
     }
@@ -268,7 +268,6 @@ UIScrollViewDelegate>
             [self performSelector:@selector(resetOldCellWithCurrentIndexArray:) withObject:indexPath afterDelay:0.2];
         }
     }
-    
     dispatch_async(dispatch_get_main_queue(), ^{
         //当前行
         DFPlayerLyricsTableViewCell *cell = (DFPlayerLyricsTableViewCell *)[self cellForRowAtIndexPath:self.currentIndexPath];
@@ -320,6 +319,7 @@ UIScrollViewDelegate>
                     duration = fabs([DFPlayer shareInstance].totalTime - [self.timeArray[self.currentIndex] floatValue]-0.2);
                 }
             }
+            
             if (duration != 0) {
                 CAKeyframeAnimation *anim = [CAKeyframeAnimation animationWithKeyPath:@"bounds.size.width"];
                 NSNumber *end = [NSNumber numberWithFloat:cell.foregroundLrcLabel.frame.size.width];
@@ -334,7 +334,6 @@ UIScrollViewDelegate>
                 [self.maskLayer addAnimation:anim forKey:@"Animation"];
                 if (!animation) {self.maskLayer.speed = 0.0;}
 //                CGFloat tt = duration - self.timeOffset;
-
             }
         }else{
             cell.foregroundLrcLabel.hidden = YES;
@@ -384,19 +383,29 @@ UIScrollViewDelegate>
 
 #pragma mark - 歌词解析
 - (void)df_lyricAnalyze{
-    if (self.tempLrcDictionary.count != 0) {[self.tempLrcDictionary removeAllObjects];}
-    if (self.timeArray.count != 0) {[self.timeArray removeAllObjects];}
-    if (self.lyricArray.count != 0) {[self.lyricArray removeAllObjects];}
     if (self.currentIndexPath) {self.currentIndexPath = nil;}
     if (self.waitResetIndexpath) {self.waitResetIndexpath = nil;}
-    
-    NSString *lyric = [DFPlayer shareInstance].currentAudioInfoModel.audioLyric;
-    if (!lyric || lyric.length <= 0) {
-        [self showNoticeLabel];
-        [self tableViewReloadData];
-        return;
+    self.lastIndex = -1;
+    self.currentIndex = -1;
+
+    NSURL *url = [DFPlayer shareInstance].currentAudioModel.audioUrl;
+    if ([self.audioUrl.absoluteString isEqualToString:url.absoluteString]) {
+        [self resetLyricTableView];//如果没有换新音频 直接复位
+    }else{
+        self.audioUrl = url;
+        if (self.tempLrcDictionary.count != 0) {[self.tempLrcDictionary removeAllObjects];}
+        if (self.timeArray.count != 0) {[self.timeArray removeAllObjects];}
+        if (self.lyricArray.count != 0) {[self.lyricArray removeAllObjects];}
+        NSString *lyric = [DFPlayer shareInstance].currentAudioInfoModel.audioLyric;
+        if (!lyric || lyric.length <= 0) {
+            [self showNoticeLabel];
+            [self tableViewReloadData];
+            return;
+        }
+        [self lyricAnalyze:lyric];//解析歌词
     }
-    
+}
+- (void)lyricAnalyze:(NSString *)lyric{
     //这里先将每句歌词分割
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSArray *arr = [lyric componentsSeparatedByString:@"\n"];
@@ -412,7 +421,9 @@ UIScrollViewDelegate>
                     NSMutableArray *tempTimeArray = [NSMutableArray array];
                     for (int j = 0; j < lineArray.count-1; j++) {
                         CGFloat seconds = [self getLyricTimeWithTimeStr:lineArray[j]];
-                        [tempTimeArray addObject:[NSNumber numberWithFloat:seconds]];
+                        if (seconds >= 0) {
+                            [tempTimeArray addObject:[NSNumber numberWithFloat:seconds]];
+                        }
                     }
                     if (tempTimeArray.count > 0) {
                         for (NSNumber *number in tempTimeArray) {
@@ -421,7 +432,9 @@ UIScrollViewDelegate>
                     }
                 }else{//单个时间
                     CGFloat seconds = [self getLyricTimeWithTimeStr:lineArray.firstObject];
-                    [self addObjectWithKey:seconds value:lineArray.lastObject];
+                    if (seconds >= 0) {
+                        [self addObjectWithKey:seconds value:lineArray.lastObject];
+                    }
                 }
             }
         }
@@ -433,35 +446,38 @@ UIScrollViewDelegate>
         for (NSString *key in self.timeArray) {
             [self.lyricArray addObject:[self.tempLrcDictionary valueForKey:key]];
         }
-        if (self.timeArray.count > 0) {[self hideNoticeLabel];}
-        //刷新
-        [self tableViewReloadData];
-        //位置复原
-        if (self.lyricArray.count > 0) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-                [self scrollToRowAtIndexPath:indexPath atScrollPosition:(UITableViewScrollPositionMiddle) animated:NO];
-            });
-        }else{
-            [self showNoticeLabel];
-        }
-        
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            //得到数据调用一次更新信息
-            [self df_updateLyricsTextWithAnimation:NO];
-        });
-        
+        //重置
+        [self resetLyricTableView];
+        //得到数据调用一次更新信息
+        [self df_updateLyricsTextWithAnimation:NO];
     });
+}
+/**位置复原*/
+- (void)resetLyricTableView{
+    if (self.timeArray.count > 0) {[self hideNoticeLabel];}
+    //刷新
+    [self tableViewReloadData];
+    
+    if (self.lyricArray.count > 0) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+            [self scrollToRowAtIndexPath:indexPath atScrollPosition:(UITableViewScrollPositionTop) animated:NO];
+        });
+    }else{
+        [self showNoticeLabel];
+    }
 }
 /**时间转换*/
 - (CGFloat)getLyricTimeWithTimeStr:(NSString *)timeStr{
+    if ([self isHasLetterWithStr:timeStr]) {
+        return -1;
+    }
     if ([timeStr rangeOfString:@"["].location != NSNotFound) {
         timeStr = [timeStr componentsSeparatedByString:@"["].lastObject;
         timeStr = [self removeNilWithStr:timeStr];
     }
     //时间转换成秒
-    CGFloat second = 0;
+    CGFloat second = -1.0;
     //[00:00.00]和[00:00:00]（分钟:秒.毫秒）
     if (timeStr.length == 8) {
         NSString *str = [timeStr substringWithRange:NSMakeRange(5, 1)];
@@ -481,7 +497,6 @@ UIScrollViewDelegate>
     }
     return second;
 }
-
 /**加入临时字典*/
 - (NSMutableDictionary *)addObjectWithKey:(CGFloat)timeKey value:(id)value{
     NSString *K = [NSString stringWithFormat:@"%lf",timeKey];
@@ -514,7 +529,7 @@ UIScrollViewDelegate>
         cell.foregroundLrcLabel.frame = cell.backgroundLrcLabel.frame = LabelRect;
     });
     
-    if (indexPath == self.currentIndexPath) {//当前行
+    if (indexPath.row == self.currentIndex) {//当前行
         cell.foregroundLrcLabel.hidden      = NO;
         cell.backgroundLrcLabel.textColor   = self.currentLineLrcBackgroundTextColor;
         cell.backgroundLrcLabel.font        = cell.foregroundLrcLabel.font = self.currentLineLrcFont;
@@ -527,8 +542,7 @@ UIScrollViewDelegate>
             cell.backgroundLrcLabel.textColor   = self.otherLineLrcBackgroundTextColor;
             cell.backgroundLrcLabel.font        = self.otherLineLrcFont;
         }
-    }
-    
+    }    
     CGFloat height = self.cellRowHeight;
     if (indexPath.row < self.lyricArray.count) {//安全性判断
         NSString *lrc = self.lyricArray[indexPath.row];
@@ -596,6 +610,15 @@ UIScrollViewDelegate>
     NSString *string = [self removeNilWithStr:str];
     if (string.length == 0)
         return YES;
+    return NO;
+}
+/**是否包含字母*/
+- (BOOL)isHasLetterWithStr:(NSString *)str{
+    NSRegularExpression *numberRegular = [NSRegularExpression regularExpressionWithPattern:@"[A-Za-z]" options:NSRegularExpressionCaseInsensitive error:nil];
+    NSInteger count = [numberRegular numberOfMatchesInString:str options:NSMatchingReportProgress range:NSMakeRange(0, str.length)];
+    if (count > 0) {
+        return YES;
+    }
     return NO;
 }
 /**刷新tableview*/

@@ -37,13 +37,14 @@
 - (void)requestManagerDidReceiveData {
     [self processRequestList];
 }
-
-- (void)requestManagerDidCompleteWithError:(NSString *)errorDescription isCached:(BOOL)isCached{
+- (void)requestManagerIsCached:(BOOL)isCached{
     if (self.delegate && [self.delegate respondsToSelector:@selector(loader:isCached:)]) {
         [self.delegate loader:self isCached:isCached];
     }
-    if (self.delegate && [self.delegate respondsToSelector:@selector(loader:didGetError:)]) {
-        [self.delegate loader:self didGetError:errorDescription];
+}
+- (void)requestManagerDidCompleteWithError:(NSInteger)errorCode{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(loader:requestError:)]) {
+        [self.delegate loader:self requestError:errorCode];
     }
 }
 
@@ -63,12 +64,13 @@
 
     @synchronized(self) {
         if (self.requestManager) {
-            if (loadingRequest.dataRequest.requestedOffset >= self.requestManager.requestOffset &&
-                loadingRequest.dataRequest.requestedOffset <= self.requestManager.requestOffset + self.requestManager.cacheLength) {
+            long long offset = loadingRequest.dataRequest.requestedOffset;
+            if (offset >= 0 && offset <= self.requestManager.cacheLength) {
                 //数据已经缓存，则直接完
                 [self processRequestList];
             }else {
                 //数据还没缓存，则等待数据下载；如果是Seek操作，则重新请求
+//                [self newTaskWithLoadingRequest:loadingRequest cache:NO];
             }
         }else {
             [self newTaskWithLoadingRequest:loadingRequest cache:YES];
@@ -84,7 +86,7 @@
         self.requestManager.cancel = YES;
     }
     self.requestManager = [[DFPlayerRequestManager alloc] initWithUrl:loadingRequest.request.URL];
-    self.requestManager.requestOffset = (long)loadingRequest.dataRequest.requestedOffset;
+//    self.requestManager.requestOffset = (long)loadingRequest.dataRequest.requestedOffset;
     if (fileLength > 0) {
         self.requestManager.fileLength = fileLength;
     }
@@ -122,11 +124,13 @@
     }
     
     //当前下载长度-要请求的长度
-    NSUInteger canReadLength = cacheLength - (requestedOffset - self.requestManager.requestOffset);
+    //    NSUInteger canReadLength = cacheLength - (requestedOffset - self.requestManager.requestOffset);
+        NSUInteger canReadLength = cacheLength - requestedOffset;
     NSUInteger respondLength = MIN(canReadLength, loadingRequest.dataRequest.requestedLength);
  
-    [loadingRequest.dataRequest respondWithData:[DFPlayerFileManager df_readTempFileDataWithOffset:requestedOffset - self.requestManager.requestOffset length:respondLength]];
-    
+//    [loadingRequest.dataRequest respondWithData:[DFPlayerFileManager df_readTempFileDataWithOffset:requestedOffset - self.requestManager.requestOffset length:respondLength]];
+    [loadingRequest.dataRequest respondWithData:[DFPlayerFileManager df_readTempFileDataWithOffset:requestedOffset length:respondLength]];
+
     //如果完全响应了所需要的数据，则完成
     NSUInteger nowendOffset = requestedOffset + canReadLength;
     NSUInteger reqEndOffset = (long)loadingRequest.dataRequest.requestedOffset + (long)loadingRequest.dataRequest.requestedLength;

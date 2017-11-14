@@ -22,7 +22,7 @@
 /**调用该方法将恢复更新与进度相关的UI控件（除了歌词tableview）的刷新*/
 - (void)df_resumeUpdateProgress;
 
-/**
+/**(下面的方法可以显示出airplay按钮，若完善airplay功能需要用到私有API，故不建议使用)
  AirPlay按钮（背景图片在DFPlayer.bundle中同名替换相应的图片即可）
  airplay按钮是系统按钮，当系统检测到airplay可用时才会显示。
  
@@ -31,9 +31,9 @@
  @param superView AirPlayView父视图
  @return AirPlayView
  */
-- (UIView *_Nonnull)df_airPlayViewWithFrame:(CGRect)frame
-                            backgroundColor:(UIColor *_Nonnull)backgroundColor
-                                  superView:(UIView *_Nonnull)superView;
+- (UIView *_Nullable)df_airPlayViewWithFrame:(CGRect)frame
+                             backgroundColor:(UIColor *_Nonnull)backgroundColor
+                                   superView:(UIView *_Nonnull)superView;
 
 /**
  播放暂停按钮(背景图片在DFPlayer.bundle中同名替换相应的图片即可)
@@ -72,7 +72,7 @@
                                           block:(void(^_Nullable)(void))block;
 
 /**
- 播放模式按钮(单曲循环，顺序循环，随机循环) （DFPlayerMode为DFPlayerModeOnlyOnce时此按钮无效）
+ 播放模式按钮(单曲循环，顺序循环，随机循环) （DFPlayerMode为DFPlayerModeOnlyOnce时此按钮会隐藏）
  
  @param frame 按钮frame
  @param superView 按钮父视图
@@ -97,9 +97,9 @@
  @return 进度条
  */
 - (UIProgressView *_Nullable)df_bufferProgressViewWithFrame:(CGRect)frame
-                                    trackTintColor:(UIColor *_Nonnull)trackTintColor
-                                 progressTintColor:(UIColor *_Nonnull)progressTintColor
-                                         superView:(UIView *_Nonnull)superView;
+                                             trackTintColor:(UIColor *_Nonnull)trackTintColor
+                                          progressTintColor:(UIColor *_Nonnull)progressTintColor
+                                                  superView:(UIView *_Nonnull)superView;
 
 /**
  播放进度条

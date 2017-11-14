@@ -16,7 +16,7 @@
 
 - (void)loader:(DFPlayerResourceLoader *)loader isCached:(BOOL)isCached;
 
-- (void)loader:(DFPlayerResourceLoader *)loader didGetError:(NSString *)errorDescription;
+- (void)loader:(DFPlayerResourceLoader *)loader requestError:(NSInteger)errorCode;
 @end
 /**
  DFPlayer资源加载器

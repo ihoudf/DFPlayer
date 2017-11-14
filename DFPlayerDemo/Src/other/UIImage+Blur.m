@@ -2,7 +2,7 @@
 //  UIImage+Blur.m
 //  DFPlayer
 //
-//  Created by Faroe on 2017/9/19.
+//  Created by HDF on 2017/9/19.
 //  Copyright © 2017年 HDF. All rights reserved.
 //
 

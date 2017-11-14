@@ -34,7 +34,8 @@ static NSString *cellId = @"cellId";
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"添加音频" style:(UIBarButtonItemStylePlain) target:self action:@selector(addSongAction)];
     self.navigationItem.rightBarButtonItem.tintColor = HDFGreenColor;
-
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillTerminate) name:UIApplicationWillTerminateNotification object:nil];
+    
     self.addIndex = 0;
     [self initBackGroundView];
     [self initDFPlayer];
@@ -133,9 +134,9 @@ static NSString *cellId = @"cellId";
     [DFPlayer shareInstance].delegate    = self;
     [DFPlayer shareInstance].category    = DFPlayerAudioSessionCategoryPlayback;
     [DFPlayer shareInstance].isObserveWWAN = YES;
+//    [DFPlayer shareInstance].isManualToPlay = NO;
 //    [DFPlayer shareInstance].playMode = DFPlayerModeOnlyOnce;//DFPLayer默认单曲循环。
-    [DFPlayer shareInstance].isObservePreviousAudioModel = YES;
-    [[DFPlayer shareInstance] df_reloadData];//必须在传入数据源后调用（类似UITableView的reloadData）
+    [[DFPlayer shareInstance] df_reloadData];//须在传入数据源后调用（类似UITableView的reloadData）
     CGRect buffRect = CGRectMake(CountWidth(104), topH+CountHeight(28), CountWidth(542), CountHeight(4));
     CGRect proRect  = CGRectMake(CountWidth(104), topH+CountHeight(10), CountWidth(542), CountHeight(40));
     CGRect currRect = CGRectMake(CountWidth(10), topH+CountHeight(10), CountWidth(90), CountHeight(40));
@@ -144,11 +145,8 @@ static NSString *cellId = @"cellId";
     CGRect nextRext = CGRectMake(CountWidth(490), topH+CountHeight(84), CountWidth(80), CountWidth(80));
     CGRect lastRect = CGRectMake(CountWidth(180), topH+CountHeight(84), CountWidth(80), CountWidth(80));
     CGRect typeRect = CGRectMake(CountWidth(40), topH+CountHeight(100), CountWidth(63), CountHeight(45));
-    CGRect airRect  = CGRectMake(SCREEN_WIDTH-CountWidth(92), topH+CountHeight(100), CountWidth(52), CountHeight(48));
 
     DFPlayerControlManager *manager = [DFPlayerControlManager shareInstance];
-    //airplay按钮
-    [manager df_airPlayViewWithFrame:airRect backgroundColor:[UIColor colorWithWhite:0 alpha:0] superView:self.backgroundImageView];
     //缓冲条
     [manager df_bufferProgressViewWithFrame:buffRect trackTintColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.5] progressTintColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:0.5] superView:self.backgroundImageView];
     //进度条
@@ -168,6 +166,9 @@ static NSString *cellId = @"cellId";
     [manager df_nextAudioBtnWithFrame:nextRext superView:self.backgroundImageView block:nil];
     //上一首按钮
     [manager df_lastAudioBtnWithFrame:lastRect superView:self.backgroundImageView block:nil];
+    
+    [[DFPlayer shareInstance] df_setPlayerWithPreviousAudioModel];
+
 }
 
 #pragma mark - DFPLayer dataSource
@@ -182,7 +183,7 @@ static NSString *cellId = @"cellId";
         DFPlayerModel *model        = [[DFPlayerModel alloc] init];
         model.audioId               = i;//****重要。AudioId从0开始，仅标识当前音频在数组中的位置。
         if ([yourModel.yourUrl hasPrefix:@"http"]) {//网络音频
-            model.audioUrl              = [self translateIllegalCharacterWtihUrlStr:yourModel.yourUrl];
+            model.audioUrl  = [self translateIllegalCharacterWtihUrlStr:yourModel.yourUrl];
         }else{//本地音频
             NSString *path = [[NSBundle mainBundle] pathForResource:yourModel.yourUrl ofType:@""];
             if (path) {model.audioUrl = [NSURL fileURLWithPath:path];}
@@ -225,13 +226,6 @@ static NSString *cellId = @"cellId";
         });
     });
 }
-//网络状态监测代理
-- (void)df_playerNetworkDidChangeToWWAN:(DFPlayer *)player{
-    [self showAlertWithTitle:@"继续播放将产生流量费用" message:nil noBlock:nil yseBlock:^{
-        [DFPlayer shareInstance].isObserveWWAN = NO;
-        [[DFPlayer shareInstance] df_playerPlayWithAudioId:player.currentAudioModel.audioId];
-    }];
-}
 //缓冲进度代理
 - (void)df_player:(DFPlayer *)player bufferProgress:(CGFloat)bufferProgress totalTime:(CGFloat)totalTime{
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:player.currentAudioModel.audioId
@@ -248,13 +242,21 @@ static NSString *cellId = @"cellId";
     cell.detailTextLabel.text = [NSString stringWithFormat:@"当前进度%lf--当前时间%.0f--总时长%.0f",progress,currentTime,totalTime];
     cell.detailTextLabel.hidden = NO;
 }
-//缓存情况代理
-- (void)df_player:(DFPlayer *)player isCached:(BOOL)isCached{
-    if (isCached) {[self tableViewReloadData];}
-}
-//错误信息代理
-- (void)df_player:(DFPlayer *)player didFailWithErrorMessage:(NSString *)errorMessage{
-    [self showAlertWithTitle:errorMessage message:nil yesBlock:nil];
+//状态信息代理
+- (void)df_player:(DFPlayer *)player didGetStatusCode:(DFPlayerStatusCode)statusCode{
+    if (statusCode == 0) {
+        [self showAlertWithTitle:@"没有网络连接" message:nil yesBlock:nil];
+    }else if(statusCode == 1){
+        [self showAlertWithTitle:@"继续播放将产生流量费用" message:nil noBlock:nil yseBlock:^{
+            [DFPlayer shareInstance].isObserveWWAN = NO;
+            [[DFPlayer shareInstance] df_playerPlayWithAudioId:player.currentAudioModel.audioId];
+        }];
+        return;
+    }else if(statusCode == 2){
+        [self showAlertWithTitle:@"请求超时" message:nil yesBlock:nil];
+    }else if(statusCode == 8){
+        [self tableViewReloadData];return;
+    }
 }
 
 #pragma mark - 从plist中加载音频数据
@@ -325,13 +327,17 @@ static NSString *cellId = @"cellId";
 - (NSURL *)translateIllegalCharacterWtihUrlStr:(NSString *)yourUrl{
     //如果链接中存在中文或某些特殊字符，需要通过以下代码转译
     NSString *encodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)yourUrl, (CFStringRef)@"!NULL,'()*+,-./:;=?@_~%#[]", NULL, kCFStringEncodingUTF8));
-    //        NSString *str = [ss stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//    NSString *encodedString = [yourUrl stringByAddingPercentEncodingWithAllowedCharacters:charactSet];
     return [NSURL URLWithString:encodedString];
 }
 - (void)tableViewReloadData{
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
     });
+}
+
+- (void)applicationWillTerminate{
+    [[DFPlayer shareInstance] df_setPreviousAudioModel];
 }
 
 

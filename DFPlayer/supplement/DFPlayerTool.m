@@ -8,6 +8,12 @@
 
 #import "DFPlayerTool.h"
 #import "AFNetworkReachabilityManager.h"
+
+@interface DFPlayerTool()
+
+
+@end
+
 @implementation DFPlayerTool
 
 + (NSURL *)customUrlWithUrl:(NSURL *)url{
@@ -33,24 +39,44 @@
     return [components URL];
 }
 
-+ (void)checkNetworkReachable:(void(^)(NSInteger networkStatus))block
-{
++ (BOOL)isLocalWithUrl:(NSURL *)url{
+    return [self isLocalWithUrlString:url.absoluteString];
+}
+
++ (BOOL)isLocalWithUrlString:(NSString *)urlString{
+    if ([urlString hasPrefix:@"http"]) {
+        return NO;
+    }
+    return YES;
+}
+
++ (DFPlayerTool *)shareInstance {
+    static DFPlayerTool *instance = nil;
+    static dispatch_once_t predicate;
+    dispatch_once(&predicate, ^{
+        instance = [[[self class] alloc] init];
+    });
+    return instance;
+}
+- (void)startMonitoringNetworkStatus:(void(^)(void))block{
     AFNetworkReachabilityManager *mgr = [AFNetworkReachabilityManager sharedManager];
     [mgr setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        NSLog(@"-- DFPlayer： 网络状态：%ld",(long)status);
         switch (status) {
             case AFNetworkReachabilityStatusUnknown:
-                block(-1);
+                self.networkStatus = DFPlayerNetworkStatusUnknown;
                 break;
             case AFNetworkReachabilityStatusNotReachable:
-                block(0);
+                self.networkStatus = DFPlayerNetworkStatusNotReachable;
                 break;
             case AFNetworkReachabilityStatusReachableViaWWAN:
-                block(1);
+                self.networkStatus = DFPlayerNetworkStatusReachableViaWWAN;
                 break;
             case AFNetworkReachabilityStatusReachableViaWiFi:
-                block(2);
+                self.networkStatus = DFPlayerNetworkStatusReachableViaWiFi;
                 break;
         }
+        if (block) {block();}
     }];
     [mgr startMonitoring];
 }

@@ -2,7 +2,7 @@
 //  main.m
 //  DFPlayerDemo
 //
-//  Created by Faroe on 2017/9/20.
+//  Created by HDF on 2017/9/20.
 //  Copyright © 2017年 HDF. All rights reserved.
 //
 

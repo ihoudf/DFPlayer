@@ -8,6 +8,7 @@
 
 #import "DFPlayerFileManager.h"
 #import "DFPlayerTool.h"
+
 static NSString *DFPlayer_fileId            = @"cacheFileId";
 static NSString *DFPlayer_fileName          = @"DFPlayerCache";//所有缓存文件都放在了沙盒Cache文件夹下DFPlayerCache文件夹里
 static NSString *DFPlayer_archiverName      = @"DFPlayer.archiver";
@@ -28,7 +29,7 @@ static NSString *DFPlayer_modelArchiverName = @"DFPlayerInfoModel.archiver";
             NSLog(@"warning:The length of userId is zero,DFPlayer use unified cache file named user_public.");
         }
     }else{
-         NSLog(@"DFPlayer use unified cache file named user_public.");
+         NSLog(@"-- DFPlayer： Using unified cache file named user_public.");
     }
     [[NSUserDefaults standardUserDefaults] setObject:uniqueId forKey:DFPlayer_fileId];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -97,7 +98,7 @@ static NSString *DFPlayer_modelArchiverName = @"DFPlayerInfoModel.archiver";
         NSNumber *numberId = [NSNumber numberWithInt:[DFPlayer_fileId intValue]];
         [manager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:@{NSFileOwnerAccountID:numberId} error:&error];
         if (error) {
-            NSLog(@"error--:%@",[error localizedDescription]);
+            NSLog(@"-- DFPlayer:error-:%@",[error localizedDescription]);
         }
     }
     NSString *audioName = [url.path lastPathComponent];
@@ -183,12 +184,13 @@ static NSString *DFPlayer_modelArchiverName = @"DFPlayerInfoModel.archiver";
 }
 
 /**计算系统磁盘剩余可用空间*/
-+ (void)df_countSystemSizeBlock:(void(^)(CGFloat totalSize,CGFloat freeSize,BOOL isSuccess))block{
++ (void)df_countSystemSizeBlock:(void(^)(CGFloat totalSize,CGFloat freeSize))block{
     NSError *error = nil;
     NSDictionary *dictionary = [[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:&error];
     if (error){
+        NSLog(@"-- DFPlayer: %@",[error localizedDescription]);
         if (block) {
-            block(0,0,NO);
+            block(0,0);
         }
     }else{
         NSNumber *free = [dictionary objectForKey:NSFileSystemFreeSize];
@@ -197,13 +199,17 @@ static NSString *DFPlayer_modelArchiverName = @"DFPlayerInfoModel.archiver";
         NSNumber *total = [dictionary objectForKey:NSFileSystemSize];
         float totalsize = [total unsignedLongLongValue]/1000.0;
         if (block) {
-            block(totalsize,freesize,YES);
+            block(totalsize,freesize);
         }
     }
 }
 
 @end
 
+NSString *const DFPlayerCurrentAudioInfoModelAudioUrl       = @"DFPlayerCurrentAudioInfoModelAudioUrl";
+NSString *const DFPlayerCurrentAudioInfoModelCurrentTime    = @"DFPlayerCurrentAudioInfoModelCurrentTime";
+NSString *const DFPlayerCurrentAudioInfoModelTotalTime      = @"DFPlayerCurrentAudioInfoModelTotalTime";
+NSString *const DFPlayerCurrentAudioInfoModelProgress       = @"DFPlayerCurrentAudioInfoModelProgress";
 
 @implementation DFPlayerArchiverManager
 #pragma mark - key归档
@@ -263,7 +269,33 @@ static NSString *DFPlayer_modelArchiverName = @"DFPlayerInfoModel.archiver";
     return [NSKeyedUnarchiver unarchiveObjectWithFile:path];
 }
 /**归档infoModel*/
-+ (BOOL)df_archiveInfoModelDictionary:(NSMutableDictionary *)dic{
++ (BOOL)df_archiveInfoModelWithAudioUrl:(NSURL *)audioUrl
+                            currentTime:(CGFloat)currentTime
+                              totalTime:(CGFloat)totalTime
+                               progress:(CGFloat)progress{
+
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    if (audioUrl && [audioUrl isKindOfClass:[NSURL class]]) {
+        if ([DFPlayerTool isLocalWithUrl:audioUrl]) {
+            [dic setObject:[[audioUrl absoluteString] lastPathComponent]
+                    forKey:DFPlayerCurrentAudioInfoModelAudioUrl];
+        }else{
+            [dic setObject:[audioUrl absoluteString]
+                    forKey:DFPlayerCurrentAudioInfoModelAudioUrl];
+        }    
+    }
+    if (currentTime) {
+        [dic setObject:[NSNumber numberWithFloat:currentTime]
+                forKey:DFPlayerCurrentAudioInfoModelCurrentTime];
+    }
+    if (totalTime) {
+        [dic setObject:[NSNumber numberWithFloat:totalTime]
+                forKey:DFPlayerCurrentAudioInfoModelTotalTime];
+    }
+    if (progress) {
+        [dic setObject:[NSNumber numberWithFloat:progress]
+                forKey:DFPlayerCurrentAudioInfoModelProgress];
+    }
     NSString *path = [DFPlayerArchiverManager modelArchiverFilePath];
     return [NSKeyedArchiver archiveRootObject:dic toFile:path];
 }

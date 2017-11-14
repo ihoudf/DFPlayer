@@ -9,6 +9,7 @@
 #import "DFPlayerRequestManager.h"
 #import "DFPlayerTool.h"
 #import "DFPlayerFileManager.h"
+NSString * const DFNetworkStatusKey    = @"networkStatus";
 
 @interface DFPlayerRequestModel : NSObject<NSCoding>
 @property (nonatomic, copy) NSString *last_modified;
@@ -38,23 +39,27 @@
 @property (nonatomic, strong) NSURLSessionDataTask  *dataTask;
 @property (nonatomic, strong) NSURL                 *requestUrl;
 @property (nonatomic, strong) NSMutableArray        *archiverArray;
+@property (nonatomic, assign) BOOL  isNewAudio;
 
 @end
 
 @implementation DFPlayerRequestManager
+- (void)dealloc{
+    [[DFPlayerTool shareInstance] removeObserver:self forKeyPath:DFNetworkStatusKey];
+}
 + (instancetype)requestWithUrl:(NSURL *)url{
     return [[self alloc] initWithUrl:url];
 }
 - (instancetype)initWithUrl:(NSURL *)url{
     self = [super init];
     if (self) {
+        [[DFPlayerTool shareInstance] addObserver:self forKeyPath:DFNetworkStatusKey options:NSKeyValueObservingOptionNew context:nil];
         [DFPlayerFileManager df_createTempFile];
         self.requestUrl = [DFPlayerTool originalUrlWithUrl:url];
     }
     return self;
 }
 - (void)requestStart{
-    
     __block DFPlayerRequestModel *model = [[DFPlayerRequestModel alloc] init];
     if (self.isHaveCache) {//安全性判断。如果沙盒存在缓存文件，再去发起校验。沙盒没有，直接下载缓存
         if (self.isObserveFileModifiedTime) {
@@ -69,21 +74,33 @@
         }
     }
     
+    self.isNewAudio = YES;
     //直接请求源端数据
     self.request = [NSMutableURLRequest requestWithURL:self.requestUrl
                                            cachePolicy:(NSURLRequestReloadIgnoringCacheData)
-                                       timeoutInterval:20.0];
+                                       timeoutInterval:10.0];
     if (model.ETag) {
         [self.request addValue:model.ETag forHTTPHeaderField:@"If-None-Match"];
     }
     if (model.last_modified) {
         [self.request addValue:model.last_modified forHTTPHeaderField:@"If-Modified-Since"];
     }
+    [self requestDataTask];
+}
+
+- (void)resumeRequestStart{
+    //直接请求源端数据
+    self.request = [NSMutableURLRequest requestWithURL:self.requestUrl
+                                           cachePolicy:(NSURLRequestReloadIgnoringCacheData)
+                                       timeoutInterval:10.0];
     if (self.requestOffset > 0) {
-        NSString *value = [NSString stringWithFormat:@"bytes=%ld-%ld", (long)self.requestOffset, (long)self.fileLength - 1];
+        NSString *value = [NSString stringWithFormat:@"bytes=%ld-%ld", (long)self.requestOffset,(long)self.fileLength];
         [self.request addValue:value forHTTPHeaderField:@"Range"];
     }
-    
+    [self requestDataTask];
+}
+
+- (void)requestDataTask{
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     self.session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:[NSOperationQueue mainQueue]];
     self.dataTask = [self.session dataTaskWithRequest:self.request];
@@ -102,12 +119,13 @@
     if (self.cancel) return;
     completionHandler(NSURLSessionResponseAllow);
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+    self.isNewAudio = NO;
 
-    NSString *contentLength = httpResponse.allHeaderFields[@"Content-Length"];
-    self.fileLength = (long)[contentLength integerValue] > 0 ? (long)[contentLength integerValue] : (long)[response expectedContentLength];
-    
-    NSInteger statusCode = httpResponse.statusCode;    
+    NSInteger statusCode = httpResponse.statusCode;
     if (statusCode == 200) {
+        NSString *contentLength = httpResponse.allHeaderFields[@"Content-Length"];
+        self.fileLength = (long)[contentLength integerValue] > 0 ? (long)[contentLength integerValue] : (long)[response expectedContentLength];
+        
         DFPlayerRequestModel *model = [DFPlayerRequestModel new];
         model.last_modified = httpResponse.allHeaderFields[@"Last-Modified"];
         model.ETag          = httpResponse.allHeaderFields[@"Etag"];
@@ -130,8 +148,9 @@
 //服务器返回数据 可能会调用多次
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
     if (self.cancel) return;
-    [DFPlayerFileManager df_writeDataToAudioFileTempPathWithData:data];
     self.cacheLength += data.length;
+    [DFPlayerFileManager df_writeDataToAudioFileTempPathWithData:data];
+    
     if (self.delegate && [self.delegate respondsToSelector:@selector(requestManagerDidReceiveData)]) {
         [self.delegate requestManagerDidReceiveData];
     }
@@ -139,29 +158,37 @@
 
 //请求完成会调用该方法，请求失败则error有值
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
-    
-    if (self.cancel) {
-        NSLog(@"-- DFPlayer： 下载取消");
-        if (self.delegate && [self.delegate respondsToSelector:@selector(requestManagerDidCompleteWithError:isCached:)]) {
-            [self.delegate requestManagerDidCompleteWithError:nil isCached:NO];
+    if (self.cancel) {return;}//下载取消
+    if (error) {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(requestManagerDidCompleteWithError:)]) {
+            [self.delegate requestManagerDidCompleteWithError:error.code];
         }
     }else {
-        if (error) {
-            if (self.delegate && [self.delegate respondsToSelector:@selector(requestManagerDidCompleteWithError:isCached:)]) {
-                [self.delegate requestManagerDidCompleteWithError:[error localizedDescription] isCached:NO];
+        self.isNewAudio = YES;
+        //可以缓存则保存文件
+        [DFPlayerFileManager df_moveAudioFileFromTempPathToCachePath:self.requestUrl blcok:^(BOOL isSuccess,NSError *error) {
+            if (!isSuccess) {
+                NSLog(@"-- DFPlayer： 保存失败：%@",[error localizedDescription]);
             }
-        }else {
-            //可以缓存则保存文件
-            [DFPlayerFileManager df_moveAudioFileFromTempPathToCachePath:self.requestUrl blcok:^(BOOL isSuccess,NSError *error) {
-                if (isSuccess) {
-                    NSLog(@"-- DFPlayer： 保存成功");
-                }else{
-                    NSLog(@"-- DFPlayer： 保存失败：%@",[error localizedDescription]);
+            if (self.delegate && [self.delegate respondsToSelector:@selector(requestManagerIsCached:)]) {
+                [self.delegate requestManagerIsCached:isSuccess];
+            }
+        }];
+    }
+}
+
+#pragma mark - KVO
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
+    DFPlayerTool *tool = [DFPlayerTool shareInstance];
+    if (object == tool) {
+        if ([keyPath isEqualToString:DFNetworkStatusKey]) {
+            if ( !self.isNewAudio) {
+                if (tool.networkStatus != DFPlayerNetworkStatusUnknown &&
+                    tool.networkStatus != DFPlayerNetworkStatusNotReachable) {
+                    self.requestOffset = self.cacheLength;
+                    [self resumeRequestStart];
                 }
-                if (self.delegate && [self.delegate respondsToSelector:@selector(requestManagerDidCompleteWithError:isCached:)]) {
-                    [self.delegate requestManagerDidCompleteWithError:[error localizedDescription] isCached:isSuccess];
-                }
-            }];
+            }
         }
     }
 }
