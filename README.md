@@ -8,7 +8,7 @@
 <a href="https://ihoudf.github.io/" target="blank"><img src="https://img.shields.io/badge/homepage-ihoudf-brightgreen.svg"></a>
 
 
-##### A simple and flexible iOS audio playback module. Based on AVPlayer, support local and remote audio playback, with caching, remote control, locking and control center information display, single sequential and random playback,airplay,Lyrics sync,and other basic audio player functions, using a few code can realize the function of player.（简单又灵活的iOS音频播放组件。基于AVPlayer，支持本地和远程音频播放，具有缓存、耳机线控、锁频和控制中心信息展示、单曲顺序随机播放、airplay播放、歌词同步、记录上次播放进度等基本的音频播放器功能，DFPlayer封装了缓冲条、进度条、播放暂停按钮、下一首按钮、上一首按钮、播放模式按钮、airplay按钮、歌词同步的tableview等UI控件，一行代码布局即可实现相应功能。）
+##### A simple and flexible iOS audio playback module. Based on AVPlayer, support local and remote audio playback, with caching, remote control, locking and control center information display, single sequential and random playback,airplay,Lyrics sync,and other basic audio player functions, using a few code can realize the function of player.（简单又灵活的iOS音频播放组件。基于AVPlayer，支持本地和远程音频播放，具有缓存、耳机线控、锁屏和控制中心信息展示、单曲顺序随机播放、airplay播放、歌词同步、记录上次播放进度等基本的音频播放器功能，DFPlayer封装了缓冲条、进度条、播放暂停按钮、下一首按钮、上一首按钮、播放模式按钮、airplay按钮、歌词同步的tableview等UI控件，一行代码布局即可实现相应功能。）
 
 - ##### DFPlayer：关于iOS音频播放，传音频数据给我就好了🙃10行代码可播放，50行代码做播放器
 - ##### 观看两分钟视频展示：<a href="http://www.iqiyi.com/w_19ruzcqjqh.html" target="blank">http://www.iqiyi.com/w_19ruzcqjqh.html</a>
@@ -22,7 +22,7 @@
 <br>(2). 歌曲配图由<a href="https://y.qq.com/" target="blank">https://y.qq.com/</a>提供。
 <br>(3). 歌词及Lrc制作由<a href="http://www.lrcgc.com/" target="blank">http://www.lrcgc.com/</a>和<a href="https://y.qq.com/" target="blank">https://y.qq.com/</a>提供。
 #
-### 安装（最低支持 iOS 7.0）
+### -- 安装（最低支持 iOS 7.0）
 ###### 手动安装
 ```
     1.下载 DFPlayer 文件夹内的所有内容
@@ -36,7 +36,7 @@
     3.import "DFPlayer.h"
 ```
 > DFPLayer使用AFNetworkReachabilityManager进行网络监测，如正在使用AFNetworking，删除DFPlayer中的相关文件。
-### 版本说明
+### -- 版本说明
 ##### 当前版本1.0.4，pods同步。<a href="https://github.com/ihoudf/DFPlayer/releases" target="blank">查看更多版本</a> 
 ```
 本次更新：
@@ -48,7 +48,7 @@
 6.其他逻辑优化
 ```
 
-### 使用
+### -- 使用
 DFPlayer的使用十分简单。
 ##### 详细文档：<a href="https://ihoudf.github.io/2017/10/26/DFPlayer%E6%8E%A5%E5%85%A5%E8%AF%B4%E6%98%8E/#df-doc" target="blank">DFPlayer详细文档</a>
 
@@ -92,11 +92,20 @@ DFPlayer的使用十分简单。
     ...等，详细查看‘详细文档’。
 ```
 
-### 许可证
+### -- 许可证
 使用 MIT 许可证，详情见<a href="https://github.com/ihoudf/DFPlayer/blob/master/LICENSE">LICENSE</a> 文件。
 
-#
-### Installation（required iOS 7.0+）
+## THANKS!
+如果您对DFPlayer有业务需求改进或发现bug，欢迎在<a href="https://github.com/ihoudf/DFPlayer/issues" target="blank">这里</a>提交。
+<br>您还可以添加qq交流群：479873475 ，一起探讨iOS开发技术，关于DFPlayer的bug修复和版本更新也会在群里及时告知。
+<br>
+<font color="#42C485">合作qq：188816190</font>
+<br>
+<br>
+<br>
+
+# English Introduction
+### -- Installation（required iOS 7.0+）
 ###### Manually
 ```
     1.Download all the files in the DFPlayer subdirectory.
@@ -111,7 +120,7 @@ DFPlayer的使用十分简单。
 ```
 > DFPLayer use AFNetworkReachabilityManager to monitor network status,if you are using AFNetWorking,delete releative file in DFPlayer group.
 
-### Use
+### -- Use
 The use of DFPlayer is so easy.
 ##### Detailed documentation：<a href="https://ihoudf.github.io/2017/10/26/DFPlayer%E6%8E%A5%E5%85%A5%E8%AF%B4%E6%98%8E/#df-doc" target="blank">DFPlayer documents</a>
 ##### Use Statement：
@@ -160,13 +169,8 @@ The use of DFPlayer is so easy.
 ```
 
 
-### License
+### -- License
 provided under the MIT license. See <a href="https://github.com/ihoudf/DFPlayer/blob/master/LICENSE" target="blank">LICENSE</a>  file for details.
-
-# THANKS!
-如果您对DFPlayer有业务需求改进或发现bug，欢迎在<a href="https://github.com/ihoudf/DFPlayer/issues" target="blank">这里</a>提交。您还可以添加qq交流群：479873475 ，一起探讨iOS开发技术。关于DFPlayer的bug修复和版本更新也会在群里及时告知。
-<br>
-<font color="#42C485">合作qq：188816190</font>
 <br>
 <br>
 <br>
