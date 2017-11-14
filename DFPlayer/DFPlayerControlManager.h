@@ -86,7 +86,6 @@
                                         superView:(UIView *_Nonnull)superView
                                             block:(void(^_Nullable)(void))block;
 
-
 /**
  缓冲进度条
 
@@ -138,7 +137,6 @@
  */
 - (UILabel *_Nullable)df_totalTimeLabelWithFrame:(CGRect)frame
                               superView:(UIView *_Nonnull)superView;
-
 
 #pragma mark - 歌词tableView相关
 /**

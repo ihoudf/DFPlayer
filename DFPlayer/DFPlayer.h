@@ -13,20 +13,6 @@
 #import "DFPlayerModel.h"
 #import "DFPlayerControlManager.h"
 
-//状态码
-typedef NS_ENUM(NSUInteger, DFPlayerStatusCode) {
-    DFPlayerStatus_NetworkUnavailable    = 0,//没有网络连接（注意：对于未缓存的网络音频，点击播放时若无网络会返回该状态码,播放时若无网络也会返回该状态码哦。DFPlayer支持运行时断点续传，即缓冲时网络从无到有，可以断点续传，而某音频没缓冲完就退出app，再进入app没做断点续传，以上特点与QQ音乐一致）
-    DFPlayerStatus_NetworkViaWWAN        = 1,//WWAN网络状态（注意：属性isObserveWWAN（默认NO）为YES时，对于未缓存的网络音频，只在点击该音频时返回该状态码。而音频正在缓冲时，网络状态由wifi到wwan并不会返回该状态码，以上特点与QQ音乐一致）
-    DFPlayerStatus_RequestTimeOut        = 2,//音频请求超时
-    DFPlayerStatus_UnavailableData       = 3,//无法获得该音频资源
-    DFPlayerStatus_UnavailableURL        = 4,//无效的URL地址
-    DFPlayerStatus_PlayError             = 5,//音频无法播放
-    DFPlayerStatus_DataError             = 6,//点击的音频ID不在当前数据源里（即数组越界）
-    DFPlayerStatus_CacheFailure          = 7,//当前音频缓存失败
-    DFPlayerStatus_CacheSuccess          = 8,//当前音频缓存完成
-    DFPlayerStatus_SetPreviousAudioModelError = 9,//配置历史音频信息失败
-    DFPlayerStatus_UnknownError          = 100,//未知错误
-};
 //播放器类别
 typedef NS_ENUM(NSInteger,DFPlayerAudioSessionCategory){
     //用于播放。随静音键和屏幕关闭而静音。不终止其它应用播放声音
@@ -58,6 +44,21 @@ typedef NS_ENUM(NSInteger, DFPlayerMode){
     DFPlayerModeOrderCycle,     //顺序循环
     DFPlayerModeShuffleCycle    //随机循环
 };
+
+//状态码
+typedef NS_ENUM(NSUInteger, DFPlayerStatusCode) {
+    DFPlayerStatus_NetworkUnavailable    = 0,//没有网络连接（注意：对于未缓存的网络音频，点击播放时若无网络会返回该状态码,播放时若无网络也会返回该状态码哦。DFPlayer支持运行时断点续传，即缓冲时网络从无到有，可以断点续传，而某音频没缓冲完就退出app，再进入app没做断点续传，以上特点与QQ音乐一致）
+    DFPlayerStatus_NetworkViaWWAN        = 1,//WWAN网络状态（注意：属性isObserveWWAN（默认NO）为YES时，对于未缓存的网络音频，只在点击该音频时返回该状态码。而音频正在缓冲时，网络状态由wifi到wwan并不会返回该状态码，以上特点与QQ音乐一致）
+    DFPlayerStatus_RequestTimeOut        = 2,//音频请求超时
+    DFPlayerStatus_UnavailableData       = 3,//无法获得该音频资源
+    DFPlayerStatus_UnavailableURL        = 4,//无效的URL地址
+    DFPlayerStatus_PlayError             = 5,//音频无法播放
+    DFPlayerStatus_DataError             = 6,//点击的音频ID不在当前数据源里（即数组越界）
+    DFPlayerStatus_CacheFailure          = 7,//当前音频缓存失败
+    DFPlayerStatus_CacheSuccess          = 8,//当前音频缓存完成
+    DFPlayerStatus_SetPreviousAudioModelError = 9,//配置历史音频信息失败
+    DFPlayerStatus_UnknownError          = 100,//未知错误
+};
 @class DFPlayer;
 @protocol DFPlayerDataSource <NSObject>
 @required
@@ -75,12 +76,10 @@ typedef NS_ENUM(NSInteger, DFPlayerMode){
  @param player DFPlayer音频播放管理器
  */
 - (DFPlayerInfoModel *)df_playerAudioInfoModel:(DFPlayer *)player;
-
 @end
 
 @protocol DFPlayerDelegate <NSObject>
 @optional
-
 /**
  代理1：音频将要加入播放队列
 
@@ -95,6 +94,7 @@ typedef NS_ENUM(NSInteger, DFPlayerMode){
  */
 
 - (void)df_playerReadyToPlay:(DFPlayer *)player;
+
 /**
  代理3：缓冲进度代理  (属性isObserveBufferProgress(默认YES)为YES时有效）
  
@@ -139,9 +139,9 @@ typedef NS_ENUM(NSInteger, DFPlayerMode){
  （DFPlayer默认被系统打断暂停播放，打断结束检测能够播放则恢复播放，如果实现此代理，打断逻辑由您处理）
 
  @param player DFPlayer音频播放管理器
- @param isInterruptedBegin YES:被系统打断开始  NO:被系统打断结束
+ @param isInterrupted YES:被系统打断开始  NO:被系统打断结束
  */
-- (void)df_player:(DFPlayer *)player isInterruptedBegin:(BOOL)isInterruptedBegin;
+- (void)df_player:(DFPlayer *)player isInterrupted:(BOOL)isInterrupted;
 
 /**
  代理8：监听耳机插入拔出代理
@@ -268,7 +268,7 @@ typedef NS_ENUM(NSInteger, DFPlayerMode){
 - (void)df_audioLast;
 
 /**
- 设置历史播放信息(本地音频或网络音频已缓存时有效)
+ 设置历史播放信息
  （在合适的时机，调用该方法，将会在本地记录音频URL、当前播放到的时间、音频总时长、播放进度，以供下次继续播放）
 
  @return 是否保存成功
@@ -282,11 +282,11 @@ typedef NS_ENUM(NSInteger, DFPlayerMode){
  */
 - (BOOL)df_setPlayerWithPreviousAudioModel;
 
-/**释放播放器，还原其他播放器*/
-- (void)df_dellecPlayer;
-
 /**实现远程线控功能，需替换main.m中UIApplicationMain函数的第三个参数。*/
-- (NSString *)remoteControlClass;
+- (NSString *)df_remoteControlClass;
+
+/**释放播放器，还原其他播放器*/
+- (void)df_deallocPlayer;
 
 /**音频跳转，value：时间百分比*/
 - (void)df_seekToTimeWithValue:(CGFloat)value;

@@ -11,6 +11,6 @@
 #import "DFPlayer.h"
 int main(int argc, char * argv[]) {
     @autoreleasepool {
-        return UIApplicationMain(argc, argv, [[DFPlayer shareInstance] remoteControlClass], NSStringFromClass([AppDelegate class]));
+        return UIApplicationMain(argc, argv, [[DFPlayer shareInstance] df_remoteControlClass], NSStringFromClass([AppDelegate class]));
     }
 }

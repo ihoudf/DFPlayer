@@ -25,7 +25,7 @@
 @interface DFPlayerInfoModel : NSObject
 /**歌词*/
 @property (nonatomic, nullable, copy) NSString *audioLyric;
-/*当您正确传入以下属性时，DFPlayer将自动为您设置锁屏模式和控制中心的播放信息展示*/
+/*正确传入以下属性时，DFPlayer将自动设置锁屏模式和控制中心的播放信息展示*/
 /**音频名*/
 @property (nonatomic, nullable, copy) NSString *audioName;
 /**专辑名*/

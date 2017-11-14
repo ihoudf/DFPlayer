@@ -66,7 +66,6 @@ NSString * const DFNetworkStatusKey    = @"networkStatus";
             NSMutableDictionary *dic = [DFPlayerArchiverManager df_hasArchivedFileDictionary];
             [dic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
                 if ([key isEqualToString:self.requestUrl.absoluteString]) {
-                    NSLog(@"-- DFPlayer： 已经存在归档");
                     model = (DFPlayerRequestModel *)obj;
                     *stop = YES;
                 }

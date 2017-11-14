@@ -13,7 +13,6 @@
 @interface DFCacheViewController ()
 
 @end
-
 @implementation DFCacheViewController
 {
     UILabel *currentLabel;

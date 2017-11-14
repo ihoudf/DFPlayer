@@ -189,15 +189,15 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
     if ([dic[AVAudioSessionInterruptionTypeKey] integerValue] == 1) {//打断开始
         NSLog(@"-- DFPlayer： 音频被打断开始，并记录了播放信息");
         [self df_setPreviousAudioModel];//打断时也要记录信息
-        if (self.delegate && [self.delegate respondsToSelector:@selector(df_player:isInterruptedBegin:)]) {
-            [self.delegate df_player:self isInterruptedBegin:YES];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(df_player:isInterrupted:)]) {
+            [self.delegate df_player:self isInterrupted:YES];
         }else{
             [self df_audioPause];
         }
     }else {//打断结束
         NSLog(@"-- DFPlayer： 音频被打断结束");
-        if (self.delegate && [self.delegate respondsToSelector:@selector(df_player:isInterruptedBegin:)]) {
-            [self.delegate df_player:self isInterruptedBegin:NO];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(df_player:isInterrupted:)]) {
+            [self.delegate df_player:self isInterrupted:NO];
         }else{
             if ([notification.userInfo[AVAudioSessionInterruptionOptionKey] unsignedIntegerValue] == 1) {
                 NSLog(@"-- DFPlayer： 能够恢复播放");
@@ -368,7 +368,7 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
     dispatch_group_notify(self.dataGroupQueue, self.HighGlobalQueue, ^{
         if (self.playerModelArray.count > audioId) {
             self.currentAudioModel = self.playerModelArray[audioId];
-            NSLog(@"-- DFPlayer： 点击了音频Id:%ld   url：%@",(unsigned long)self.currentAudioModel.audioId,self.currentAudioModel.audioUrl);
+            NSLog(@"-- DFPlayer： 点击了音频Id:%ld",(unsigned long)self.currentAudioModel.audioId);
             self.currentAudioTag = audioId;
             [self audioPrePlay];
         }else{
@@ -451,7 +451,7 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
     //播放网络音频
     else{
         NSString *cacheFilePath = [DFPlayerFileManager df_isExistAudioFileWithURL:currentAudioUrl];
-        NSLog(@"-- DFPlayer： 是否有缓存：%@",cacheFilePath);
+        NSLog(@"-- DFPlayer： 是否有缓存：%@",cacheFilePath?@"有":@"无");
         self.isCached = cacheFilePath?YES:NO;
         [self loadPlayerItemWithUrl:currentAudioUrl cacheFilePath:cacheFilePath];
     }
@@ -721,10 +721,27 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
 }
 
 /**远程线控*/
-- (NSString *)remoteControlClass{
+- (NSString *)df_remoteControlClass{
     return NSStringFromClass([DFPlayerRemoteApplication class]);
 }
-
+/**释放播放器*/
+- (void)df_deallocPlayer{
+    [self df_audioPause];
+    //解除激活,并还原其他应用播放器声音
+    if (self.resourceLoader) {
+        [self.resourceLoader stopLoading];
+    }
+    if (self.isOthetPlaying) {
+        [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
+    }else{
+        [[AVAudioSession sharedInstance] setActive:NO error:nil];
+    }
+    if (self.player) {
+        self.player = nil;
+    }
+    [self.player.currentItem cancelPendingSeeks];
+    [self.player.currentItem.asset cancelLoading];
+}
 #pragma mark - 播放 暂停 下一首 上一首
 /**播放*/
 -(void)df_audioPlay{
@@ -849,25 +866,6 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
     }
     self.currentAudioModel = self.playerModelArray[self.currentAudioTag];
     [self audioPrePlay];
-}
-
-/**释放播放器*/
-- (void)df_dellecPlayer{
-    [self df_audioPause];
-    //解除激活,并还原其他应用播放器声音
-    if (self.resourceLoader) {
-        [self.resourceLoader stopLoading];
-    }
-    if (self.isOthetPlaying) {
-        [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
-    }else{
-        [[AVAudioSession sharedInstance] setActive:NO error:nil];
-    }
-    if (self.player) {
-        self.player = nil;
-    }
-    [self.player.currentItem cancelPendingSeeks];
-    [self.player.currentItem.asset cancelLoading];
 }
 
 #pragma mark - 随机播放数组
@@ -1040,7 +1038,7 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
     }];
 }
 
-#pragma mark - 统一错误代理
+#pragma mark - 统一状态代理
 - (void)df_playerStatusWithStatusCode:(NSUInteger)statusCode{
     NSLog(@"-- DFPlayer： 状态码:%lu",(unsigned long)statusCode);
     if (self.delegate && [self.delegate respondsToSelector:@selector(df_player:didGetStatusCode:)]) {
