@@ -5,7 +5,6 @@
 //  Created by HDF on 2017/7/18.
 //  Copyright © 2017年 HDF. All rights reserved.
 //
-//  当前版本 1.0.4
 
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
