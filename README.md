@@ -102,9 +102,9 @@ DFPlayer的使用十分简单。
 <font color="#42C485">合作qq：188816190</font>
 <br>
 <br>
-<br>
 
 <div id="englishIntroduction"></div>
+<br>
 # English Introduction
 ### -- Installation（required iOS 7.0+）
 ###### Manually
