@@ -103,7 +103,7 @@ DFPlayer的使用十分简单。
 <br>
 <br>
 
-<div id="englishIntroduction"></div>
+<div id="englishIntroduction">-</div>
 <br>
 # English Introduction
 ### -- Installation（required iOS 7.0+）
