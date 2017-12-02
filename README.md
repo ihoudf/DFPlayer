@@ -11,7 +11,7 @@
 ##### A simple and flexible iOS audio playback module. Based on AVPlayer, support local and remote audio playback, with caching, remote control, locking and control center information display, single sequential and random playback,airplay,Lyrics sync,and other basic audio player functions, using a few code can realize the function of player.（简单又灵活的iOS音频播放组件。基于AVPlayer，支持本地和远程音频播放，具有缓存、耳机线控、锁屏和控制中心信息展示、单曲顺序随机播放、airplay播放、歌词同步、记录上次播放进度等基本的音频播放器功能，DFPlayer封装了缓冲条、进度条、播放暂停按钮、下一首按钮、上一首按钮、播放模式按钮、airplay按钮、歌词同步的tableview等UI控件，一行代码布局即可实现相应功能。）
 
 - ##### [-- > English Introduction  ( If possible,please give me a star.Love you😘)](#englishIntroduction)
-- ##### DFPlayer：关于iOS音频播放，传音频数据给我就好了🙃10行代码可播放，50行代码做播放器
+- ##### DFPlayer：关于iOS音频播放，传音频数据给我就好了🙃
 - ##### 观看两分钟视频展示：<a href="http://www.iqiyi.com/w_19ruzcqjqh.html" target="blank">http://www.iqiyi.com/w_19ruzcqjqh.html</a>
 - ##### 截图展示：
 <a href="https://ihoudf.github.io/2017/10/26/DFPlayer%E6%8E%A5%E5%85%A5%E8%AF%B4%E6%98%8E/" target="blank"><img width="282" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPLayerImage1.png?raw=true"></a>
