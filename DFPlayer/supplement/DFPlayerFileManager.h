@@ -2,8 +2,8 @@
 //  DFPlayerFileManager.h
 //  DFPlayer
 //
-//  Created by HDF on 2017/7/30.
-//  Copyright © 2017年 HDF. All rights reserved.
+//  Created by ihoudf on 2017/7/30.
+//  Copyright © 2017年 ihoudf. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -33,7 +33,7 @@
 + (void)df_moveAudioFileFromTempPathToCachePath:(NSURL *)url blcok:(void(^)(BOOL isSuccess,NSError *error))block;
 
 /**是否存在缓存文件 存在：返回文件路径 不存在：返回nil*/
-+ (NSString *)df_isExistAudioFileWithURL:(NSURL *)url;
++ (NSString *)df_isCachedWithAudioUrl:(NSURL *)url;
 
 /**清除url对应的本地缓存*/
 + (void)df_playerClearCacheWithUrl:(NSURL *)url block:(void(^)(BOOL isSuccess, NSError *error))block;

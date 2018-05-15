@@ -2,8 +2,8 @@
 //  DFPlayerRequestManager.m
 //  DFPlayer
 //
-//  Created by HDF on 2017/7/31.
-//  Copyright © 2017年 HDF. All rights reserved.
+//  Created by ihoudf on 2017/7/31.
+//  Copyright © 2017年 ihoudf. All rights reserved.
 //
 
 #import "DFPlayerRequestManager.h"
@@ -45,7 +45,7 @@ NSString * const DFNetworkStatusKey    = @"networkStatus";
 
 @implementation DFPlayerRequestManager
 - (void)dealloc{
-    [[DFPlayerTool shareInstance] removeObserver:self forKeyPath:DFNetworkStatusKey];
+    [[DFPlayerTool sharedTool] removeObserver:self forKeyPath:DFNetworkStatusKey];
 }
 + (instancetype)requestWithUrl:(NSURL *)url{
     return [[self alloc] initWithUrl:url];
@@ -53,7 +53,7 @@ NSString * const DFNetworkStatusKey    = @"networkStatus";
 - (instancetype)initWithUrl:(NSURL *)url{
     self = [super init];
     if (self) {
-        [[DFPlayerTool shareInstance] addObserver:self forKeyPath:DFNetworkStatusKey options:NSKeyValueObservingOptionNew context:nil];
+        [[DFPlayerTool sharedTool] addObserver:self forKeyPath:DFNetworkStatusKey options:NSKeyValueObservingOptionNew context:nil];
         [DFPlayerFileManager df_createTempFile];
         self.requestUrl = [DFPlayerTool originalUrlWithUrl:url];
     }
@@ -178,7 +178,7 @@ NSString * const DFNetworkStatusKey    = @"networkStatus";
 
 #pragma mark - KVO
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
-    DFPlayerTool *tool = [DFPlayerTool shareInstance];
+    DFPlayerTool *tool = [DFPlayerTool sharedTool];
     if (object == tool) {
         if ([keyPath isEqualToString:DFNetworkStatusKey]) {
             if ( !self.isNewAudio) {

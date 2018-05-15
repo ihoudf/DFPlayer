@@ -2,8 +2,8 @@
 //  DFCacheViewController.m
 //  DFPlayerDemo
 //
-//  Created by HDF on 2017/10/7.
-//  Copyright © 2017年 HDF. All rights reserved.
+//  Created by ihoudf on 2017/10/7.
+//  Copyright © 2017年 ihoudf. All rights reserved.
 //
 
 #import "DFCacheViewController.h"
@@ -71,8 +71,8 @@
     
     [DFPlayer df_playerClearCacheForCurrentUser:isCurrentUser block:^(BOOL isSuccess, NSError *error) {
         [self shAlertViewWithTitle:@"清除成功"];
-        currentLabel.text = [NSString stringWithFormat:@"当前cache:%.2lfM",[DFPlayer df_playerCountCacheSizeForCurrentUser:YES]];
-        allLabel.text = [NSString stringWithFormat:@"所有cache:%.2lfM",[DFPlayer df_playerCountCacheSizeForCurrentUser:NO]];
+        self->currentLabel.text = [NSString stringWithFormat:@"当前cache:%.2lfM",[DFPlayer df_playerCountCacheSizeForCurrentUser:YES]];
+        self->allLabel.text = [NSString stringWithFormat:@"所有cache:%.2lfM",[DFPlayer df_playerCountCacheSizeForCurrentUser:NO]];
     }];
 }
 

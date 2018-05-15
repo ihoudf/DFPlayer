@@ -2,8 +2,8 @@
 //  DFPlayerFileManager.m
 //  DFPlayer
 //
-//  Created by HDF on 2017/7/30.
-//  Copyright © 2017年 HDF. All rights reserved.
+//  Created by ihoudf on 2017/7/30.
+//  Copyright © 2017年 ihoudf. All rights reserved.
 //
 
 #import "DFPlayerFileManager.h"
@@ -116,7 +116,7 @@ static NSString *DFPlayer_modelArchiverName = @"DFPlayerInfoModel.archiver";
 }
 
 /**缓存文件是否存在*/
-+ (NSString *)df_isExistAudioFileWithURL:(NSURL *)url{
++ (NSString *)df_isCachedWithAudioUrl:(NSURL *)url{
     NSString *path = [DFPlayerFileManager  audioFileOfCachePathWithUrl:url];
     NSString *audioName = [url.path lastPathComponent];
     NSString *cacheFilePath = [NSString stringWithFormat:@"%@/%@", path, audioName];
@@ -128,7 +128,7 @@ static NSString *DFPlayer_modelArchiverName = @"DFPlayerInfoModel.archiver";
 
 /**清除url对应的本地缓存*/
 + (void)df_playerClearCacheWithUrl:(NSURL *)url block:(void(^)(BOOL isSuccess, NSError *error))block{
-    NSString *cacheFilePath = [self df_isExistAudioFileWithURL:url];
+    NSString *cacheFilePath = [self df_isCachedWithAudioUrl:url];
     if (cacheFilePath) {
         NSFileManager *manager = [NSFileManager defaultManager];
         NSError *error;
@@ -276,7 +276,7 @@ NSString *const DFPlayerCurrentAudioInfoModelProgress       = @"DFPlayerCurrentA
 
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     if (audioUrl && [audioUrl isKindOfClass:[NSURL class]]) {
-        if ([DFPlayerTool isLocalWithUrl:audioUrl]) {
+        if ([DFPlayerTool isLocalAudio:audioUrl]) {
             [dic setObject:[[audioUrl absoluteString] lastPathComponent]
                     forKey:DFPlayerCurrentAudioInfoModelAudioUrl];
         }else{

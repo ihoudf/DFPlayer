@@ -2,8 +2,8 @@
 //  DFAudioViewController.m
 //  DFPlayerDemo
 //
-//  Created by HDF on 2017/10/7.
-//  Copyright © 2017年 HDF. All rights reserved.
+//  Created by ihoudf on 2017/10/7.
+//  Copyright © 2017年 ihoudf. All rights reserved.
 //
 
 #import "DFAudioViewController.h"
@@ -89,9 +89,7 @@ static NSString *cellId = @"cellId";
                                                     currentLineLrcFont:HDFSystemFontOfSize(34)
                                                       otherLineLrcFont:HDFSystemFontOfSize(29)
                                                              superView:self.scrollView
-                                                            clickBlock:^(NSIndexPath * _Nullable indexpath) {
-
-                                                                 }];
+                                                            clickBlock:nil];
     lyricsTableView.backgroundColor = [UIColor clearColor];
 }
 #pragma mark  - tableview

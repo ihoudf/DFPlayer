@@ -2,8 +2,8 @@
 //  DFPlayerTool.m
 //  DFPlayer
 //
-//  Created by HDF on 2017/7/30.
-//  Copyright © 2017年 HDF. All rights reserved.
+//  Created by ihoudf on 2017/7/30.
+//  Copyright © 2017年 ihoudf. All rights reserved.
 //
 
 #import "DFPlayerTool.h"
@@ -39,24 +39,18 @@
     return [components URL];
 }
 
-+ (BOOL)isLocalWithUrl:(NSURL *)url{
-    return [self isLocalWithUrlString:url.absoluteString];
++ (BOOL)isLocalAudio:(NSURL *)url{
+    return [url.absoluteString hasPrefix:@"http"] ? NO : YES;
 }
 
-+ (BOOL)isLocalWithUrlString:(NSString *)urlString{
-    if ([urlString hasPrefix:@"http"]) {
-        return NO;
-    }
-    return YES;
-}
 
-+ (DFPlayerTool *)shareInstance {
-    static DFPlayerTool *instance = nil;
++ (DFPlayerTool *)sharedTool{
+    static DFPlayerTool *tool = nil;
     static dispatch_once_t predicate;
     dispatch_once(&predicate, ^{
-        instance = [[[self class] alloc] init];
+        tool = [[[self class] alloc] init];
     });
-    return instance;
+    return tool;
 }
 - (void)startMonitoringNetworkStatus:(void(^)(void))block{
     AFNetworkReachabilityManager *mgr = [AFNetworkReachabilityManager sharedManager];

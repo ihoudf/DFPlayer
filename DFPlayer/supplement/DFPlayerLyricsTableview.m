@@ -2,8 +2,8 @@
 //  DFPlayerLyricsTableview.m
 //  DFPlayer
 //
-//  Created by HDF on 2017/8/16.
-//  Copyright © 2017年 HDF. All rights reserved.
+//  Created by ihoudf on 2017/8/16.
+//  Copyright © 2017年 ihoudf. All rights reserved.
 //
 
 #import "DFPlayerLyricsTableview.h"
@@ -520,7 +520,7 @@ UIScrollViewDelegate>
     DFPlayerLyricsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[DFPlayerLyricsTableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:CellIdentifier];
-        cell.backgroundColor = self.cellBackgroundColor?self.cellBackgroundColor:[UIColor whiteColor];
+        cell.backgroundColor = self.cellBackgroundColor;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     

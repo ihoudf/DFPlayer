@@ -2,27 +2,37 @@
 //  DFPlayerControlManager.h
 //  DFPlayer
 //
-//  Created by HDF on 2017/7/20.
-//  Copyright © 2017年 HDF. All rights reserved.
+//  Created by ihoudf on 2017/7/20.
+//  Copyright © 2017年 ihoudf. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  DFPlayer控制管理器
  */
 @interface DFPlayerControlManager : NSObject
 
-/**单利方法*/
-+ (DFPlayerControlManager *_Nullable)shareInstance;
+/**
+ 单利方法
+ */
++ (DFPlayerControlManager *)shareInstance;
 
-/**调用该方法将停止更新与进度相关的UI控件（除了歌词tableview）的刷新*/
+/**
+ 调用该方法将停止更新与进度相关的UI控件（除了歌词tableview）的刷新
+ */
 - (void)df_stopUpdateProgress;
 
-/**调用该方法将恢复更新与进度相关的UI控件（除了歌词tableview）的刷新*/
+/**
+ 调用该方法将恢复更新与进度相关的UI控件（除了歌词tableview）的刷新
+ */
 - (void)df_resumeUpdateProgress;
 
-/**(下面的方法可以显示出airplay按钮，若完善airplay功能需要用到私有API，故不建议使用)
+/**
+ (下面的方法可以显示出airplay按钮，若完善airplay功能需要用到私有API，故不建议使用)
  AirPlay按钮（背景图片在DFPlayer.bundle中同名替换相应的图片即可）
  airplay按钮是系统按钮，当系统检测到airplay可用时才会显示。
  
@@ -31,9 +41,9 @@
  @param superView AirPlayView父视图
  @return AirPlayView
  */
-- (UIView *_Nullable)df_airPlayViewWithFrame:(CGRect)frame
-                             backgroundColor:(UIColor *_Nonnull)backgroundColor
-                                   superView:(UIView *_Nonnull)superView;
+- (UIView *)df_airPlayViewWithFrame:(CGRect)frame
+                    backgroundColor:(UIColor *)backgroundColor
+                          superView:(UIView *)superView;
 
 /**
  播放暂停按钮(背景图片在DFPlayer.bundle中同名替换相应的图片即可)
@@ -43,9 +53,9 @@
  @param block 按钮action 若无其他操作需求，传nil即可
  @return 播放暂停按钮
  */
-- (UIButton *_Nullable)df_playPauseBtnWithFrame:(CGRect)frame
-                                      superView:(UIView *_Nonnull)superView
-                                          block:(void(^_Nullable)(void))block;
+- (UIButton *)df_playPauseBtnWithFrame:(CGRect)frame
+                             superView:(UIView *)superView
+                                 block:(void(^_Nullable)(void))block;
 
 /**
  上一首按钮(背景图片在DFPlayer.bundle中同名替换相应的图片即可)
@@ -55,9 +65,9 @@
  @param block 按钮action 若无其他操作需求，传nil即可
  @return 上一首按钮
  */
-- (UIButton *_Nullable)df_lastAudioBtnWithFrame:(CGRect)frame
-                                      superView:(UIView *_Nonnull)superView
-                                          block:(void(^_Nullable)(void))block;
+- (UIButton *)df_lastAudioBtnWithFrame:(CGRect)frame
+                             superView:(UIView *)superView
+                                 block:(void(^_Nullable)(void))block;
 
 /**
  下一首按钮(背景图片在DFPlayer.bundle中同名替换相应的图片即可)
@@ -67,9 +77,9 @@
  @param block 按钮action 若无其他操作需求，传nil即可
  @return 下一首按钮
  */
-- (UIButton *_Nullable)df_nextAudioBtnWithFrame:(CGRect)frame
-                                      superView:(UIView *_Nonnull)superView
-                                          block:(void(^_Nullable)(void))block;
+- (UIButton *)df_nextAudioBtnWithFrame:(CGRect)frame
+                             superView:(UIView *)superView
+                                 block:(void(^_Nullable)(void))block;
 
 /**
  播放模式按钮(单曲循环，顺序循环，随机循环) （DFPlayerMode为DFPlayerModeOnlyOnce时此按钮会隐藏）
@@ -82,9 +92,9 @@
  * 注意：当设置了DFPlayer的播放模式以后，DFPlayer将为您记录用户的选择，并在下次启动app时选择用户设置的播放模式。
  如需每次启动都设置固定某一个播放模式，请在初始化播放器后，调用[DFPlayer shareInstance].playMode = XX;重置播放模式。
  */
-- (UIButton *_Nullable)df_typeControlBtnWithFrame:(CGRect)frame
-                                        superView:(UIView *_Nonnull)superView
-                                            block:(void(^_Nullable)(void))block;
+- (UIButton *)df_typeControlBtnWithFrame:(CGRect)frame
+                               superView:(UIView *)superView
+                                   block:(void(^_Nullable)(void))block;
 
 /**
  缓冲进度条
@@ -95,10 +105,10 @@
  @param superView 进度条父视图
  @return 进度条
  */
-- (UIProgressView *_Nullable)df_bufferProgressViewWithFrame:(CGRect)frame
-                                             trackTintColor:(UIColor *_Nonnull)trackTintColor
-                                          progressTintColor:(UIColor *_Nonnull)progressTintColor
-                                                  superView:(UIView *_Nonnull)superView;
+- (UIProgressView *)df_bufferProgressViewWithFrame:(CGRect)frame
+                                    trackTintColor:(UIColor *)trackTintColor
+                                 progressTintColor:(UIColor *)progressTintColor
+                                         superView:(UIView *)superView;
 
 /**
  播放进度条
@@ -111,12 +121,12 @@
  @param superView 进度条父视图
  @return 进度条
  */
-- (UISlider *_Nullable)df_sliderWithFrame:(CGRect)frame
-                   minimumTrackTintColor:(UIColor *_Nonnull)minimumTrackTintColor
-                   maximumTrackTintColor:(UIColor *_Nonnull)maximumTrackTintColor
-                             trackHeight:(CGFloat)trackHeight
-                               thumbSize:(CGSize)thumbSize
-                               superView:(UIView *_Nonnull)superView;
+- (UISlider *)df_sliderWithFrame:(CGRect)frame
+           minimumTrackTintColor:(UIColor *)minimumTrackTintColor
+           maximumTrackTintColor:(UIColor *)maximumTrackTintColor
+                     trackHeight:(CGFloat)trackHeight
+                       thumbSize:(CGSize)thumbSize
+                       superView:(UIView *)superView;
 
 /**
  音频当前时间label
@@ -125,8 +135,8 @@
  @param superView label父视图
  @return label
  */
-- (UILabel *_Nullable)df_currentTimeLabelWithFrame:(CGRect)frame
-                                superView:(UIView *_Nonnull)superView;
+- (UILabel *)df_currentTimeLabelWithFrame:(CGRect)frame
+                                superView:(UIView *)superView;
 
 /**
  音频总时长label
@@ -135,8 +145,8 @@
  @param superView label父视图
  @return label
  */
-- (UILabel *_Nullable)df_totalTimeLabelWithFrame:(CGRect)frame
-                              superView:(UIView *_Nonnull)superView;
+- (UILabel *)df_totalTimeLabelWithFrame:(CGRect)frame
+                              superView:(UIView *)superView;
 
 #pragma mark - 歌词tableView相关
 /**
@@ -165,21 +175,30 @@
  @param clickBlock 点击某个歌词cell。indexpath：该行cell的indexpath
  @return 歌词tableView
  */
-- (UITableView *_Nullable)df_lyricTableViewWithFrame:(CGRect)frame
-                                        contentInset:(UIEdgeInsets)contentInset
-                                       cellRowHeight:(CGFloat)cellRowHeight
-                                 cellBackgroundColor:(UIColor *_Nullable)cellBackgroundColor
-                   currentLineLrcForegroundTextColor:(UIColor *_Nullable)currentLineLrcForegroundTextColor
-                   currentLineLrcBackgroundTextColor:(UIColor *_Nonnull)currentLineLrcBackgroundTextColor
-                     otherLineLrcBackgroundTextColor:(UIColor *_Nonnull)otherLineLrcBackgroundTextColor
-                                  currentLineLrcFont:(UIFont *_Nonnull)currentLineLrcFont
-                                    otherLineLrcFont:(UIFont *_Nonnull)otherLineLrcFont
-                                           superView:(UIView *_Nonnull)superView
-                                          clickBlock:(void(^_Nullable)(NSIndexPath * _Nullable indexpath))clickBlock;
+- (UITableView *)df_lyricTableViewWithFrame:(CGRect)frame
+                               contentInset:(UIEdgeInsets)contentInset
+                              cellRowHeight:(CGFloat)cellRowHeight
+                        cellBackgroundColor:(UIColor *)cellBackgroundColor
+          currentLineLrcForegroundTextColor:(UIColor *)currentLineLrcForegroundTextColor
+          currentLineLrcBackgroundTextColor:(UIColor *)currentLineLrcBackgroundTextColor
+            otherLineLrcBackgroundTextColor:(UIColor *)otherLineLrcBackgroundTextColor
+                         currentLineLrcFont:(UIFont *)currentLineLrcFont
+                           otherLineLrcFont:(UIFont *)otherLineLrcFont
+                                  superView:(UIView *)superView
+                                 clickBlock:(void(^_Nullable)(NSIndexPath *indexpath))clickBlock;
+
 /**DFPlayer不管理lyricTableview中歌词更新的暂停和恢复*/
-/**停止更新lyricTableview中歌词的刷新*/
+/**
+ 停止更新lyricTableview中歌词的刷新
+ */
 - (void)df_playerLyricTableviewStopUpdate;
-/**恢复更新lyricTableview中歌词的刷新*/
+
+/**
+ 恢复更新lyricTableview中歌词的刷新
+ */
 - (void)df_playerLyricTableviewResumeUpdate;
 
 @end
+
+NS_ASSUME_NONNULL_END
+

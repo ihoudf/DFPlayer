@@ -2,8 +2,8 @@
 //  DFPlayer.h
 //  DFPlayer
 //
-//  Created by HDF on 2017/7/18.
-//  Copyright © 2017年 HDF. All rights reserved.
+//  Created by ihoudf on 2017/7/18.
+//  Copyright © 2017年 ihoudf. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -14,15 +14,20 @@
 
 //播放器类别
 typedef NS_ENUM(NSInteger,DFPlayerAudioSessionCategory){
+    
     //用于播放。随静音键和屏幕关闭而静音。不终止其它应用播放声音
     DFPlayerAudioSessionCategoryAmbient,
+    
     //用于播放。随静音键和屏幕关闭而静音。终止其它应用播放声音
     DFPlayerAudioSessionCategorySoloAmbient,
+    
     //用于播放。不随静音键和屏幕关闭而静音。终止其它应用播放声音
     //需要在工程里设置targets->capabilities->选择backgrounds modes->勾选audio,airplay,and picture in picture
     DFPlayerAudioSessionCategoryPlayback,
+    
     //用于播放和录音。不随着静音键和屏幕关闭而静音。终止其他应用播放声音
     DFPlayerAudioSessionCategoryPlayAndRecord,
+    
     //用于播放和录音。不随着静音键和屏幕关闭而静音。可多设备输出
     DFPlayerAudioSessionCategoryMultiRoute
 };
@@ -58,26 +63,35 @@ typedef NS_ENUM(NSUInteger, DFPlayerStatusCode) {
     DFPlayerStatus_SetPreviousAudioModelError = 9,//配置历史音频信息失败
     DFPlayerStatus_UnknownError          = 100,//未知错误
 };
+
+
 @class DFPlayer;
+
 @protocol DFPlayerDataSource <NSObject>
+
 @required
+
 /**
  数据源1：音频model数组
  */
 - (NSArray<DFPlayerModel *> *)df_playerModelArray;
 
 @optional
+
 /**
  数据源2：音频信息model
  当DFPlayer收到播放请求时，会调用此方法请求当前音频的信息
- 根据player.currentAudioModel.audioId获取音频在数组中的位置,返回对应的音频信息model
+ 根据player.currentAudioModel.audioId获取音频在数组中的位置,传入对应的音频信息model
  
  @param player DFPlayer音频播放管理器
  */
 - (DFPlayerInfoModel *)df_playerAudioInfoModel:(DFPlayer *)player;
+
 @end
 
+
 @protocol DFPlayerDelegate <NSObject>
+
 @optional
 /**
  代理1：音频将要加入播放队列
@@ -91,7 +105,6 @@ typedef NS_ENUM(NSUInteger, DFPlayerStatusCode) {
 
  @param player DFPlayer音频播放管理器
  */
-
 - (void)df_playerReadyToPlay:(DFPlayer *)player;
 
 /**
@@ -101,9 +114,7 @@ typedef NS_ENUM(NSUInteger, DFPlayerStatusCode) {
  @param bufferProgress 缓冲进度
  @param totalTime 音频总时长
  */
-- (void)df_player:(DFPlayer *)player
-   bufferProgress:(CGFloat)bufferProgress
-        totalTime:(CGFloat)totalTime;
+- (void)df_player:(DFPlayer *)player bufferProgress:(CGFloat)bufferProgress totalTime:(CGFloat)totalTime;
 
 /**
  代理4：播放进度代理 （属性isObserveProgress(默认YES)为YES时有效）
@@ -113,10 +124,7 @@ typedef NS_ENUM(NSUInteger, DFPlayerStatusCode) {
  @param currentTime 当前播放到的时间
  @param totalTime 音频总时长
  */
-- (void)df_player:(DFPlayer *)player
-         progress:(CGFloat)progress
-      currentTime:(CGFloat)currentTime
-        totalTime:(CGFloat)totalTime;
+- (void)df_player:(DFPlayer *)player progress:(CGFloat)progress currentTime:(CGFloat)currentTime totalTime:(CGFloat)totalTime;
 
 /**
  代理5：播放结束代理
@@ -157,79 +165,15 @@ typedef NS_ENUM(NSUInteger, DFPlayerStatusCode) {
  */
 @interface DFPlayer : NSObject
 
-@property (nonatomic, weak) id<DFPlayerDelegate>    delegate;
-@property (nonatomic, weak) id<DFPlayerDataSource>  dataSource;
+@property (nonatomic, weak) id<DFPlayerDelegate> delegate;
 
-#pragma mark - 设置类
-/**播放器类型，默认DFPlayerAudioSessionCategorySoloAmbient*/
-@property (nonatomic, assign) DFPlayerAudioSessionCategory category;
-/**
- 播放模式，首次默认DFPlayerModeSingleCycle。设置播放模式后，DFPlayer将为您记录用户的选择。
- 如需每次启动都设置固定某一个播放模式，请在初始化播放器后，调用[DFPlayer shareInstance].playMode = XX;重置播放模式。
- */
-@property (nonatomic, assign) DFPlayerMode playMode;
-/**是否监听播放进度，默认YES*/
-@property (nonatomic, assign) BOOL isObserveProgress;
-/**是否监听缓冲进度，默认YES*/
-@property (nonatomic, assign) BOOL isObserveBufferProgress;
-/**是否需要缓存，默认YES*/
-@property (nonatomic, assign) BOOL isNeedCache;
-/**是否需要耳机线控功能，默认YES*/
-@property (nonatomic, assign) BOOL isRemoteControl;
-/**
- DFPlayerModeOnlyOnce（单曲只播放一次）模式下，
- 点击下一首(上一首)按钮(或使用线控播放下一首、上一首)，
- YES则播放下一首（上一首），NO则无响应。
- DFPlayerModeSingleCycle（单曲循环）模式下，
- 点击下一首(上一首)按钮(或使用线控播放下一首、上一首)是重新开始播放当前音频还是播放下一首（上一首），
- 移动版QQ音乐是播放下一首（上一首），PC版QQ音乐是重新开始播放当前音频
- DFPlayer默认YES，即采用移动版QQ音乐设置。NO则重新开始播放当前音频
- */
-@property (nonatomic, assign) BOOL isManualToPlay;
-/**
- 当currentAudioModel存在时，是否插入耳机音频自动恢复播放，默认NO
- 当您没有实现代理8的情况下，DFPlayer默认拨出耳机音频自动停止，插入耳机音频不会自动恢复。你可通过此属性控制插入耳机时音频是否可自动恢复
- 当您实现代理8时，耳机插入拔出时的播放暂停逻辑由您处理。
- */
-@property (nonatomic, assign) BOOL isHeadPhoneAutoPlay;
-/**
- 是否监测WWAN无线广域网（2g/3g/4g）,默认NO。
- 播放本地音频（工程目录和沙盒文件）不监测。
- 播放网络音频时，DFPlayer为您实现wifi下自动播放，无网络有缓存播放缓存，无网络无缓存返回无网络错误码。
- 基于播放器具有循环播放的功能，开启该属性，无线广域网（WWAN）网络状态通过代理6返回错误码1。
- */
-@property (nonatomic, assign) BOOL isObserveWWAN;
-/**
- 是否监听服务器文件修改时间，默认NO。
- 在播放网络音频且需要DFPlayer的缓存功能的情况下，开启该属性，不必频繁更换服务端文件名来更新客户端播放内容。
- 比如，你的服务器上有audioname.mp3资源，若更改音频内容而需重新上传音频时，您不必更改文件名以保证客户端获取最新资源，本属性为YES即可完成。
- 第一次请求某资源时，DFPlayer缓存文件的同时会记录文件在服务器端的修改时间。
- 开启该属性，以后播放该资源时，DFPlayer会判断服务端文件是否修改过，修改过则加载新资源，没有修改过则播放缓存文件。
- 关闭此属性，有缓存时将直接播放缓存，不做更新校验，在弱网环境下播放响应速度更快。但您可自行实现每隔多少天或在哪一天检测的逻辑。
- 无网络连接时，有缓存直接播放缓存文件。
- */
-@property (nonatomic, assign) BOOL isObserveFileModifiedTime;
-
-#pragma mark - 状态类
-/**播放器状态*/
-@property (nonatomic, readonly, assign) DFPlayerState           state;
-/**当前正在播放的音频model*/
-@property (nonatomic, readonly, strong) DFPlayerModel           *currentAudioModel;
-/**当前正在播放的音频信息model*/
-@property (nonatomic, readonly, strong) DFPlayerInfoModel       *currentAudioInfoModel;
-/**当前音频缓冲进度*/
-@property (nonatomic, readonly, assign) CGFloat                 bufferProgress;
-/**当前音频播放进度*/
-@property (nonatomic, readonly, assign) CGFloat                 progress;
-/**当前音频当前时间*/
-@property (nonatomic, readonly, assign) CGFloat                 currentTime;
-/**当前音频总时长*/
-@property (nonatomic, readonly, assign) CGFloat                 totalTime;
-/**上次播放的音频信息。(本地音频或网络音频已缓存时有效)*/
-@property (nonatomic, readonly, strong) DFPlayerPreviousAudioModel *previousAudioModel;
+@property (nonatomic, weak) id<DFPlayerDataSource> dataSource;
 
 #pragma mark - 初始化和操作
-/**单例方法*/
+
+/**
+ 单例方法
+ */
 + (DFPlayer *)shareInstance;
 
 /**
@@ -243,7 +187,9 @@ typedef NS_ENUM(NSUInteger, DFPlayerStatusCode) {
  */
 - (void)df_initPlayerWithUserId:(NSString *)userId;
 
-/**刷新数据源数据*/
+/**
+ 刷新数据源数据
+ */
 - (void)df_reloadData;
 
 /**
@@ -254,42 +200,167 @@ typedef NS_ENUM(NSUInteger, DFPlayerStatusCode) {
  */
 - (void)df_playerPlayWithAudioId:(NSUInteger)audioId;
 
-/**播放*/
+/**
+ 播放
+ */
 - (void)df_audioPlay;
 
-/**暂停*/
+/**
+ 暂停
+ */
 - (void)df_audioPause;
 
-/**下一首*/
+/**
+ 下一首
+ */
 - (void)df_audioNext;
 
-/**上一首*/
+/**
+ 上一首
+ */
 - (void)df_audioLast;
 
 /**
  设置历史播放信息
  （在合适的时机，调用该方法，将会在本地记录音频URL、当前播放到的时间、音频总时长、播放进度，以供下次继续播放）
-
+ 
  @return 是否保存成功
  */
 - (BOOL)df_setPreviousAudioModel;
 
 /**
  用历史播放信息配置播放器(数据源中要有该条音频的URL才能配置哦)
-
+ 
  @return 是否配置成功
  */
 - (BOOL)df_setPlayerWithPreviousAudioModel;
 
-/**实现远程线控功能，需替换main.m中UIApplicationMain函数的第三个参数。*/
+/**
+ 音频跳转，value：时间百分比
+ */
+- (void)df_seekToTimeWithValue:(CGFloat)value;
+
+/**
+ 实现远程线控功能，需替换main.m中UIApplicationMain函数的第三个参数。
+ */
 - (NSString *)df_remoteControlClass;
 
-/**释放播放器，还原其他播放器*/
+/**
+ 释放播放器，还原其他播放器
+ */
 - (void)df_deallocPlayer;
 
-/**音频跳转，value：时间百分比*/
-- (void)df_seekToTimeWithValue:(CGFloat)value;
+#pragma mark - 设置类
+
+/**
+ 播放器类型，默认DFPlayerAudioSessionCategorySoloAmbient
+ */
+@property (nonatomic, assign) DFPlayerAudioSessionCategory category;
+
+/**
+ 播放模式，首次默认DFPlayerModeSingleCycle。
+ 用户设置播放模式后，DFPlayer将为您记录用户的选择。
+ 如需每次启动都设置固定某一个播放模式，请在初始化播放器后，调用[DFPlayer shareInstance].playMode = XX;重置播放模式。
+ */
+@property (nonatomic, assign) DFPlayerMode playMode;
+
+/**
+ 是否监听播放进度，默认YES
+ */
+@property (nonatomic, assign) BOOL isObserveProgress;
+
+/**
+ 是否监听缓冲进度，默认YES
+ */
+@property (nonatomic, assign) BOOL isObserveBufferProgress;
+
+/**
+ 是否需要缓存，默认YES
+ */
+@property (nonatomic, assign) BOOL isNeedCache;
+
+/**
+ 是否需要耳机线控功能，默认YES
+ */
+@property (nonatomic, assign) BOOL isRemoteControl;
+
+/**
+ 点击下一首(上一首)按钮(或使用线控播放下一首、上一首)时，
+ 在DFPlayerModeOnlyOnce模式下，YES则播放下一首（上一首），NO则无响应。默认YES。
+ 在DFPlayerModeSingleCycle模式下，YES则播放下一首（上一首），NO则重新开始播放当前音频。默认YES（移动版QQ音乐是播放下一首（上一首），PC版QQ音乐是重新开始播放当前音频）
+ */
+@property (nonatomic, assign) BOOL isManualToPlay;
+
+/**
+ 当currentAudioModel存在时，插入耳机音频是否自动恢复播放，默认NO
+ 当未实现代理8时，DFPlayer默认拨出耳机音频自动停止，插入耳机音频不会自动恢复。可通过此属性控制插入耳机时音频是否可自动恢复
+ 当已实现代理8时，耳机插入拔出的播放暂停逻辑由您处理。
+ */
+@property (nonatomic, assign) BOOL isHeadPhoneAutoPlay;
+
+/**
+ 是否监测WWAN无线广域网（2g/3g/4g）,默认NO。
+ 播放本地音频（工程目录和沙盒文件）不监测。
+ 播放网络音频时，DFPlayer为您实现wifi下自动播放，无网络有缓存播放缓存，无网络无缓存返回无网络错误码。
+ 基于播放器具有循环播放的功能，开启该属性，无线广域网（WWAN）网络状态通过代理6返回错误码1。
+ */
+@property (nonatomic, assign) BOOL isObserveWWAN;
+
+/**
+ 是否监听服务器文件修改时间，默认NO。
+ 在播放网络音频且需要DFPlayer的缓存功能的情况下，开启该属性，不必频繁更换服务端文件名来更新客户端播放内容。
+ 比如，你的服务器上有audioname.mp3资源，若更改音频内容而需重新上传音频时，您不必更改文件名以保证客户端获取最新资源，本属性为YES即可完成。
+ 第一次请求某资源时，DFPlayer缓存文件的同时会记录文件在服务器端的修改时间。
+ 开启该属性，以后播放该资源时，DFPlayer会判断服务端文件是否修改过，修改过则加载新资源，没有修改过则播放缓存文件。
+ 关闭此属性，有缓存时将直接播放缓存，不做更新校验，在弱网环境下播放响应速度更快。但您可自行实现每隔多少天或在哪一天检测的逻辑。
+ 无网络连接时，有缓存直接播放缓存文件。
+ */
+@property (nonatomic, assign) BOOL isObserveFileModifiedTime;
+
+#pragma mark - 状态类
+
+/**
+ 播放器状态
+ */
+@property (nonatomic, readonly, assign) DFPlayerState state;
+
+/**
+ 当前正在播放的音频model
+ */
+@property (nonatomic, readonly, strong) DFPlayerModel *currentAudioModel;
+
+/**
+ 当前正在播放的音频信息model
+ */
+@property (nonatomic, readonly, strong) DFPlayerInfoModel *currentAudioInfoModel;
+
+/**
+ 当前音频缓冲进度
+ */
+@property (nonatomic, readonly, assign) CGFloat bufferProgress;
+
+/**
+ 当前音频播放进度
+ */
+@property (nonatomic, readonly, assign) CGFloat progress;
+
+/**
+ 当前音频当前时间
+ */
+@property (nonatomic, readonly, assign) CGFloat currentTime;
+
+/**
+ 当前音频总时长
+ */
+@property (nonatomic, readonly, assign) CGFloat totalTime;
+
+/**
+ 获取上次播放的音频信息。(本地音频或网络音频已缓存时有效)
+ */
+@property (nonatomic, readonly, strong) DFPlayerPreviousAudioModel *previousAudioModel;
+
 #pragma mark - 缓存相关
+
 /**
  url对应音频是否已经在本地缓存
  

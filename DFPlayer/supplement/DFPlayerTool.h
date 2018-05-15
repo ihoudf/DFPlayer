@@ -2,15 +2,18 @@
 //  DFPlayerTool.h
 //  DFPlayer
 //
-//  Created by HDF on 2017/7/30.
-//  Copyright © 2017年 HDF. All rights reserved.
+//  Created by ihoudf on 2017/7/30.
+//  Copyright © 2017年 ihoudf. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 static NSString *DFPlayerCurrentAudioInfoModelPlayNotiKey = @"DFPlayerCurrentAudioInfoModelPlayNotiKey";
 
-#define kWeakSelf __weak __typeof(&*self)weakSelf = self;
+#define WeakSelf __weak __typeof(&*self) weakSelf = self;
+#define StrongSelf  __strong __typeof(&*self) strongSelf = weakSelf;
+
+
 //网络状态
 typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
     DFPlayerNetworkStatusUnknown          = -1, //未知
@@ -26,12 +29,11 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
 //链接
 + (NSURL *)customUrlWithUrl:(NSURL *)url;
 + (NSURL *)originalUrlWithUrl:(NSURL *)url;
-//判断是否是本地音频
-+ (BOOL)isLocalWithUrl:(NSURL *)url;
-+ (BOOL)isLocalWithUrlString:(NSString *)urlString;
+
++ (BOOL)isLocalAudio:(NSURL *)url; //是否是本地音频
 
 //网络
-+ (DFPlayerTool *)shareInstance;
++ (DFPlayerTool *)sharedTool;
 - (void)startMonitoringNetworkStatus:(void(^)(void))block;
 @property (nonatomic, assign) DFPlayerNetworkStatus networkStatus;
 @end

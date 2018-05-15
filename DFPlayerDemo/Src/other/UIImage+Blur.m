@@ -2,8 +2,8 @@
 //  UIImage+Blur.m
 //  DFPlayer
 //
-//  Created by HDF on 2017/9/19.
-//  Copyright © 2017年 HDF. All rights reserved.
+//  Created by ihoudf on 2017/9/19.
+//  Copyright © 2017年 ihoudf. All rights reserved.
 //
 
 #import "UIImage+Blur.h"
