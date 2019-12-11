@@ -10,13 +10,11 @@
 #import "DFAudioViewController.h"
 #import "DFCacheViewController.h"
 #import "DFPlayer.h"
-#import "DFMacro.h"
 @interface AppDelegate ()
 
 @end
 
 @implementation AppDelegate
-
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     DFAudioViewController *remoteVC = [[DFAudioViewController alloc] init];
@@ -27,7 +25,7 @@
     UINavigationController *mineNav = [[UINavigationController alloc] initWithRootViewController:mineVC];
     mineVC.title = @"缓存";
     
-    [[UITabBarItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName:HDFGreenColor} forState:UIControlStateNormal];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName:[UIColor colorWithRed:66.0/255.0 green:196.0/255.0 blue:133.0/255.0 alpha:1]} forState:UIControlStateNormal];
     UITabBarController *tabbarVC = [[UITabBarController alloc] init];
 
     tabbarVC.viewControllers = @[remoteNav,mineNav];
@@ -38,6 +36,5 @@
 
     return YES;
 }
-
 
 @end

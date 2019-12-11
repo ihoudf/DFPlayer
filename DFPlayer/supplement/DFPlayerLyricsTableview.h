@@ -7,19 +7,37 @@
 //
 
 #import <UIKit/UIKit.h>
-static NSString *DFPlayerNotificationProgressSliderDragEnd = @"DFPlayerNotificationProgressSliderDragEnd";
+
+@class DFPlayerLyricsTableview;
+
+@protocol DFPlayerLyricsTableviewDelegate <NSObject>
+
+@optional
+- (void)df_lyricsTableview:(DFPlayerLyricsTableview *)lyricsTableview
+           onPlayingLyrics:(NSString *)onPlayingLyrics;
+
+@end
 
 @interface DFPlayerLyricsTableview : UITableView
 
+@property (nonatomic, weak) id<DFPlayerLyricsTableviewDelegate> lyricsDelegate;
+
+@property (nonatomic, assign) BOOL stopUpdate;
+
 @property (nonatomic, assign) CGFloat cellRowHeight;
+
 @property (nonatomic, strong) UIColor *cellBackgroundColor;
+
 @property (nonatomic, strong) UIColor *currentLineLrcForegroundTextColor;
+
 @property (nonatomic, strong) UIColor *currentLineLrcBackgroundTextColor;
+
 @property (nonatomic, strong) UIColor *otherLineLrcBackgroundTextColor;
+
 @property (nonatomic, strong) UIFont *currentLineLrcFont;
+
 @property (nonatomic, strong) UIFont *otherLineLrcFont;
+
 @property (nonatomic, strong) UIView *lrcTableViewSuperview;
-@property (nonatomic, copy) void(^clickBlock)(NSIndexPath *indexPath);
-/**更新标记*/
-@property (nonatomic, assign) BOOL isStopUpdateLrc;
+
 @end

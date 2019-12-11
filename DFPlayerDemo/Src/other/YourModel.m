@@ -1,13 +1,13 @@
 //
-//  YourDataModel.m
+//  YourModel.m
 //  DFPlayer
 //
 //  Created by ihoudf on 2017/8/4.
 //  Copyright © 2017年 ihoudf. All rights reserved.
 //
 
-#import "YourDataModel.h"
+#import "YourModel.h"
 
-@implementation YourDataModel
+@implementation YourModel
 
 @end
