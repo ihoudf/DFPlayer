@@ -84,7 +84,7 @@ typedef void(^DFPlayerLyricsBlock)(NSString *onPlayingLyrics);
 @interface DFPlayerControlManager() <DFPlayerLyricsTableviewDelegate>
 {
     BOOL _stopUpdate;
-    BOOL _isDraging;
+    BOOL _isSeek;
 }
 
 @property (nonatomic, strong) UIButton          *playBtn;
@@ -109,11 +109,15 @@ typedef void(^DFPlayerLyricsBlock)(NSString *onPlayingLyrics);
     return manager;
 }
 
-- (UIButton *)button:(CGRect)frame image:(UIImage *)image superView:(UIView *)superView block:(nullable void (^)(void))block action:(nullable void(^)(void))action{
-    UIButton *button = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    button.frame = frame;
-    [button setBackgroundImage:image forState:(UIControlStateNormal)];
-    button.handleButtonActionBlock = ^(UIButton * _Nullable sender) {
+- (UIButton *)button:(CGRect)frame
+               image:(UIImage *)image
+           superView:(UIView *)superView
+               block:(nullable void (^)(void))block
+              action:(nullable void(^)(void))action{
+    UIButton *btn = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    btn.frame = frame;
+    [btn setBackgroundImage:image forState:(UIControlStateNormal)];
+    btn.handleButtonActionBlock = ^(UIButton * _Nullable sender) {
         if (block) {
             block();
         }
@@ -121,11 +125,13 @@ typedef void(^DFPlayerLyricsBlock)(NSString *onPlayingLyrics);
             action();
         }
     };
-    [superView addSubview:button];
-    return button;
+    [superView addSubview:btn];
+    return btn;
 }
 
-- (UILabel *)label:(CGRect)frame superView:(UIView *)superView observerKey:(NSString *)observerKey{
+- (UILabel *)label:(CGRect)frame
+         superView:(UIView *)superView
+       observerKey:(NSString *)observerKey{
     UILabel *label = [[UILabel alloc] initWithFrame:frame];
     label.text = @"00:00";
     label.textColor = [UIColor blackColor];
@@ -151,8 +157,8 @@ typedef void(^DFPlayerLyricsBlock)(NSString *onPlayingLyrics);
 - (UIButton *)df_playPauseBtnWithFrame:(CGRect)frame
                              superView:(UIView *)superView
                                  block:(nullable void (^)(void))block{
-    UIImage *image = [DFPlayer sharedPlayer].state == DFPlayerStatePlaying ? DFPlayer_playImage : DFPlayer_pauseImage;
-    self.playBtn = [self button:frame image:image superView:superView block:block action:^{
+    UIImage *img = [DFPlayer sharedPlayer].state == DFPlayerStatePlaying ? DFPlayer_playImage : DFPlayer_pauseImage;
+    self.playBtn = [self button:frame image:img superView:superView block:block action:^{
         if ([DFPlayer sharedPlayer].state == DFPlayerStatePlaying) {
             [[DFPlayer sharedPlayer] df_pause];
         }else{
@@ -189,16 +195,16 @@ typedef void(^DFPlayerLyricsBlock)(NSString *onPlayingLyrics);
     if ([DFPlayer sharedPlayer].playMode == DFPlayerModeOnlyOnce) {
         return nil;
     }
-    UIImage *image = [UIImage new];
+    UIImage *img = [UIImage new];
     if ([DFPlayer sharedPlayer].playMode == DFPlayerModeSingleCycle) {
-        image = DFPlayer_singleImage;
+        img = DFPlayer_singleImage;
     }else if ([DFPlayer sharedPlayer].playMode == DFPlayerModeOrderCycle){
-        image = DFPlayer_circleImage;
+        img = DFPlayer_circleImage;
     }else{
-        image = DFPlayer_shuffleImage;
+        img = DFPlayer_shuffleImage;
     }
-    UIButton *button = [self button:frame image:image superView:superView block:nil action:nil];
-    button.handleButtonActionBlock = ^(UIButton * _Nullable sender) {
+    UIButton *btn = [self button:frame image:img superView:superView block:block action:nil];
+    btn.handleButtonActionBlock = ^(UIButton * _Nullable sender) {
         switch ([DFPlayer sharedPlayer].playMode) {
             case DFPlayerModeSingleCycle:
                 [DFPlayer sharedPlayer].playMode = DFPlayerModeOrderCycle;
@@ -215,11 +221,8 @@ typedef void(^DFPlayerLyricsBlock)(NSString *onPlayingLyrics);
             default:
                 break;
         }
-        if (block) {
-            block();
-        }
     };
-    return button;
+    return btn;
 }
 
 #pragma mark - 音频当前时间
@@ -281,7 +284,7 @@ typedef void(^DFPlayerLyricsBlock)(NSString *onPlayingLyrics);
 }
 
 - (void)progressSliderTouchBegan:(UISlider *)sender{
-    _isDraging = YES;
+    _isSeek = YES;
 }
 
 - (void)progressSliderValueChanged:(UISlider *)sender{
@@ -290,52 +293,56 @@ typedef void(^DFPlayerLyricsBlock)(NSString *onPlayingLyrics);
 }
 
 - (void)progressSliderTouchEnded:(UISlider *)sender{
-    _isDraging = NO;
-    [[NSNotificationCenter defaultCenter] postNotificationName:DFPlayerNotificationProgressSliderDragEnd object:nil];
-    [[DFPlayer sharedPlayer] df_seekToTime:self.progressSlider.value];
+    [self seek:self.progressSlider.value];
 }
 
 - (void)handleTapSliderAction:(UITapGestureRecognizer *)tap{
     if ([tap.view isKindOfClass:[UISlider class]]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:DFPlayerNotificationProgressSliderDragEnd object:nil];
+        _isSeek = YES;
         UISlider *slider = (UISlider *)tap.view;
         CGPoint point    = [tap locationInView:slider];
-        CGFloat tapValue = point.x / slider.frame.size.width;
-        [[DFPlayer sharedPlayer] df_seekToTime:tapValue];
+        CGFloat value    = point.x / slider.frame.size.width;
+        [self seek:value];
     }
+}
+
+- (void)seek:(CGFloat)value{
+     [[DFPlayer sharedPlayer] df_seekToTime:value completionBlock:^{
+         [[NSNotificationCenter defaultCenter] postNotificationName:DFPlayerNotificationSeekEnd object:nil];
+         self->_isSeek = NO;
+     }];
 }
 
 #pragma mark - KVO
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
     if (object == [DFPlayer sharedPlayer]) {
-        
-        if ([keyPath isEqualToString:DFStateKey]) {
-            if (!_isDraging) {
-                UIImage *image = [DFPlayer sharedPlayer].state == (DFPlayerStateBuffering | DFPlayerStatePlaying) ? DFPlayer_pauseImage : DFPlayer_playImage;
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.playBtn setBackgroundImage:image forState:(UIControlStateNormal)];
-                });
-            }
-        }else{
-            if (_stopUpdate) {
-                return;
-            }
-            dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([keyPath isEqualToString:DFStateKey]) {
+                if (!self->_isSeek) {
+                    UIImage *img = [DFPlayer sharedPlayer].state == (DFPlayerStateBuffering | DFPlayerStatePlaying) ? DFPlayer_pauseImage : DFPlayer_playImage;
+                    [self.playBtn setBackgroundImage:img forState:(UIControlStateNormal)];
+                }
+            }else{
+                if (self->_stopUpdate) {
+                    return;
+                }
                 if ([keyPath isEqualToString:DFBufferProgressKey]){
                     [self.bufferProgressView setProgress:[DFPlayer sharedPlayer].bufferProgress];
                 }else if ([keyPath isEqualToString:DFProgressKey]){
-                    if (self.progressSlider.state != UIControlStateHighlighted) {
-                        self.progressSlider.value = [DFPlayer sharedPlayer].progress;
+                    if (!self->_isSeek) {
+                        if (self.progressSlider.state != UIControlStateHighlighted) {
+                            self.progressSlider.value = [DFPlayer sharedPlayer].progress;
+                        }
                     }
                 }else if ([keyPath isEqualToString:DFCurrentTimeKey]){
-                    if (!self->_isDraging) {
+                    if (!self->_isSeek) {
                         [self configTimeLabel:self.currentTimeLabel time:[DFPlayer sharedPlayer].currentTime];
                     }
                 }else if ([keyPath isEqualToString:DFTotalTimeKey]){
                     [self configTimeLabel:self.totalTimeLabel time:[DFPlayer sharedPlayer].totalTime];
                 }
-            });
-        }
+            }
+        });
     }
 }
 

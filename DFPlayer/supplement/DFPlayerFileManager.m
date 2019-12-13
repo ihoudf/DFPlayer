@@ -79,9 +79,6 @@ static NSString * DFArchiverPath(){
     NSString *cacheFilePath = [path stringByAppendingPathComponent:audioName];
     NSError *error;
     BOOL success = [mgr moveItemAtPath:DFTempPath() toPath:cacheFilePath error:&error];
-    if (error) {
-        NSLog(@"-- DFPlayerFileManager:error-:%@",[error localizedDescription]);
-    }
     if (!success) {//安全性处理 如果没有保存成功，删除归档文件中的对应键值对
         [DFPlayerArchiverManager deleteKeyValueIfHaveArchivedWithUrl:audioUrl];
     }

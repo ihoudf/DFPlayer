@@ -11,7 +11,6 @@
 #import "YourModel.h"
 #import "NSObject+Extentions.h"
 
-static NSString *cellId = @"cellId";
 #define topH SCREEN_HEIGHT - self.tabBarController.tabBar.frame.size.height-DFHeight(200)
 
 @interface DFAudioViewController ()
@@ -29,7 +28,6 @@ static NSString *cellId = @"cellId";
 @property (nonatomic, strong) NSMutableArray<YourModel *> *yourModelArray;
 @property (nonatomic, strong) NSArray<YourModel *> *yourModelAddArray;
 @property (nonatomic, assign) NSInteger addIndex;
-
 @property (nonatomic, strong) NSMutableArray<DFPlayerModel *> *dataArray;
 
 @end
@@ -122,9 +120,9 @@ static NSString *cellId = @"cellId";
     return _yourModelArray.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellId"];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleSubtitle) reuseIdentifier:cellId];
+        cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleSubtitle) reuseIdentifier:@"cellId"];
         cell.backgroundColor = [UIColor clearColor];
     }
     YourModel *model = _yourModelArray[indexPath.row];
@@ -158,11 +156,8 @@ static NSString *cellId = @"cellId";
     [[DFPlayer sharedPlayer] df_initPlayerWithUserId:nil];
     [DFPlayer sharedPlayer].dataSource  = self;
     [DFPlayer sharedPlayer].delegate    = self;
-    [DFPlayer sharedPlayer].category    = AVAudioSessionCategoryPlayback;
     [DFPlayer sharedPlayer].isObserveWWAN = YES;
     [DFPlayer sharedPlayer].playMode    = DFPlayerModeSingleCycle;
-//    [DFPlayer sharedPlayer].isNeedCache = YES;
-//    [DFPlayer sharedPlayer].isManualToPlay = NO;
     [[DFPlayer sharedPlayer] df_reloadData];//需在传入数据源后调用
     
     CGRect buffRect = (CGRect){DFWidth(104), topH+DFHeight(28), DFWidth(542), DFHeight(4)};

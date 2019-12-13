@@ -30,8 +30,8 @@ typedef NS_ENUM(NSInteger, DFPlayerMode){
 
 //状态码
 typedef NS_ENUM(NSUInteger, DFPlayerStatusCode) {
-        
-    DFPlayerStatusNoNetwork = 2100, //无网络（注意：对于未缓存的网络音频，点击播放时若无网络会返回该状态码,缓冲完成前若断网也会返回该状态码。DFPlayer支持运行时断点续传，即缓冲时网络从无到有，可以断点续传，而某音频没缓冲完就退出app，再进入app没做断点续传，以上特点与QQ音乐一致）
+    
+    DFPlayerStatusNoNetwork = 2100, //未缓存的网络音频，点击播放时若无网络会返回该状态码。缓冲完成前若断网也会返回该状态码。（PS：DFPlayer支持运行时断点续传，即缓冲时网络从无到有，可以断点续传，而某音频没缓冲完就退出app，再进入app没做断点续传，以上特点与QQ音乐一致）
     DFPlayerStatusViaWWAN = 2101, //WWAN网络状态（注意：属性isObserveWWAN（默认NO）为YES时，对于未缓存的网络音频，点击该音频时开始缓冲时返回该状态码。而音频正在缓冲时，网络状态由wifi到wwan并不会返回该状态码，以上特点与QQ音乐一致）
     
     DFPlayerStatusTimeOut = 2200, //音频请求超时（根据服务器返回的状态码）
@@ -119,7 +119,7 @@ typedef NS_ENUM(NSUInteger, DFPlayerStatusCode) {
  代理6：播放状态码代理
  
  @param player DFPlayer
- @param statusCode 状态码
+ @param statusCode 状态码(统一在主线程返回)
  */
 - (void)df_player:(DFPlayer *)player didGetStatusCode:(DFPlayerStatusCode)statusCode;
 
@@ -147,11 +147,53 @@ typedef NS_ENUM(NSUInteger, DFPlayerStatusCode) {
  */
 @interface DFPlayer : NSObject
 
-@property (nonatomic, weak) id<DFPlayerDelegate> delegate;
+#pragma mark - 初始化和操作
 
 @property (nonatomic, weak) id<DFPlayerDataSource> dataSource;
 
-#pragma mark - 初始化和操作
+@property (nonatomic, weak) id<DFPlayerDelegate> delegate;
+
+/**
+ 播放器类型，默认AVAudioSessionCategoryPlayback
+ Tips:AVAudioSessionCategoryPlayback，需在工程里设置targets->capabilities->选择backgrounds modes->勾选audio,airplay,and picture in picture
+ */
+@property (nonatomic, assign) AVAudioSessionCategory category;
+
+/**
+ 播放模式，默认DFPlayerModeOnlyOnce。
+ */
+@property (nonatomic, assign) DFPlayerMode playMode;
+
+/**
+ 是否监听播放进度，默认YES
+ */
+@property (nonatomic, assign) BOOL isObserveProgress;
+
+/**
+ 是否监听缓冲进度，默认YES
+ */
+@property (nonatomic, assign) BOOL isObserveBufferProgress;
+
+/**
+ 是否需要缓存，默认YES
+ */
+@property (nonatomic, assign) BOOL isNeedCache;
+
+/**
+ 是否监测WWAN无线广域网（2g/3g/4g）,默认NO。
+ 播放本地音频（工程目录和沙盒文件）不监测。
+ 播放网络音频时，DFPlayer为您实现无网络有缓存播放缓存，无网络无缓存返回无网络错误码，wifi下自动播放。开启该属性，当网络为WWAN时，通过代理6返回状态码DFPlayerStatusViaWWAN。
+ */
+@property (nonatomic, assign) BOOL isObserveWWAN;
+
+/**
+ 是否监听服务器文件修改时间，默认NO。
+ 第一次请求某资源时，DFPlayer缓存文件的同时会记录文件在服务器端的修改时间。
+ 开启该属性，以后播放该资源时，DFPlayer会判断服务端文件是否修改过，修改过则加载新资源，没有修改过则播放缓存文件。
+ 关闭此属性，有缓存时将直接播放缓存，不做更新校验，在弱网环境下播放响应速度更快。
+ 无网络连接时，有缓存直接播放缓存文件。
+ */
+@property (nonatomic, assign) BOOL isObserveFileModifiedTime;
 
 /**
  单例
@@ -205,8 +247,9 @@ typedef NS_ENUM(NSUInteger, DFPlayerStatusCode) {
  音频跳转
  
  @param value 时间百分比
+ @param completionBlock seek结束
  */
-- (void)df_seekToTime:(CGFloat)value;
+- (void)df_seekToTime:(CGFloat)value completionBlock:(void(^)(void))completionBlock;
 
 /**
  倍速播放（iOS10之后系统支持的倍速常数有0.50, 0.67, 0.80, 1.0, 1.25, 1.50和2.0）
@@ -219,49 +262,6 @@ typedef NS_ENUM(NSUInteger, DFPlayerStatusCode) {
  */
 - (void)df_deallocPlayer;
 
-#pragma mark - 设置类
-
-/**
- 播放器类型，默认AVAudioSessionCategorySoloAmbient
- Tips:AVAudioSessionCategoryPlayback，需在工程里设置targets->capabilities->选择backgrounds modes->勾选audio,airplay,and picture in picture
- */
-@property (nonatomic, assign) AVAudioSessionCategory category;
-
-/**
- 播放模式，默认DFPlayerModeOnlyOnce。
- */
-@property (nonatomic, assign) DFPlayerMode playMode;
-
-/**
- 是否监听播放进度，默认YES
- */
-@property (nonatomic, assign) BOOL isObserveProgress;
-
-/**
- 是否监听缓冲进度，默认YES
- */
-@property (nonatomic, assign) BOOL isObserveBufferProgress;
-
-/**
- 是否需要缓存，默认YES
- */
-@property (nonatomic, assign) BOOL isNeedCache;
-
-/**
- 是否监测WWAN无线广域网（2g/3g/4g）,默认NO。
- 播放本地音频（工程目录和沙盒文件）不监测。
- 播放网络音频时，DFPlayer为您实现无网络有缓存播放缓存，无网络无缓存返回无网络错误码，wifi下自动播放。开启该属性，当网络为WWAN时，通过代理6返回状态码DFPlayerStatusViaWWAN。
- */
-@property (nonatomic, assign) BOOL isObserveWWAN;
-
-/**
- 是否监听服务器文件修改时间，默认NO。
- 第一次请求某资源时，DFPlayer缓存文件的同时会记录文件在服务器端的修改时间。
- 开启该属性，以后播放该资源时，DFPlayer会判断服务端文件是否修改过，修改过则加载新资源，没有修改过则播放缓存文件。
- 关闭此属性，有缓存时将直接播放缓存，不做更新校验，在弱网环境下播放响应速度更快。
- 无网络连接时，有缓存直接播放缓存文件。
- */
-@property (nonatomic, assign) BOOL isObserveFileModifiedTime;
 
 #pragma mark - 状态类
 

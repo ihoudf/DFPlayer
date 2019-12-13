@@ -16,11 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface DFPlayerModel : NSObject
 
-// 音频Id（从0开始，仅标识当前音频在数组中的位置）
-@property (nonatomic, assign) NSUInteger audioId;
+@property (nonatomic, assign) NSUInteger audioId; // 音频Id（从0开始，仅标识当前音频在数组中的位置）
 
-// 音频地址
-@property (nonatomic, strong) NSURL *audioUrl;
+@property (nonatomic, strong) NSURL *audioUrl; // 音频地址
 
 @end
 
@@ -29,21 +27,17 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface DFPlayerInfoModel : NSObject
 
-// 歌词
-@property (nonatomic, nullable, copy) NSString *audioLyrics;
+@property (nonatomic, nullable, copy) NSString *audioLyrics; // 歌词
 
 /* 正确传入以下属性时，DFPlayer将自动设置锁屏模式和控制中心的播放信息展示 */
-// 音频名
-@property (nonatomic, nullable, copy) NSString *audioName;
 
-// 专辑名
-@property (nonatomic, nullable, copy) NSString *audioAlbum;
+@property (nonatomic, nullable, copy) NSString *audioName; // 音频名
 
-// 歌手名
-@property (nonatomic, nullable, copy) NSString *audioSinger;
+@property (nonatomic, nullable, copy) NSString *audioAlbum; // 专辑名
 
-// 音频配图
-@property (nonatomic, nullable, copy) UIImage *audioImage;
+@property (nonatomic, nullable, copy) NSString *audioSinger; // 歌手名
+
+@property (nonatomic, nullable, copy) UIImage *audioImage; // 音频配图
 
 @end
 

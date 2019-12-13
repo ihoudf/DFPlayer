@@ -57,7 +57,7 @@ static NSString *DFPlayerLyricsConstMark = @"####";
     CGFloat _timeOffset; // 偏移时间。首次进入和拖拽后设置
     BOOL _isDraging; // 是否正在拖拽歌词tableView
     BOOL _isDecelerate; // 拖拽歌词tableView松手后tableView是否还在滚动
-    BOOL _isProgressSliderDragEnd; // 拖拽进度条是否结束
+    BOOL _isSeekEnd; // 拖拽进度条是否结束
 }
 // 当前AudioUrl
 @property (nonatomic, strong) NSURL *audioUrl;
@@ -83,7 +83,7 @@ static NSString *DFPlayerLyricsConstMark = @"####";
 @implementation DFPlayerLyricsTableview
 
 - (void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:DFPlayerNotificationProgressSliderDragEnd];
+    [[NSNotificationCenter defaultCenter] removeObserver:DFPlayerNotificationSeekEnd];
     [[DFPlayer sharedPlayer] removeObserver:self forKeyPath:DFPlayerLyricsStateKey];
     [[DFPlayer sharedPlayer] removeObserver:self forKeyPath:DFPlayerLyricsCurrentTimeKey];
     [[DFPlayer sharedPlayer] removeObserver:self forKeyPath:DFPlayerLyricsCurrentAudioInfoModelKey];
@@ -141,7 +141,7 @@ static NSString *DFPlayerLyricsConstMark = @"####";
         if (@available(iOS 11.0,*)) {
             self.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         }
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(df_progressSliderDragEnd) name:DFPlayerNotificationProgressSliderDragEnd object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(df_seekEnd) name:DFPlayerNotificationSeekEnd object:nil];
         
         NSKeyValueObservingOptions options = NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial;
         [[DFPlayer sharedPlayer] addObserver:self forKeyPath:DFPlayerLyricsCurrentAudioInfoModelKey options:options context:nil];
@@ -152,12 +152,12 @@ static NSString *DFPlayerLyricsConstMark = @"####";
 }
 
 - (void)setStopUpdate:(BOOL)stopUpdate{
-    self.stopUpdate = stopUpdate;
+    _stopUpdate = stopUpdate;
     [self df_updateLyricsAnimated:YES];
 }
 
-- (void)df_progressSliderDragEnd{
-    _isProgressSliderDragEnd = YES;
+- (void)df_seekEnd{
+    _isSeekEnd = YES;
     [self df_updateLyricsAnimated:YES];
 }
 
@@ -193,7 +193,7 @@ static NSString *DFPlayerLyricsConstMark = @"####";
     _timeOffset = 0;
     [self.currentIndexArray removeAllObjects];
     
-    BOOL scrollAnimated = _isProgressSliderDragEnd || !animated;
+    BOOL scrollAnimated = _isSeekEnd || !animated;
 
     //获取当前行
     CGFloat currentTimeFloat = [DFPlayer sharedPlayer].currentTime;
@@ -227,7 +227,7 @@ static NSString *DFPlayerLyricsConstMark = @"####";
     }
     _lastIndex = _currentIndex;
     _currentIndexPath = [NSIndexPath indexPathForRow:_currentIndex inSection:0];
-    if (_isProgressSliderDragEnd) {//进度回滚，恢复正在播放的当前行
+    if (_isSeekEnd) {//进度回滚，恢复正在播放的当前行
         [self setOtherLineLyricsTextStatus:_currentIndexPath];
     }
 
@@ -270,7 +270,7 @@ static NSString *DFPlayerLyricsConstMark = @"####";
         //当前行
         DFPlayerLyricsTableViewCell *cell = (DFPlayerLyricsTableViewCell *)[self cellForRowAtIndexPath:self->_currentIndexPath];
 
-        if (!self->_isProgressSliderDragEnd) {
+        if (!self->_isSeekEnd) {
             //如果当前行无歌词，记录位置并返回
 
             NSString *lyrics = [cell.foregroundLrcLabel.text removeEmptyString];
@@ -284,7 +284,7 @@ static NSString *DFPlayerLyricsConstMark = @"####";
                 return;
             }
         }
-        self->_isProgressSliderDragEnd = NO;
+        self->_isSeekEnd = NO;
 
         //设置其他行
         [self setOtherLineLyricsTextStatus:self->_lastIndexPath];

@@ -27,9 +27,9 @@
 		E05226A5239268D500819BB6 /* 苏琛-拾忆.lrc in Resources */ = {isa = PBXBuildFile; fileRef = E05226A4239268D500819BB6 /* 苏琛-拾忆.lrc */; };
 		E05226A7239271E800819BB6 /* en-嚣张.lrc in Resources */ = {isa = PBXBuildFile; fileRef = E05226A6239271E800819BB6 /* en-嚣张.lrc */; };
 		E05226A92392778500819BB6 /* 九块钱-颓.lrc in Resources */ = {isa = PBXBuildFile; fileRef = E05226A82392778500819BB6 /* 九块钱-颓.lrc */; };
+		E0F683BF23A3CD210071A285 /* default_bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0F683BE23A3CD210071A285 /* default_bg.jpg */; };
 		F9037BF61FB482320002F98C /* ihoudf-dfplayer.lrc in Resources */ = {isa = PBXBuildFile; fileRef = F9037BF51FB482320002F98C /* ihoudf-dfplayer.lrc */; };
 		F944936B1FA1CD6D006C605F /* 陈冠希-战争.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F944936A1FA1CD6C006C605F /* 陈冠希-战争.mp3 */; };
-		F944936F1FA1D544006C605F /* default_bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F944936E1FA1D544006C605F /* default_bg.jpg */; };
 		F94493711FA1D7C3006C605F /* 911-I Do.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F94493701FA1D7C3006C605F /* 911-I Do.mp3 */; };
 		F94493791FA1DA29006C605F /* Frankmusik-Wrecking Ball.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F94493781FA1DA29006C605F /* Frankmusik-Wrecking Ball.mp3 */; };
 		F944937B1FA1DC0F006C605F /* Flo Rida-Can't Believe It.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F944937A1FA1DC0F006C605F /* Flo Rida-Can't Believe It.mp3 */; };
@@ -100,9 +100,9 @@
 		E05226A4239268D500819BB6 /* 苏琛-拾忆.lrc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "苏琛-拾忆.lrc"; sourceTree = "<group>"; };
 		E05226A6239271E800819BB6 /* en-嚣张.lrc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "en-嚣张.lrc"; sourceTree = "<group>"; };
 		E05226A82392778500819BB6 /* 九块钱-颓.lrc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "九块钱-颓.lrc"; sourceTree = "<group>"; };
+		E0F683BE23A3CD210071A285 /* default_bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = default_bg.jpg; sourceTree = "<group>"; };
 		F9037BF51FB482320002F98C /* ihoudf-dfplayer.lrc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ihoudf-dfplayer.lrc"; sourceTree = "<group>"; };
 		F944936A1FA1CD6C006C605F /* 陈冠希-战争.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "陈冠希-战争.mp3"; sourceTree = "<group>"; };
-		F944936E1FA1D544006C605F /* default_bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = default_bg.jpg; sourceTree = "<group>"; };
 		F94493701FA1D7C3006C605F /* 911-I Do.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "911-I Do.mp3"; sourceTree = "<group>"; };
 		F94493781FA1DA29006C605F /* Frankmusik-Wrecking Ball.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Frankmusik-Wrecking Ball.mp3"; sourceTree = "<group>"; };
 		F944937A1FA1DC0F006C605F /* Flo Rida-Can't Believe It.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Flo Rida-Can't Believe It.mp3"; sourceTree = "<group>"; };
@@ -249,7 +249,7 @@
 		06B33B9F1F72582F003A559C /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				F944936E1FA1D544006C605F /* default_bg.jpg */,
+				E0F683BE23A3CD210071A285 /* default_bg.jpg */,
 				F95478431F88CE6C00D85D46 /* Audio */,
 				F95478451F88CE7300D85D46 /* LRC */,
 				06B33BA01F72582F003A559C /* AudioDataAdd.plist */,
@@ -306,21 +306,21 @@
 		F95478451F88CE7300D85D46 /* LRC */ = {
 			isa = PBXGroup;
 			children = (
-				F9FA4F5D1F9CC44C0026C284 /* 汪苏泷-追光者.lrc */,
-				F9037BF51FB482320002F98C /* ihoudf-dfplayer.lrc */,
-				F9D6E97C1F8A37C300069376 /* 徐良-321对不起.lrc */,
-				F95478501F88DAB900D85D46 /* 权志龙-MISSING YOU.lrc */,
-				F95BD25B1FA0982400388ED8 /* 音阙诗听-红昭愿.lrc */,
 				06E3FE901F8E07E90063577B /* 阿悄-死皮赖脸.lrc */,
-				F95478521F88DBF800D85D46 /* 王若琳-迷宫.lrc */,
-				E03C789523824C0700C31BB6 /* 梦涵-17岁.lrc */,
-				F95478541F892DD700D85D46 /* 许嵩(Vae)-有何不可.lrc */,
 				E052269E23924CA300819BB6 /* 陈芳语-爱你.lrc */,
-				E05226A02392555300819BB6 /* 莫文蔚-慢慢喜欢你.lrc */,
-				E05226A22392610C00819BB6 /* G2er-还有我.lrc */,
-				E05226A4239268D500819BB6 /* 苏琛-拾忆.lrc */,
-				E05226A6239271E800819BB6 /* en-嚣张.lrc */,
 				E05226A82392778500819BB6 /* 九块钱-颓.lrc */,
+				E03C789523824C0700C31BB6 /* 梦涵-17岁.lrc */,
+				E05226A02392555300819BB6 /* 莫文蔚-慢慢喜欢你.lrc */,
+				F95478501F88DAB900D85D46 /* 权志龙-MISSING YOU.lrc */,
+				E05226A4239268D500819BB6 /* 苏琛-拾忆.lrc */,
+				F9FA4F5D1F9CC44C0026C284 /* 汪苏泷-追光者.lrc */,
+				F95478521F88DBF800D85D46 /* 王若琳-迷宫.lrc */,
+				F9D6E97C1F8A37C300069376 /* 徐良-321对不起.lrc */,
+				F95478541F892DD700D85D46 /* 许嵩(Vae)-有何不可.lrc */,
+				F95BD25B1FA0982400388ED8 /* 音阙诗听-红昭愿.lrc */,
+				E05226A6239271E800819BB6 /* en-嚣张.lrc */,
+				E05226A22392610C00819BB6 /* G2er-还有我.lrc */,
+				F9037BF51FB482320002F98C /* ihoudf-dfplayer.lrc */,
 			);
 			path = LRC;
 			sourceTree = "<group>";
@@ -414,10 +414,9 @@
 			};
 			buildConfigurationList = 06B33B2A1F725814003A559C /* Build configuration list for PBXProject "DFPlayerDemo" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);
@@ -449,7 +448,6 @@
 				F95478511F88DAB900D85D46 /* 权志龙-MISSING YOU.lrc in Resources */,
 				06B33B3F1F725814003A559C /* Assets.xcassets in Resources */,
 				F944937B1FA1DC0F006C605F /* Flo Rida-Can't Believe It.mp3 in Resources */,
-				F944936F1FA1D544006C605F /* default_bg.jpg in Resources */,
 				06B33BB41F725830003A559C /* AudioDataAdd.plist in Resources */,
 				06B33B3D1F725814003A559C /* Main.storyboard in Resources */,
 				E05226A12392555300819BB6 /* 莫文蔚-慢慢喜欢你.lrc in Resources */,
@@ -461,6 +459,7 @@
 				F95BD25C1FA0982400388ED8 /* 音阙诗听-红昭愿.lrc in Resources */,
 				F9D6E97D1F8A37C300069376 /* 徐良-321对不起.lrc in Resources */,
 				E03C789623824C0700C31BB6 /* 梦涵-17岁.lrc in Resources */,
+				E0F683BF23A3CD210071A285 /* default_bg.jpg in Resources */,
 				E05226A92392778500819BB6 /* 九块钱-颓.lrc in Resources */,
 				F94493791FA1DA29006C605F /* Frankmusik-Wrecking Ball.mp3 in Resources */,
 				E05226A5239268D500819BB6 /* 苏琛-拾忆.lrc in Resources */,
@@ -606,7 +605,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -657,7 +656,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";

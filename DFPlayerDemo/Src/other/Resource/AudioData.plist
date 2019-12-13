@@ -4,34 +4,6 @@
 <array>
 	<dict>
 		<key>audioUrl</key>
-		<string>http://152.136.133.149/audio/tui.mp3</string>
-		<key>audioName</key>
-		<string>颓</string>
-		<key>audioSinger</key>
-		<string>九块钱</string>
-		<key>audioImage</key>
-		<string>http://152.136.133.149/img/tui.jpg</string>
-		<key>audioAlbum</key>
-		<string>颓</string>
-		<key>audioLyric</key>
-		<string>九块钱-颓.lrc</string>
-	</dict>
-	<dict>
-		<key>audioUrl</key>
-		<string>http://152.136.133.149/audio/missyou.mp3</string>
-		<key>audioName</key>
-		<string>missing you</string>
-		<key>audioSinger</key>
-		<string>G-Dragon</string>
-		<key>audioImage</key>
-		<string>http://152.136.133.149/img/missyou.jpg</string>
-		<key>audioAlbum</key>
-		<string>one of a kind</string>
-		<key>audioLyric</key>
-		<string>权志龙-MISSING YOU.lrc</string>
-	</dict>
-	<dict>
-		<key>audioUrl</key>
 		<string>http://152.136.133.149/audio/bingbian.mp3</string>
 		<key>audioName</key>
 		<string>※※※</string>
@@ -88,6 +60,34 @@
 	</dict>
 	<dict>
 		<key>audioUrl</key>
+		<string>http://152.136.133.149/audio/tui.mp3</string>
+		<key>audioName</key>
+		<string>颓</string>
+		<key>audioSinger</key>
+		<string>九块钱</string>
+		<key>audioImage</key>
+		<string>http://152.136.133.149/img/tui.jpg</string>
+		<key>audioAlbum</key>
+		<string>颓</string>
+		<key>audioLyric</key>
+		<string>九块钱-颓.lrc</string>
+	</dict>
+	<dict>
+		<key>audioUrl</key>
+		<string>http://152.136.133.149/audio/missyou.mp3</string>
+		<key>audioName</key>
+		<string>missing you</string>
+		<key>audioSinger</key>
+		<string>G-Dragon</string>
+		<key>audioImage</key>
+		<string>http://152.136.133.149/img/missyou.jpg</string>
+		<key>audioAlbum</key>
+		<string>one of a kind</string>
+		<key>audioLyric</key>
+		<string>权志龙-MISSING YOU.lrc</string>
+	</dict>
+	<dict>
+		<key>audioUrl</key>
 		<string>http://152.136.133.149/audio/haiyouwo.mp3</string>
 		<key>audioName</key>
 		<string>还有我</string>
@@ -99,20 +99,6 @@
 		<string>还有我</string>
 		<key>audioLyric</key>
 		<string>G2er-还有我.lrc</string>
-	</dict>
-	<dict>
-		<key>audioUrl</key>
-		<string>冷雨夜（Live）</string>
-		<key>audioName</key>
-		<string>冷雨夜（Live）</string>
-		<key>audioSinger</key>
-		<string>杨丞琳</string>
-		<key>audioImage</key>
-		<string>http://img3.kuwo.cn/star/albumcover/300/93/65/3429570848.jpg</string>
-		<key>audioAlbum</key>
-		<string>蒙面唱将猜猜猜</string>
-		<key>audioLyric</key>
-		<string></string>
 	</dict>
 	<dict>
 		<key>audioUrl</key>
@@ -200,6 +186,34 @@
 	</dict>
 	<dict>
 		<key>audioUrl</key>
+		<string>http://152.136.133.149/audio/tabushi.mp3</string>
+		<key>audioName</key>
+		<string>她不是</string>
+		<key>audioSinger</key>
+		<string>BigYear大年</string>
+		<key>audioImage</key>
+		<string>http://152.136.133.149/img/tabushi.jpg</string>
+		<key>audioAlbum</key>
+		<string>她不是</string>
+		<key>audioLyric</key>
+		<string></string>
+	</dict>
+	<dict>
+		<key>audioUrl</key>
+		<string>http://152.136.133.149/audio/zouma.mp3</string>
+		<key>audioName</key>
+		<string>走马</string>
+		<key>audioSinger</key>
+		<string>曲肖冰</string>
+		<key>audioImage</key>
+		<string>http://152.136.133.149/img/zouma.jpg</string>
+		<key>audioAlbum</key>
+		<string>走马</string>
+		<key>audioLyric</key>
+		<string></string>
+	</dict>
+	<dict>
+		<key>audioUrl</key>
 		<string>http://152.136.133.149/audio/migong.mp3</string>
 		<key>audioName</key>
 		<string>迷宫</string>
@@ -279,20 +293,6 @@
 		<string>http://152.136.133.149/img/wodemingzi.jpg</string>
 		<key>audioAlbum</key>
 		<string>我的名字</string>
-	</dict>
-	<dict>
-		<key>audioUrl</key>
-		<string>http://152.136.133.149/audio/zhishaohaiyouni.mp3</string>
-		<key>audioName</key>
-		<string>至少还有你</string>
-		<key>audioSinger</key>
-		<string>林忆莲</string>
-		<key>audioImage</key>
-		<string>http://152.136.133.149/img/zhishaohaiyouni.jpg</string>
-		<key>audioAlbum</key>
-		<string>至少还有你</string>
-		<key>audioLyric</key>
-		<string></string>
 	</dict>
 	<dict>
 		<key>audioUrl</key>

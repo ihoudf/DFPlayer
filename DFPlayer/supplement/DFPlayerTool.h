@@ -9,10 +9,10 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-static NSString *DFPlayerNotificationProgressSliderDragEnd = @"DFPlayerNotificationProgressSliderDragEnd";
+static NSString *DFPlayerNotificationSeekEnd = @"DFPlayerNotificationSeekEnd";
 
-#define DFPlayerWeakSelf __weak __typeof(&*self) weakSelf = self;
-#define DFPlayerStrongSelf __strong __typeof(&*self) strongSelf = weakSelf;
+#define DFPlayerWeakSelf __weak __typeof(&*self) wSelf = self;
+#define DFPlayerStrongSelf __strong __typeof(&*self) sSelf = wSelf;
 
 #define DFPlayerHighGlobalQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
 #define DFPlayerDefaultGlobalQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)

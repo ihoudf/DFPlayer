@@ -19,12 +19,12 @@ NS_ASSUME_NONNULL_BEGIN
 + (DFPlayerControlManager *)sharedManager;
 
 /**
- 停止缓冲条、进度条、当前时间label、总时间label和歌词tableView的刷新
+ 停止所有进度类控件的刷新
  */
 - (void)df_stopUpdate;
 
 /**
- 恢复 缓冲条、进度条、当前时间label、总时间label和歌词tableView的刷新
+ 恢复所有进度类控件的刷新
  */
 - (void)df_resumeUpdate;
 
@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  上一首按钮(背景图片在DFPlayer.bundle中同名替换相应的图片即可)
-
+ 
  @param frame 按钮frame
  @param superView 按钮父视图
  @param block 按钮action 若无其他操作需求，传nil即可
@@ -78,7 +78,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  缓冲进度条
-
+ 
  @param frame frame
  @param trackTintColor 未缓冲部分进度条颜色
  @param progressTintColor 已缓冲部分进度条颜色
@@ -92,7 +92,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  播放进度条
-
+ 
  @param frame frame
  @param minimumTrackTintColor 滑块左边滑动条的颜色
  @param maximumTrackTintColor 滑块右边滑动条的颜色
@@ -110,7 +110,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  音频当前时间label
-
+ 
  @param frame frame
  @param superView label父视图
  @return label
@@ -120,7 +120,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  音频总时长label
-
+ 
  @param frame frame
  @param superView label父视图
  @return label
