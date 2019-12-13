@@ -2,41 +2,80 @@
 //  DFPlayerTool.h
 //  DFPlayer
 //
-//  Created by HDF on 2017/7/30.
-//  Copyright © 2017年 HDF. All rights reserved.
+//  Created by ihoudf on 2017/7/30.
+//  Copyright © 2017年 ihoudf. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-static NSString *DFPlayerCurrentAudioInfoModelPlayNotiKey = @"DFPlayerCurrentAudioInfoModelPlayNotiKey";
 
-#define kWeakSelf __weak __typeof(&*self)weakSelf = self;
-//网络状态
+static NSString *DFPlayerNotificationSeekEnd = @"DFPlayerNotificationSeekEnd";
+
+#define DFPlayerWeakSelf __weak __typeof(&*self) wSelf = self;
+#define DFPlayerStrongSelf __strong __typeof(&*self) sSelf = wSelf;
+
+#define DFPlayerHighGlobalQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
+#define DFPlayerDefaultGlobalQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+
+#define DF_SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
+#define DF_FONTSIZE(size) ((size) / 1334.0) * DF_SCREEN_HEIGHT
+
+
+// 网络状态
 typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
     DFPlayerNetworkStatusUnknown          = -1, //未知
     DFPlayerNetworkStatusNotReachable     = 0,  //无网络链接
     DFPlayerNetworkStatusReachableViaWWAN = 1,  //2G/3G/4G
     DFPlayerNetworkStatusReachableViaWiFi = 2   //WIFI
 };
+
 /**
  DFPlayer工具类
  */
 @interface DFPlayerTool : NSObject
 
-//链接
-+ (NSURL *)customUrlWithUrl:(NSURL *)url;
-+ (NSURL *)originalUrlWithUrl:(NSURL *)url;
-//判断是否是本地音频
-+ (BOOL)isLocalWithUrl:(NSURL *)url;
-+ (BOOL)isLocalWithUrlString:(NSString *)urlString;
+// 链接
++ (NSURL *)customURL:(NSURL *)URL;
++ (NSURL *)originalURL:(NSURL *)URL;
 
-//网络
-+ (DFPlayerTool *)shareInstance;
-- (void)startMonitoringNetworkStatus:(void(^)(void))block;
-@property (nonatomic, assign) DFPlayerNetworkStatus networkStatus;
+// 是否是本地音频
++ (BOOL)isLocalAudio:(NSURL *)URL;
+
+// 是否是NSURL类型
++ (BOOL)isNSURL:(NSURL *)URL;
+
+// 网络
++ (void)startMonitoringNetworkStatus:(void (^)(DFPlayerNetworkStatus networkStatus))block;
+
++ (void)stopMonitoringNetwork;
+
++ (DFPlayerNetworkStatus)networkStatus;
+
 @end
-@interface UIImage (DFImage)
 
-//裁剪图片
+
+@interface UIImage (DFPlayerImageExtensions)
+
+// 裁剪图片
 - (UIImage *)imageByResizeToSize:(CGSize)size;
+
 @end
+
+
+@interface NSString (DFPlayerStringExtensions)
+
+// 字符串去空字符
+- (NSString *)removeEmptyString;
+
+// 判断是否为空
+- (BOOL)isEmptyString;
+
+// 是否包含字母
+- (BOOL)isContainLetter;
+
+
+@end
+
+
+
+

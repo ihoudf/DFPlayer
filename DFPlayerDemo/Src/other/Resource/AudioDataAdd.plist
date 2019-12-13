@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>audioUrl</key>
+		<string>http://152.136.133.149/audio/zhishaohaiyouni.mp3</string>
+		<key>audioName</key>
+		<string>至少还有你</string>
+		<key>audioSinger</key>
+		<string>林忆莲</string>
+		<key>audioImage</key>
+		<string>http://152.136.133.149/img/zhishaohaiyouni.jpg</string>
+		<key>audioAlbum</key>
+		<string>至少还有你</string>
+		<key>audioLyric</key>
+		<string></string>
+	</dict>
+	<dict>
+		<key>audioUrl</key>
+		<string>http://152.136.133.149/audio/waiyu.mp3</string>
+		<key>audioName</key>
+		<string>外愈</string>
+		<key>audioSinger</key>
+		<string>任然</string>
+		<key>audioImage</key>
+		<string>http://152.136.133.149/img/waiyu.jpg</string>
+		<key>audioAlbum</key>
+		<string>外愈</string>
+		<key>audioLyric</key>
+		<string></string>
+	</dict>
+	<dict>
+		<key>audioUrl</key>
+		<string>http://152.136.133.149/audio/duanxian.mp3</string>
+		<key>audioName</key>
+		<string>断线</string>
+		<key>audioSinger</key>
+		<string>shang</string>
+		<key>audioImage</key>
+		<string>http://152.136.133.149/img/duanxian.jpg</string>
+		<key>audioAlbum</key>
+		<string>断线</string>
+		<key>audioLyric</key>
+		<string></string>
+	</dict>
+	<dict>
+		<key>audioUrl</key>
+		<string>http://152.136.133.149/audio/nianshaoyouwei.mp3</string>
+		<key>audioName</key>
+		<string>年少有为</string>
+		<key>audioSinger</key>
+		<string>李荣浩</string>
+		<key>audioImage</key>
+		<string>http://152.136.133.149/img/nianshaoyouwei.jpg</string>
+		<key>audioAlbum</key>
+		<string>耳朵</string>
+		<key>audioLyric</key>
+		<string></string>
+	</dict>
+</array>
+</plist>

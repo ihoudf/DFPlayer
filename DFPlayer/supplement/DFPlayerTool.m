@@ -2,28 +2,25 @@
 //  DFPlayerTool.m
 //  DFPlayer
 //
-//  Created by HDF on 2017/7/30.
-//  Copyright © 2017年 HDF. All rights reserved.
+//  Created by ihoudf on 2017/7/30.
+//  Copyright © 2017年 ihoudf. All rights reserved.
 //
 
 #import "DFPlayerTool.h"
-#import "AFNetworkReachabilityManager.h"
+#import "DFPlayer_AFNetworkReachabilityManager.h"
 
-@interface DFPlayerTool()
-
-
-@end
+static DFPlayerNetworkStatus _networkStatus;
 
 @implementation DFPlayerTool
 
-+ (NSURL *)customUrlWithUrl:(NSURL *)url{
-    NSString *urlStr = [url absoluteString];
-    if ([urlStr rangeOfString:@":"].location != NSNotFound) {
-        NSString *scheme = [[urlStr componentsSeparatedByString:@":"] firstObject];
++ (NSURL *)customURL:(NSURL *)URL{
+    NSString *URLString = [URL absoluteString];
+    if ([URLString rangeOfString:@":"].location != NSNotFound) {
+        NSString *scheme = [[URLString componentsSeparatedByString:@":"] firstObject];
         if (scheme) {
             NSString *newScheme = [scheme stringByAppendingString:@"-streaming"];
-            urlStr = [urlStr stringByReplacingOccurrencesOfString:scheme withString:newScheme];
-            return [NSURL URLWithString:urlStr];
+            URLString = [URLString stringByReplacingOccurrencesOfString:scheme withString:newScheme];
+            return [NSURL URLWithString:URLString];
         }else{
             return nil;
         }
@@ -32,66 +29,91 @@
     }
 }
 
-+ (NSURL *)originalUrlWithUrl:(NSURL *)url{
-    NSURLComponents * components = [[NSURLComponents alloc] initWithURL:url
++ (NSURL *)originalURL:(NSURL *)URL{
+    NSURLComponents * components = [[NSURLComponents alloc] initWithURL:URL
                                                 resolvingAgainstBaseURL:NO];
     components.scheme = [components.scheme stringByReplacingOccurrencesOfString:@"-streaming" withString:@""];
     return [components URL];
 }
 
-+ (BOOL)isLocalWithUrl:(NSURL *)url{
-    return [self isLocalWithUrlString:url.absoluteString];
++ (BOOL)isLocalAudio:(NSURL *)URL{
+    return [URL.absoluteString hasPrefix:@"http"] ? NO : YES;
 }
 
-+ (BOOL)isLocalWithUrlString:(NSString *)urlString{
-    if ([urlString hasPrefix:@"http"]) {
-        return NO;
-    }
-    return YES;
++ (BOOL)isNSURL:(NSURL *)URL{
+    return [URL isKindOfClass:[NSURL class]];
 }
 
-+ (DFPlayerTool *)shareInstance {
-    static DFPlayerTool *instance = nil;
-    static dispatch_once_t predicate;
-    dispatch_once(&predicate, ^{
-        instance = [[[self class] alloc] init];
-    });
-    return instance;
-}
-- (void)startMonitoringNetworkStatus:(void(^)(void))block{
++ (void)startMonitoringNetworkStatus:(void (^)(DFPlayerNetworkStatus))block{
     AFNetworkReachabilityManager *mgr = [AFNetworkReachabilityManager sharedManager];
     [mgr setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
-        NSLog(@"-- DFPlayer： 网络状态：%ld",(long)status);
         switch (status) {
             case AFNetworkReachabilityStatusUnknown:
-                self.networkStatus = DFPlayerNetworkStatusUnknown;
+                _networkStatus = DFPlayerNetworkStatusUnknown;
                 break;
             case AFNetworkReachabilityStatusNotReachable:
-                self.networkStatus = DFPlayerNetworkStatusNotReachable;
+                _networkStatus = DFPlayerNetworkStatusNotReachable;
                 break;
             case AFNetworkReachabilityStatusReachableViaWWAN:
-                self.networkStatus = DFPlayerNetworkStatusReachableViaWWAN;
+                _networkStatus = DFPlayerNetworkStatusReachableViaWWAN;
                 break;
             case AFNetworkReachabilityStatusReachableViaWiFi:
-                self.networkStatus = DFPlayerNetworkStatusReachableViaWiFi;
+                _networkStatus = DFPlayerNetworkStatusReachableViaWiFi;
                 break;
         }
-        if (block) {block();}
+        if (block) {
+            block(_networkStatus);
+        }
     }];
     [mgr startMonitoring];
 }
 
++ (void)stopMonitoringNetwork{
+    [[AFNetworkReachabilityManager sharedManager] stopMonitoring];
+}
+
++ (DFPlayerNetworkStatus)networkStatus{
+    return _networkStatus;
+}
+
 @end
 
-@implementation UIImage (DFImage)
+@implementation UIImage (DFPlayerImageExtensions)
+
 - (UIImage *)imageByResizeToSize:(CGSize)size {
-    if (size.width <= 0 || size.height <= 0) return nil;
+    if (size.width <= 0 || size.height <= 0){
+        return nil;
+    }
     UIGraphicsBeginImageContextWithOptions(size, NO, self.scale);
     [self drawInRect:CGRectMake(0, 0, size.width, size.height)];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return image;
 }
+
+@end
+
+@implementation NSString (DFPlayerStringExtensions)
+
+- (NSString *)removeEmptyString{
+    NSString *str = [NSString stringWithFormat:@"%@",self];
+    return [str stringByReplacingOccurrencesOfString:@" " withString:@""];
+}
+
+- (BOOL)isEmptyString{
+    if(!self || [self isEqualToString:@"(null)"] || [self isKindOfClass:[NSNull class]] || [self isEqual:[NSNull null]]){
+        return YES;
+    }
+    return [self removeEmptyString].length == 0;
+}
+
+- (BOOL)isContainLetter{
+    NSRegularExpression *numberRegular = [NSRegularExpression regularExpressionWithPattern:@"[A-Za-z]" options:NSRegularExpressionCaseInsensitive error:nil];
+    NSInteger count = [numberRegular numberOfMatchesInString:self options:NSMatchingReportProgress range:NSMakeRange(0, self.length)];
+    return count > 0;
+}
+
+
 @end
 
 

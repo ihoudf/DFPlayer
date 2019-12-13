@@ -2,13 +2,14 @@
 //  DFPlayerRequestManager.h
 //  DFPlayer
 //
-//  Created by HDF on 2017/7/31.
-//  Copyright © 2017年 HDF. All rights reserved.
+//  Created by ihoudf on 2017/7/31.
+//  Copyright © 2017年 ihoudf. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <Foundation/NSURLError.h>
 @protocol DFPlayerRequestDelegate <NSObject>
+
 /**
  得到服务器响应
  
@@ -20,7 +21,6 @@
  从服务器接收到数据
  */
 - (void)requestManagerDidReceiveData;
-
 
 /**
  缓存结果
@@ -42,14 +42,25 @@
  DFPlayer请求管理器
  */
 @interface DFPlayerRequestManager : NSObject
+
 + (instancetype)requestWithUrl:(NSURL *)url;
+
 - (instancetype)initWithUrl:(NSURL *)url;
+
 @property (nonatomic, weak) id<DFPlayerRequestDelegate> delegate;
+
 @property (nonatomic, assign) NSInteger requestOffset;//请求起始位置
+
 @property (nonatomic, assign) NSInteger fileLength;//文件长度
+
 @property (nonatomic, assign) NSInteger cacheLength;//缓冲长度
+
 @property (nonatomic, assign) BOOL cancel;//是否取消请求
+
 @property (nonatomic, assign) BOOL isHaveCache;//是否有缓存
+
 @property (nonatomic, assign) BOOL isObserveFileModifiedTime;//是否观察修改时间
+
 - (void)requestStart;
+
 @end

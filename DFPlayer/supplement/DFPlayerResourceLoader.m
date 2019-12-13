@@ -2,8 +2,8 @@
 //  DFPlayerResourceLoader.m
 //  DFPlayer
 //
-//  Created by HDF on 2017/7/30.
-//  Copyright © 2017年 HDF. All rights reserved.
+//  Created by ihoudf on 2017/7/30.
+//  Copyright © 2017年 ihoudf. All rights reserved.
 //
 
 #import "DFPlayerResourceLoader.h"
@@ -70,7 +70,7 @@
                 [self processRequestList];
             }else {
                 //数据还没缓存，则等待数据下载；如果是Seek操作，则重新请求
-//                [self newTaskWithLoadingRequest:loadingRequest cache:NO];
+                [self newTaskWithLoadingRequest:loadingRequest cache:NO];
             }
         }else {
             [self newTaskWithLoadingRequest:loadingRequest cache:YES];
@@ -86,7 +86,6 @@
         self.requestManager.cancel = YES;
     }
     self.requestManager = [[DFPlayerRequestManager alloc] initWithUrl:loadingRequest.request.URL];
-//    self.requestManager.requestOffset = (long)loadingRequest.dataRequest.requestedOffset;
     if (fileLength > 0) {
         self.requestManager.fileLength = fileLength;
     }
@@ -124,11 +123,9 @@
     }
     
     //当前下载长度-要请求的长度
-    //    NSUInteger canReadLength = cacheLength - (requestedOffset - self.requestManager.requestOffset);
-        NSUInteger canReadLength = cacheLength - requestedOffset;
+    NSUInteger canReadLength = cacheLength - requestedOffset;
     NSUInteger respondLength = MIN(canReadLength, loadingRequest.dataRequest.requestedLength);
- 
-//    [loadingRequest.dataRequest respondWithData:[DFPlayerFileManager df_readTempFileDataWithOffset:requestedOffset - self.requestManager.requestOffset length:respondLength]];
+    
     [loadingRequest.dataRequest respondWithData:[DFPlayerFileManager df_readTempFileDataWithOffset:requestedOffset length:respondLength]];
 
     //如果完全响应了所需要的数据，则完成

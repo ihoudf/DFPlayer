@@ -2,20 +2,21 @@
 //  DFPlayerRequestManager.m
 //  DFPlayer
 //
-//  Created by HDF on 2017/7/31.
-//  Copyright © 2017年 HDF. All rights reserved.
+//  Created by ihoudf on 2017/7/31.
+//  Copyright © 2017年 ihoudf. All rights reserved.
 //
 
 #import "DFPlayerRequestManager.h"
 #import "DFPlayerTool.h"
 #import "DFPlayerFileManager.h"
-NSString * const DFNetworkStatusKey    = @"networkStatus";
 
 @interface DFPlayerRequestModel : NSObject<NSCoding>
 @property (nonatomic, copy) NSString *last_modified;
 @property (nonatomic, copy) NSString *ETag;
 @end
+
 @implementation DFPlayerRequestModel
+
 - (void)encodeWithCoder:(NSCoder *)aCoder{
     [aCoder encodeObject:self.last_modified forKey:@"last_modified"];
     [aCoder encodeObject:self.ETag          forKey:@"ETag"];
@@ -28,12 +29,12 @@ NSString * const DFNetworkStatusKey    = @"networkStatus";
     }
     return self;
 }
-- (void)setValue:(id)value forUndefinedKey:(NSString *)key{
-    
-}
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key{}
+
 @end
 
 @interface DFPlayerRequestManager()<NSURLSessionDataDelegate>
+
 @property (nonatomic, strong) NSMutableURLRequest   *request;
 @property (nonatomic, strong) NSURLSession          *session;
 @property (nonatomic, strong) NSURLSessionDataTask  *dataTask;
@@ -44,21 +45,31 @@ NSString * const DFNetworkStatusKey    = @"networkStatus";
 @end
 
 @implementation DFPlayerRequestManager
-- (void)dealloc{
-    [[DFPlayerTool shareInstance] removeObserver:self forKeyPath:DFNetworkStatusKey];
-}
+
 + (instancetype)requestWithUrl:(NSURL *)url{
     return [[self alloc] initWithUrl:url];
 }
+
 - (instancetype)initWithUrl:(NSURL *)url{
     self = [super init];
     if (self) {
-        [[DFPlayerTool shareInstance] addObserver:self forKeyPath:DFNetworkStatusKey options:NSKeyValueObservingOptionNew context:nil];
+        
+        [DFPlayerTool startMonitoringNetworkStatus:^(DFPlayerNetworkStatus networkStatus) {
+            if (!self.isNewAudio) {
+                if (networkStatus != DFPlayerNetworkStatusUnknown ||
+                    networkStatus != DFPlayerNetworkStatusNotReachable) {
+                    self.requestOffset = self.cacheLength;
+                    [self resumeRequestStart];
+                }
+            }
+        }];
+        
         [DFPlayerFileManager df_createTempFile];
-        self.requestUrl = [DFPlayerTool originalUrlWithUrl:url];
+        self.requestUrl = [DFPlayerTool originalURL:url];
     }
     return self;
 }
+
 - (void)requestStart{
     __block DFPlayerRequestModel *model = [[DFPlayerRequestModel alloc] init];
     if (self.isHaveCache) {//安全性判断。如果沙盒存在缓存文件，再去发起校验。沙盒没有，直接下载缓存
@@ -115,11 +126,13 @@ NSString * const DFNetworkStatusKey    = @"networkStatus";
 #pragma mark - NSURLSessionDataDelegate
 //服务器响应
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler {
-    if (self.cancel) return;
+    if (self.cancel) {
+        return;
+    }
     completionHandler(NSURLSessionResponseAllow);
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
     self.isNewAudio = NO;
-
+    
     NSInteger statusCode = httpResponse.statusCode;
     if (statusCode == 200) {
         NSString *contentLength = httpResponse.allHeaderFields[@"Content-Length"];
@@ -141,12 +154,14 @@ NSString * const DFNetworkStatusKey    = @"networkStatus";
     if (self.delegate && [self.delegate respondsToSelector:@selector(requestManagerDidReceiveResponseWithStatusCode:)]) {
         [self.delegate requestManagerDidReceiveResponseWithStatusCode:statusCode];
     }
- 
+    
 }
 
 //服务器返回数据 可能会调用多次
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
-    if (self.cancel) return;
+    if (self.cancel){
+        return;
+    }
     self.cacheLength += data.length;
     [DFPlayerFileManager df_writeDataToAudioFileTempPathWithData:data];
     
@@ -157,7 +172,9 @@ NSString * const DFNetworkStatusKey    = @"networkStatus";
 
 //请求完成会调用该方法，请求失败则error有值
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
-    if (self.cancel) {return;}//下载取消
+    if (self.cancel) {
+        return;
+    }
     if (error) {
         if (self.delegate && [self.delegate respondsToSelector:@selector(requestManagerDidCompleteWithError:)]) {
             [self.delegate requestManagerDidCompleteWithError:error.code];
@@ -165,31 +182,12 @@ NSString * const DFNetworkStatusKey    = @"networkStatus";
     }else {
         self.isNewAudio = YES;
         //可以缓存则保存文件
-        [DFPlayerFileManager df_moveAudioFileFromTempPathToCachePath:self.requestUrl blcok:^(BOOL isSuccess,NSError *error) {
-            if (!isSuccess) {
-                NSLog(@"-- DFPlayer： 保存失败：%@",[error localizedDescription]);
-            }
-            if (self.delegate && [self.delegate respondsToSelector:@selector(requestManagerIsCached:)]) {
-                [self.delegate requestManagerIsCached:isSuccess];
-            }
-        }];
-    }
-}
-
-#pragma mark - KVO
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
-    DFPlayerTool *tool = [DFPlayerTool shareInstance];
-    if (object == tool) {
-        if ([keyPath isEqualToString:DFNetworkStatusKey]) {
-            if ( !self.isNewAudio) {
-                if (tool.networkStatus != DFPlayerNetworkStatusUnknown &&
-                    tool.networkStatus != DFPlayerNetworkStatusNotReachable) {
-                    self.requestOffset = self.cacheLength;
-                    [self resumeRequestStart];
-                }
-            }
+        BOOL success = [DFPlayerFileManager df_moveAudioFileFromTempPathToCachePath:self.requestUrl];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(requestManagerIsCached:)]) {
+            [self.delegate requestManagerIsCached:success];
         }
     }
 }
+
 
 @end

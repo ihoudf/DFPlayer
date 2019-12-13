@@ -2,115 +2,138 @@
 //  DFAudioViewController.m
 //  DFPlayerDemo
 //
-//  Created by HDF on 2017/10/7.
-//  Copyright © 2017年 HDF. All rights reserved.
+//  Created by ihoudf on 2017/10/7.
+//  Copyright © 2017年 ihoudf. All rights reserved.
 //
 
 #import "DFAudioViewController.h"
 #import "DFPlayer.h"
-#import "YourDataModel.h"
-#import "DFMacro.h"
-#import "NSObject+Alert.h"
-#import "UIImage+Blur.h"
-static NSString *cellId = @"cellId";
-#define topH SCREEN_HEIGHT - self.tabBarController.tabBar.frame.size.height-CountHeight(200)
-@interface DFAudioViewController ()
-<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,DFPlayerDelegate,DFPlayerDataSource>
-@property (nonatomic, strong) UIScrollView      *scrollView;
-@property (nonatomic, strong) UITableView       *tableView;
-@property (nonatomic, strong) UIImageView       *backgroundImageView;
+#import "YourModel.h"
+#import "NSObject+Extentions.h"
 
-@property (nonatomic, strong) NSMutableArray    *dataArray;
-@property (nonatomic, strong) NSMutableArray    *df_ModelArray;
-@property (nonatomic, strong) NSArray           *addArray;//模拟添加数据
-@property (nonatomic, assign) NSInteger         addIndex;//添加音频数组标识
-@property (nonatomic, assign) BOOL              stopUpdate;
+#define topH SCREEN_HEIGHT - self.tabBarController.tabBar.frame.size.height-DFHeight(200)
+
+@interface DFAudioViewController ()
+<UITableViewDelegate,UITableViewDataSource,DFPlayerDelegate,DFPlayerDataSource>
+{
+    UIImageView *_bgView;
+    UIScrollView *_scrollView;
+    UITableView *_tableView;
+    UITableView *_lyricsTableView;
+    UILabel *_noticeLabel;
+    BOOL _stopUpdate;
+}
+
+
+@property (nonatomic, strong) NSMutableArray<YourModel *> *yourModelArray;
+@property (nonatomic, strong) NSArray<YourModel *> *yourModelAddArray;
+@property (nonatomic, assign) NSInteger addIndex;
+@property (nonatomic, strong) NSMutableArray<DFPlayerModel *> *dataArray;
+
 @end
 
 @implementation DFAudioViewController
-#pragma mark - 加载视图
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"添加音频" style:(UIBarButtonItemStylePlain) target:self action:@selector(addSongAction)];
-    self.navigationItem.rightBarButtonItem.tintColor = HDFGreenColor;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillTerminate) name:UIApplicationWillTerminateNotification object:nil];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"添加音频" style:(UIBarButtonItemStylePlain) target:self action:@selector(handleRightBarButtonItemAction)];
+    self.navigationItem.rightBarButtonItem.tintColor = DFGreenColor;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"暂停恢复" style:(UIBarButtonItemStylePlain) target:self action:@selector(handleLeftBarButtonItemAction)];
+    self.navigationItem.leftBarButtonItem.tintColor = DFGreenColor;
     
     self.addIndex = 0;
-    [self initBackGroundView];
-    [self initDFPlayer];
+    
+    [self initData];
     [self initUI];
+    [self initDFPlayer];
 }
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self tableViewReloadData];
 }
 
-#pragma mark - UI
-- (void)initBackGroundView{
-    self.backgroundImageView = [[UIImageView alloc] init];
-    self.backgroundImageView.frame = [UIScreen mainScreen].bounds;
-    self.backgroundImageView.backgroundColor = [UIColor whiteColor];
-    self.backgroundImageView.image = [UIImage imageNamed:@"default_bg.jpg"];
-    self.backgroundImageView.userInteractionEnabled = YES;
-    [self.view addSubview:self.backgroundImageView];
-    //这里使用iOS8以后才能使用的虚化方法
-    UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
-    effectView.frame = self.backgroundImageView.frame;
-    [self.backgroundImageView addSubview:effectView];
+- (void)initData{
+    //这里是你从自己服务端请求的数据
+    _yourModelArray = [self getYourModelArray]; // 主数据
+    _yourModelAddArray = [self getYourModelAddArray];// 用于模拟添加数据
 }
+
 - (void)initUI{
-    CGFloat H = topH - CountHeight(10);
-    CGRect rect = CGRectMake( 0, 0, SCREEN_WIDTH, H);
-    self.scrollView = [[UIScrollView alloc] init];
-    self.scrollView.frame = rect;
-    self.scrollView.delegate = self;
-    self.scrollView.pagingEnabled = YES;
-    self.scrollView.contentSize = CGSizeMake(SCREEN_WIDTH*2, H);
-    self.scrollView.showsHorizontalScrollIndicator = NO;
-    [self.view addSubview:self.scrollView];
+    _bgView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+    _bgView.backgroundColor = [UIColor whiteColor];
+    _bgView.image = [UIImage imageNamed:@"default_bg.jpg"];
+    _bgView.userInteractionEnabled = YES;
+    [self.view addSubview:_bgView];
+    if (@available(iOS 8.0,*)) {
+        UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
+        effectView.frame = _bgView.frame;
+        [_bgView addSubview:effectView];
+    }
     
-    self.tableView              = [[UITableView alloc] init];
-    self.tableView.frame        = rect;
-    self.tableView.delegate     = self;
-    self.tableView.dataSource   = self;
-    self.tableView.rowHeight    = CountHeight(100);
-    [self.scrollView addSubview:self.tableView];
+    CGFloat noticeLabel_H = DFHeight(70);
+    CGFloat H = topH - noticeLabel_H;
+    CGRect rect = (CGRect){0, 0, SCREEN_WIDTH, H};
+    _scrollView = [[UIScrollView alloc] initWithFrame:rect];
+    _scrollView.delegate = self;
+    _scrollView.pagingEnabled = YES;
+    _scrollView.contentSize = (CGSize){SCREEN_WIDTH*2, H};
+    _scrollView.showsHorizontalScrollIndicator = NO;
+    [_bgView addSubview:_scrollView];
+    
+    _tableView = [[UITableView alloc] initWithFrame:rect];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.rowHeight = DFHeight(100);
+    [_scrollView addSubview:_tableView];
     
     //歌词tableview
-    UITableView *lyricsTableView =
-    [[DFPlayerControlManager shareInstance] df_lyricTableViewWithFrame:(CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, H))
-                                                          contentInset:UIEdgeInsetsMake((H-CountHeight(90))/2, 0, (H-CountHeight(90))/2, 0)
-                                                         cellRowHeight:CountHeight(90)
+    _lyricsTableView =
+    [[DFPlayerControlManager sharedManager] df_lyricTableViewWithFrame:(CGRect){SCREEN_WIDTH, 0, SCREEN_WIDTH, H}
+                                                         cellRowHeight:DFHeight(90)
                                                    cellBackgroundColor:[UIColor clearColor]
-                                     currentLineLrcForegroundTextColor:HDFGreenColor
+                                     currentLineLrcForegroundTextColor:DFGreenColor
                                      currentLineLrcBackgroundTextColor:[UIColor whiteColor]
                                        otherLineLrcBackgroundTextColor:[UIColor whiteColor]
-                                                    currentLineLrcFont:HDFSystemFontOfSize(34)
-                                                      otherLineLrcFont:HDFSystemFontOfSize(29)
-                                                             superView:self.scrollView
-                                                            clickBlock:^(NSIndexPath * _Nullable indexpath) {
+                                                    currentLineLrcFont:DFSystemFont(18)
+                                                      otherLineLrcFont:DFSystemFont(16)
+                                                             superView:_scrollView
+                                                                 block:^(NSString * _Nonnull onPlayingLyrics) {
+        self->_noticeLabel.text = onPlayingLyrics;
+    }];
+    _lyricsTableView.backgroundColor = [UIColor clearColor];
+    _lyricsTableView.showsVerticalScrollIndicator = NO;
+    CGFloat edgeInsets_top = (H-DFHeight(90))/2;
+    UIEdgeInsets contentInset = UIEdgeInsetsMake(edgeInsets_top, 0, edgeInsets_top, 0);
+    _lyricsTableView.contentInset = contentInset;
 
-                                                                 }];
-    lyricsTableView.backgroundColor = [UIColor clearColor];
+    _noticeLabel = [[UILabel alloc] init];
+    _noticeLabel.frame = (CGRect){0, H, SCREEN_WIDTH, noticeLabel_H};
+    _noticeLabel.backgroundColor = [UIColor colorWithWhite:1 alpha:0.1];
+    _noticeLabel.textColor = DFGreenColor;
+    _noticeLabel.textAlignment = NSTextAlignmentCenter;
+    _noticeLabel.font = DFSystemFont(18);
+    [_bgView addSubview:_noticeLabel];
 }
 #pragma mark  - tableview
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return  self.dataArray.count;
+    return _yourModelArray.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleSubtitle) reuseIdentifier:cellId];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellId"];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleSubtitle) reuseIdentifier:@"cellId"];
         cell.backgroundColor = [UIColor clearColor];
     }
-    YourDataModel *model = self.dataArray[indexPath.row];
+    YourModel *model = _yourModelArray[indexPath.row];
     NSString *audioType = @"网络音频";
-    if (![model.yourUrl hasPrefix:@"http"]) {audioType = @"本地音频";}
+    if (![model.yourUrl hasPrefix:@"http"]) {
+        audioType = @"本地音频";
+    }
     cell.textLabel.text = [NSString stringWithFormat:@"%ld--%@-%@(%@)",(long)indexPath.row,audioType,model.yourName,model.yourSinger];
-    NSURL *url = [self translateIllegalCharacterWtihUrlStr:model.yourUrl];
-    if ([DFPlayer df_playerCheckIsCachedWithAudioUrl:url]) {
-        cell.tintColor = HDFGreenColor;
+    NSURL *url = [self getAvailableURL:model.yourUrl];
+    if ([[DFPlayer sharedPlayer] df_cachePath:url]) {
+        cell.tintColor = DFGreenColor;
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }else{
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -121,96 +144,107 @@ static NSString *cellId = @"cellId";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    if (self.df_ModelArray.count > indexPath.row) {
-        [self.scrollView setContentOffset:(CGPointMake(SCREEN_WIDTH, 0)) animated:YES];
-        DFPlayerModel *model = self.df_ModelArray[indexPath.row];
-        [[DFPlayer shareInstance] df_playerPlayWithAudioId:model.audioId];
+    if (self.dataArray.count > indexPath.row) {
+        [_scrollView setContentOffset:(CGPointMake(SCREEN_WIDTH, 0)) animated:YES];
+        DFPlayerModel *model = self.dataArray[indexPath.row];
+        [[DFPlayer sharedPlayer] df_playWithAudioId:model.audioId];
     }
 }
+
 #pragma mark - 初始化DFPlayer
 - (void)initDFPlayer{
-    [[DFPlayer shareInstance] df_initPlayerWithUserId:nil];
-    [DFPlayer shareInstance].dataSource  = self;
-    [DFPlayer shareInstance].delegate    = self;
-    [DFPlayer shareInstance].category    = DFPlayerAudioSessionCategoryPlayback;
-    [DFPlayer shareInstance].isObserveWWAN = YES;
-//    [DFPlayer shareInstance].isManualToPlay = NO;
-//    [DFPlayer shareInstance].playMode = DFPlayerModeOnlyOnce;//DFPLayer默认单曲循环。
-    [[DFPlayer shareInstance] df_reloadData];//须在传入数据源后调用（类似UITableView的reloadData）
-    CGRect buffRect = CGRectMake(CountWidth(104), topH+CountHeight(28), CountWidth(542), CountHeight(4));
-    CGRect proRect  = CGRectMake(CountWidth(104), topH+CountHeight(10), CountWidth(542), CountHeight(40));
-    CGRect currRect = CGRectMake(CountWidth(10), topH+CountHeight(10), CountWidth(90), CountHeight(40));
-    CGRect totaRect = CGRectMake(SCREEN_WIDTH-CountWidth(100), topH+CountHeight(10), CountWidth(90), CountHeight(40));
-    CGRect playRect = CGRectMake(CountWidth(320), topH+CountHeight(70), CountWidth(110), CountWidth(110));
-    CGRect nextRext = CGRectMake(CountWidth(490), topH+CountHeight(84), CountWidth(80), CountWidth(80));
-    CGRect lastRect = CGRectMake(CountWidth(180), topH+CountHeight(84), CountWidth(80), CountWidth(80));
-    CGRect typeRect = CGRectMake(CountWidth(40), topH+CountHeight(100), CountWidth(63), CountHeight(45));
+    [[DFPlayer sharedPlayer] df_initPlayerWithUserId:nil];
+    [DFPlayer sharedPlayer].dataSource  = self;
+    [DFPlayer sharedPlayer].delegate    = self;
+    [DFPlayer sharedPlayer].isObserveWWAN = YES;
+    [DFPlayer sharedPlayer].playMode    = DFPlayerModeSingleCycle;
+    [[DFPlayer sharedPlayer] df_reloadData];//需在传入数据源后调用
+    
+    CGRect buffRect = (CGRect){DFWidth(104), topH+DFHeight(28), DFWidth(542), DFHeight(4)};
+    CGRect proRect  = (CGRect){DFWidth(104), topH+DFHeight(10), DFWidth(542), DFHeight(40)};
+    CGRect currRect = (CGRect){DFWidth(10), topH+DFHeight(10), DFWidth(90), DFHeight(40)};
+    CGRect totaRect = (CGRect){SCREEN_WIDTH-DFWidth(100), topH+DFWidth(10), DFWidth(90), DFHeight(40)};
+    CGRect playRect = (CGRect){DFWidth(320), topH+DFHeight(70), DFWidth(110), DFWidth(110)};
+    CGRect nextRext = (CGRect){DFWidth(490), topH+DFHeight(84), DFWidth(80), DFWidth(80)};
+    CGRect lastRect = (CGRect){DFWidth(180), topH+DFHeight(84), DFWidth(80), DFWidth(80)};
+    CGRect typeRect = (CGRect){DFWidth(40), topH+DFHeight(100), DFWidth(63), DFHeight(45)};
 
-    DFPlayerControlManager *manager = [DFPlayerControlManager shareInstance];
+    CGRect rateRect = (CGRect){SCREEN_WIDTH -DFWidth(103), topH+DFHeight(100), DFWidth(63), DFHeight(45)};
+
+    DFPlayerControlManager *mgr = [DFPlayerControlManager sharedManager];
     //缓冲条
-    [manager df_bufferProgressViewWithFrame:buffRect trackTintColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.5] progressTintColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:0.5] superView:self.backgroundImageView];
+    [mgr df_bufferProgressViewWithFrame:buffRect trackTintColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.5] progressTintColor:[UIColor colorWithWhite:1 alpha:0.5] superView:_bgView];
     //进度条
-    [manager df_sliderWithFrame:proRect minimumTrackTintColor:HDFGreenColor maximumTrackTintColor:[UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:0.0] trackHeight:CountHeight(4) thumbSize:(CGSizeMake(CountWidth(34), CountWidth(34))) superView:self.backgroundImageView];
+    [mgr df_sliderWithFrame:proRect minimumTrackTintColor:DFGreenColor maximumTrackTintColor:DFRGBAColor(204.0, 204.0, 204.0, 0.0) trackHeight:DFHeight(4) thumbSize:(CGSize){DFWidth(34), DFWidth(34)} superView:_bgView];
     //当前时间
-    UILabel *curLabel = [manager df_currentTimeLabelWithFrame:currRect superView:self.backgroundImageView];
+    UILabel *curLabel = [mgr df_currentTimeLabelWithFrame:currRect superView:_bgView];
     curLabel.textColor = [UIColor whiteColor];
     //总时间
-    UILabel *totLabel = [manager df_totalTimeLabelWithFrame:totaRect superView:self.backgroundImageView];
+    UILabel *totLabel = [mgr df_totalTimeLabelWithFrame:totaRect superView:_bgView];
     totLabel.textColor = [UIColor whiteColor];
-
     //播放模式按钮
-    [manager df_typeControlBtnWithFrame:typeRect superView:self.backgroundImageView block:nil];
+    [mgr df_typeControlBtnWithFrame:typeRect superView:_bgView block:nil];
     //播放暂停按钮
-    [manager df_playPauseBtnWithFrame:playRect superView:self.backgroundImageView block:nil];
+    [mgr df_playPauseBtnWithFrame:playRect superView:_bgView block:nil];
     //下一首按钮
-    [manager df_nextAudioBtnWithFrame:nextRext superView:self.backgroundImageView block:nil];
+    [mgr df_nextAudioBtnWithFrame:nextRext superView:_bgView block:nil];
     //上一首按钮
-    [manager df_lastAudioBtnWithFrame:lastRect superView:self.backgroundImageView block:nil];
+    [mgr df_lastAudioBtnWithFrame:lastRect superView:_bgView block:nil];
     
-    [[DFPlayer shareInstance] df_setPlayerWithPreviousAudioModel];
+    UIButton *button = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    button.frame = rateRect;
+    [button setTitle:@"倍速" forState:(UIControlStateNormal)];
+    [button setTitleColor:DFGreenColor forState:(UIControlStateNormal)];
+    [button addTarget:self action:@selector(rateAction) forControlEvents:(UIControlEventTouchUpInside)];
+    [_bgView addSubview:button];
+}
 
+- (void)rateAction{
+    [self showRateAlertSheetBlock:^(NSString *rate) {
+        [[DFPlayer sharedPlayer] df_setRate:[rate floatValue]];
+    }];
 }
 
 #pragma mark - DFPLayer dataSource
-- (NSArray<DFPlayerModel *> *)df_playerModelArray{
-    if (_df_ModelArray.count == 0) {
-        _df_ModelArray = [NSMutableArray array];
+- (NSArray<DFPlayerModel *> *)df_audioDataForPlayer:(DFPlayer *)player{
+    if (!_dataArray) {
+        _dataArray = [NSMutableArray array];
     }else{
-        [_df_ModelArray removeAllObjects];
+        [_dataArray removeAllObjects];
     }
-    for (int i = 0; i < self.dataArray.count; i++) {
-        YourDataModel *yourModel    = self.dataArray[i];
-        DFPlayerModel *model        = [[DFPlayerModel alloc] init];
-        model.audioId               = i;//****重要。AudioId从0开始，仅标识当前音频在数组中的位置。
+    for (int i = 0; i < _yourModelArray.count; i++) {
+        YourModel *yourModel = _yourModelArray[i];
+        DFPlayerModel *model = [[DFPlayerModel alloc] init];
+        model.audioId = i;//****重要。AudioId从0开始，仅标识当前音频在数组中的位置。
         if ([yourModel.yourUrl hasPrefix:@"http"]) {//网络音频
-            model.audioUrl  = [self translateIllegalCharacterWtihUrlStr:yourModel.yourUrl];
+            model.audioUrl = [self getAvailableURL:yourModel.yourUrl];
         }else{//本地音频
             NSString *path = [[NSBundle mainBundle] pathForResource:yourModel.yourUrl ofType:@""];
-            if (path) {model.audioUrl = [NSURL fileURLWithPath:path];}
+            if (path) {
+                model.audioUrl = [NSURL fileURLWithPath:path];
+            }
         }
-        [_df_ModelArray addObject:model];
+        [_dataArray addObject:model];
     }
-    return self.df_ModelArray;
+    return _dataArray;
 }
-- (DFPlayerInfoModel *)df_playerAudioInfoModel:(DFPlayer *)player{
-    YourDataModel *yourModel        = self.dataArray[player.currentAudioModel.audioId];
-    DFPlayerInfoModel *infoModel    = [[DFPlayerInfoModel alloc] init];
-    //音频名 歌手 专辑名
-    infoModel.audioName     = yourModel.yourName;
-    infoModel.audioSinger   = yourModel.yourSinger;
-    infoModel.audioAlbum    = yourModel.yourAlbum;
-    //歌词
-    NSString *lyricPath     = [[NSBundle mainBundle] pathForResource:yourModel.yourLyric ofType:nil];
-    infoModel.audioLyric    = [NSString stringWithContentsOfFile:lyricPath encoding:NSUTF8StringEncoding error:nil];
-    //配图
-    NSURL *imageUrl         = [NSURL URLWithString:yourModel.yourImage];
-    NSData *imageData       = [NSData dataWithContentsOfURL:imageUrl];
-    infoModel.audioImage    = [UIImage imageWithData: imageData];
+- (DFPlayerInfoModel *)df_audioInfoForPlayer:(DFPlayer *)player{
+    YourModel *yourModel = _yourModelArray[player.currentAudioModel.audioId];
+    NSString *lyricPath = [[NSBundle mainBundle] pathForResource:yourModel.yourLyric ofType:nil];
+    NSURL *imageUrl = [NSURL URLWithString:yourModel.yourImage];
+    NSData *imageData = [NSData dataWithContentsOfURL:imageUrl];
+    DFPlayerInfoModel *infoModel = [[DFPlayerInfoModel alloc] init];
+    infoModel.audioName = yourModel.yourName;
+    infoModel.audioSinger = yourModel.yourSinger;
+    infoModel.audioAlbum = yourModel.yourAlbum;
+    infoModel.audioLyrics = [NSString stringWithContentsOfFile:lyricPath encoding:NSUTF8StringEncoding error:nil];
+    infoModel.audioImage = [UIImage imageWithData:imageData];
     return infoModel;
 }
+
 #pragma mark - DFPlayer delegate
 //加入播放队列
-- (void)df_playerAudioWillAddToPlayQueue:(DFPlayer *)player{
+- (void)df_playerAudioAddToPlayQueue:(DFPlayer *)player{
     [self tableViewReloadData];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         UIImage *audioImage = player.currentAudioInfoModel.audioImage;
@@ -221,134 +255,79 @@ static NSString *cellId = @"cellId";
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             NSString *audioName = player.currentAudioInfoModel.audioName;
-            self.navigationItem.title = [NSString stringWithFormat:@"当前音频：%@",audioName];
-            self.backgroundImageView.image = audioImage;
+            self.navigationItem.title = audioName;
+            self->_bgView.image = audioImage;
+            self->_noticeLabel.text = player.currentAudioInfoModel.audioLyrics ? @"" : @"无可用歌词";
         });
     });
 }
+
 //缓冲进度代理
 - (void)df_player:(DFPlayer *)player bufferProgress:(CGFloat)bufferProgress totalTime:(CGFloat)totalTime{
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:player.currentAudioModel.audioId
-                                                inSection:0];
-    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"正在缓冲%lf",bufferProgress];
-    cell.detailTextLabel.hidden = NO;
+    [self congfigCell:player.currentAudioModel.audioId
+      detailTextLabel:[NSString stringWithFormat:@"正在缓冲%lf",bufferProgress]];
 }
+
 //播放进度代理
 - (void)df_player:(DFPlayer *)player progress:(CGFloat)progress currentTime:(CGFloat)currentTime totalTime:(CGFloat)totalTime{
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:player.currentAudioModel.audioId
-                                                inSection:0];
-    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"当前进度%lf--当前时间%.0f--总时长%.0f",progress,currentTime,totalTime];
-    cell.detailTextLabel.hidden = NO;
+    [self congfigCell:player.currentAudioModel.audioId
+      detailTextLabel:[NSString stringWithFormat:@"当前进度%lf--当前时间%.0f--总时长%.0f",progress,currentTime,totalTime]];
 }
+
 //状态信息代理
 - (void)df_player:(DFPlayer *)player didGetStatusCode:(DFPlayerStatusCode)statusCode{
-    if (statusCode == 0) {
-        [self showAlertWithTitle:@"没有网络连接" message:nil yesBlock:nil];
-    }else if(statusCode == 1){
-        [self showAlertWithTitle:@"继续播放将产生流量费用" message:nil noBlock:nil yseBlock:^{
-            [DFPlayer shareInstance].isObserveWWAN = NO;
-            [[DFPlayer shareInstance] df_playerPlayWithAudioId:player.currentAudioModel.audioId];
+    if (statusCode == DFPlayerStatusNoNetwork) {
+        [self showAlert:@"没有网络连接"];
+    }else if(statusCode == DFPlayerStatusViaWWAN){
+        [self showAlert:@"继续播放将产生流量费用" okBlock:^{
+            [DFPlayer sharedPlayer].isObserveWWAN = NO;
+            [[DFPlayer sharedPlayer] df_playWithAudioId:player.currentAudioModel.audioId];
         }];
+    }else if(statusCode == DFPlayerStatusTimeOut){
+        [self showAlert:@"请求超时"];
+    }else if(statusCode == DFPlayerStatusCacheSucc){
+        [self tableViewReloadData];
         return;
-    }else if(statusCode == 2){
-        [self showAlertWithTitle:@"请求超时" message:nil yesBlock:nil];
-    }else if(statusCode == 8){
-        [self tableViewReloadData];return;
+    }else{
+        NSLog(@"状态码:%lu",(unsigned long)statusCode);
     }
 }
 
-#pragma mark - 从plist中加载音频数据
-- (NSMutableArray *)dataArray{
-    if (_dataArray == nil) {
-        _dataArray = [NSMutableArray array];
-        NSString *path1 = [[NSBundle mainBundle] pathForResource:@"AudioData" ofType:@"plist"];
-        NSMutableArray *arr = [[NSMutableArray alloc] initWithContentsOfFile:path1];
-        for (int tag = 0; tag < 1; tag++) {
-            for (int i = 0; i < arr.count; i++) {
-                YourDataModel *model = [self setDataModelWithDic:arr[i]];
-                [_dataArray addObject:model];
-            }
-        }
-    }
-    return _dataArray;
-}
-- (YourDataModel *)setDataModelWithDic:(NSDictionary *)dic{
-    YourDataModel *model = [[YourDataModel alloc] init];
-    model.yourUrl       = [dic valueForKey:@"audioUrl"];
-    model.yourName      = [dic valueForKey:@"audioName"];
-    model.yourSinger    = [dic valueForKey:@"audioSinger"];
-    model.yourAlbum     = [dic valueForKey:@"audioAlbum"];
-    model.yourImage     = [dic valueForKey:@"audioImage"];
-    model.yourLyric     = [dic valueForKey:@"audioLyric"];
-    return model;
-}
-- (NSArray *)addArray{
-    if (_addArray == nil) {
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"addAudio" ofType:@"plist"];
-        NSMutableArray *addData = [[NSMutableArray alloc] initWithContentsOfFile:path];
-        _addArray = [NSArray arrayWithArray:addData];
-    }
-    return _addArray;
+- (void)congfigCell:(NSInteger)row detailTextLabel:(NSString *)text{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+    UITableViewCell *cell = [_tableView cellForRowAtIndexPath:indexPath];
+    cell.detailTextLabel.text = text;
+    cell.detailTextLabel.hidden = NO;
 }
 
-#pragma mark - scrolleview delegate
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    if (scrollView.contentOffset.x >= SCREEN_WIDTH) {
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"暂停恢复" style:(UIBarButtonItemStylePlain) target:self action:@selector(stopResumeBtnAction)];
-        self.navigationItem.leftBarButtonItem.tintColor = HDFGreenColor;
-    }else{
-        self.navigationItem.leftBarButtonItem = [UIBarButtonItem new];
-    }
-}
-- (void)stopResumeBtnAction{
-    if (self.stopUpdate) {
-        [[DFPlayerControlManager shareInstance] df_playerLyricTableviewResumeUpdate];
-        self.stopUpdate = NO;
-    }else{
-        [[DFPlayerControlManager shareInstance] df_playerLyricTableviewStopUpdate];
-        self.stopUpdate = YES;
-    }
-}
 #pragma mark - action
-- (void)addSongAction{
-    if (self.addIndex >= self.addArray.count) {
-        [self showAlertWithTitle:@"添加完毕，已无更多音频" message:nil yesBlock:nil];
+- (void)handleRightBarButtonItemAction{
+    if (self.addIndex >= self.yourModelAddArray.count) {
+        [self showAlert:@"添加完毕，已无更多音频"];
         return;
     }
-    YourDataModel *yourModel = [self setDataModelWithDic:self.addArray[self.addIndex]];
-    [self.dataArray insertObject:yourModel atIndex:0];//这里将数据加到第一个
-    [self tableViewReloadData];
+    YourModel *yourModel = self.yourModelAddArray[self.addIndex];
+    [self.yourModelArray insertObject:yourModel atIndex:0];//这里将数据加到第一个
     self.addIndex++;
-    //更新DFPlayer的音频数据
-    [[DFPlayer shareInstance] df_reloadData];
+    [self tableViewReloadData];
+    [[DFPlayer sharedPlayer] df_reloadData];
 }
-- (NSURL *)translateIllegalCharacterWtihUrlStr:(NSString *)yourUrl{
-    //如果链接中存在中文或某些特殊字符，需要通过以下代码转译
-    NSString *encodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)yourUrl, (CFStringRef)@"!NULL,'()*+,-./:;=?@_~%#[]", NULL, kCFStringEncodingUTF8));
-//    NSString *encodedString = [yourUrl stringByAddingPercentEncodingWithAllowedCharacters:charactSet];
-    return [NSURL URLWithString:encodedString];
+
+- (void)handleLeftBarButtonItemAction{
+    if (_stopUpdate) {
+        [[DFPlayerControlManager sharedManager] df_resumeUpdate];
+        _stopUpdate = NO;
+    }else{
+        [[DFPlayerControlManager sharedManager] df_stopUpdate];
+        _stopUpdate = YES;
+    }
 }
+
 - (void)tableViewReloadData{
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.tableView reloadData];
+        [self->_tableView reloadData];
     });
 }
 
-- (void)applicationWillTerminate{
-    [[DFPlayer shareInstance] df_setPreviousAudioModel];
-}
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
