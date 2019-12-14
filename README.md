@@ -1,24 +1,21 @@
 # <img src="https://github.com/ihoudf/DFPlayer/blob/master/dfplayer_logo388x83.png?raw=true" width="260">
 <a href="https://github.com/ihoudf/DFPlayer"><img src="https://img.shields.io/badge/build-passing-green.svg"></a>
-<a href="https://github.com/ihoudf/DFPlayer"><img src="https://img.shields.io/badge/pod-1.0.5-yellow.svg"></a>
 <a href="https://github.com/ihoudf/DFPlayer/blob/master/LICENSE" target="blank"><img src="https://img.shields.io/badge/license-MIT-brightgreen.svg"></a>
 <a href="https://github.com/ihoudf/DFPlayer"><img src="https://img.shields.io/badge/platform-iOS-blue.svg"></a>
 <a href="https://github.com/ihoudf/DFPlayer"><img src="https://img.shields.io/badge/support-iOS%207%2B-yellowgreen.svg"></a>
 <a href="https://github.com/ihoudf/DFPlayer" target="blank"><img src="https://img.shields.io/badge/lauguage-Objective--C-orange.svg"></a>
 
 
-
-#### A simple and flexible iOS audio playback module. Based on AVPlayer, support local and remote audio playback, with caching, remote control, locking and control center information display, single sequential and random playback,Lyrics sync,rate playback,and other basic audio player functions, using a few code can realize the function of player.
+# DFPlayer2.0.0版本来啦！使用更简单、代码更清晰
 
 #### 简单灵活的iOS音频播放组件。基于AVPlayer，支持本地和远程音频播放，具有缓存、耳机线控、锁屏和控制中心信息展示、单曲顺序随机播放、歌词同步、倍速播放等基本的音频播放器功能，DFPlayer封装了缓冲条、进度条、播放暂停按钮、下一首按钮、上一首按钮、播放模式按钮、歌词同步的tableview等UI控件，一行代码布局即可实现相应功能。
 
 
 - ##### DFPlayer：关于iOS音频播放，传音频数据给我就好了🙃
-- ##### 观看两分钟视频展示：<a href="http://www.iqiyi.com/w_19ruzcqjqh.html" target="blank">http://www.iqiyi.com/w_19ruzcqjqh.html</a>
 - ##### 截图展示：
-<img width="275" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerImage1.webp?raw=true">
-<img width="275" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerImage2.webp?raw=true">
-<img width="275" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerImage3.webp?raw=true">
+<a><img width="275" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerImage1.png?raw=true"></a>
+<a><img width="275" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerImage2.png?raw=true"></a>
+<a><img width="275" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerImage3.png?raw=true"></a>
 
 #
 ## -- 支持
@@ -111,7 +108,7 @@ DFPlayer的使用十分简单。
 
 如果DFPlayer有幸帮您解决了一点问题，加快了开发进度，欢迎打赏以便我续费服务器，持续维护本项目，感谢🙏
 
-<img align=center width="150" src="https://github.com/ihoudf/DFPlayer/blob/master/shoukuanma.png">
+<img align=center width="200" src="https://github.com/ihoudf/DFPlayer/blob/master/shoukuanma.png">
 
 #
 ## THANKS!

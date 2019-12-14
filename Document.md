@@ -1,9 +1,10 @@
-> # 只需关注三个类即可：
+> ## 只需关注三个类即可：
 >>#### [1、DFPlayer：播放能力管理器](#first)
 >>#### [2、DFPlayerControlManager：播放控件管理器](#second)
 >>#### [3、DFPlayerModel：数据model类](#third)
+>为了显示清晰，以下只列举了方法，具体参数要求下载工程查看
 
-##### PS：为了显示清晰，这里只列举了方法，具体参数要求下载工程查看
+<br>
 
 ## <a id="first">一、DFPlayer</a>
 
@@ -217,7 +218,7 @@
 
 ##### DFPlayerModel（必传）
 ```
-@property (nonatomic, assign) NSUInteger audioId; // 音频Id（从0开始，仅标识当前音频在数组中的位置）
+@property (nonatomic, assign) NSUInteger audioId; // 音频Id
 
 @property (nonatomic, strong) NSURL *audioUrl; // 音频地址
 ```
@@ -225,8 +226,6 @@
 ##### DFPlayerInfoModel(非必传)
 ```
 @property (nonatomic, nullable, copy) NSString *audioLyrics; // 歌词
-
-/* 正确传入以下属性时，DFPlayer将自动设置锁屏模式和控制中心的播放信息展示 */
 
 @property (nonatomic, nullable, copy) NSString *audioName; // 音频名
 
