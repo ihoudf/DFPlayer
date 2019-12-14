@@ -13,13 +13,14 @@
 
 - ##### DFPlayer：关于iOS音频播放，传音频数据给我就好了🙃
 - ##### 截图展示：
-<a href="javascript: void(0)"><img width="275" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerImage1.png?raw=true"></a>
-<a href="javascript: void(0)"><img width="275" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerImage2.png?raw=true"></a>
-<a href="javascript: void(0)"><img width="275" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerImage3.png?raw=true"></a>
+<a href=""><img width="275" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerImage1.png?raw=true"></a>
+<a href=""><img width="275" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerImage2.png?raw=true"></a>
+<a href=""><img width="275" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerImage3.png?raw=true"></a>
 
 #
 ## -- 支持
 - 支持本地和远程音频播放
+- 适配最新系统，缓冲时播放
 - 分账户缓存（根据不同用户建立不同缓存地址）、清除缓存
 - 耳机线控
 - 锁屏和控制中心信息展示及控制
@@ -34,13 +35,13 @@
 ## -- 安装（最低支持 iOS 7.1）
 ###### 手动安装
 ```
-    1、下载，并将DFPlayer文件夹拖放到工程
+    1、下载并将DFPlayer文件夹拖放到工程
     2、import "DFPlayer.h"
 ```
 ###### CocoaPods
 ```
-    1、在 Podfile 中添加:  pod 'DFPlayer'
-    2、执行 pod install 或 pod update
+    1、在Podfile中添加: pod 'DFPlayer'
+    2、执行pod install DFPlayer
     3、import "DFPlayer.h"
 ```
 <br>
