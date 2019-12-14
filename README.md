@@ -17,7 +17,8 @@
 <a href=""><img width="275" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerImage2.png?raw=true"></a>
 <a href=""><img width="275" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerImage3.png?raw=true"></a>
 
-#
+<br>
+
 ## -- 支持
 - 支持本地和远程音频播放
 - 适配最新系统，缓冲时播放
@@ -111,7 +112,8 @@ DFPlayer的使用十分简单。
 
 <img width="220" src="https://github.com/ihoudf/DFPlayer/blob/master/shoukuanma.png">
 
-#
+<br>
+
 ## THANKS!
 如果您对DFPlayer有业务需求改进或发现bug，欢迎在<a href="https://github.com/ihoudf/DFPlayer/issues" target="blank">这里</a>提交。
 <br>
