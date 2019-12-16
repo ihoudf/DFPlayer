@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		06B33B341F725814003A559C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33B331F725814003A559C /* main.m */; };
-		06B33B3D1F725814003A559C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 06B33B3B1F725814003A559C /* Main.storyboard */; };
 		06B33B3F1F725814003A559C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 06B33B3E1F725814003A559C /* Assets.xcassets */; };
 		06B33B421F725814003A559C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 06B33B401F725814003A559C /* LaunchScreen.storyboard */; };
 		06B33B4D1F725814003A559C /* DFPlayerDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 06B33B4C1F725814003A559C /* DFPlayerDemoTests.m */; };
@@ -72,7 +71,6 @@
 /* Begin PBXFileReference section */
 		06B33B2F1F725814003A559C /* DFPlayerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DFPlayerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		06B33B331F725814003A559C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		06B33B3C1F725814003A559C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		06B33B3E1F725814003A559C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		06B33B411F725814003A559C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		06B33B431F725814003A559C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -196,7 +194,6 @@
 			isa = PBXGroup;
 			children = (
 				06B33B431F725814003A559C /* Info.plist */,
-				06B33B3B1F725814003A559C /* Main.storyboard */,
 				06B33B331F725814003A559C /* main.m */,
 			);
 			name = "Supporting Files";
@@ -449,7 +446,6 @@
 				06B33B3F1F725814003A559C /* Assets.xcassets in Resources */,
 				F944937B1FA1DC0F006C605F /* Flo Rida-Can't Believe It.mp3 in Resources */,
 				06B33BB41F725830003A559C /* AudioDataAdd.plist in Resources */,
-				06B33B3D1F725814003A559C /* Main.storyboard in Resources */,
 				E05226A12392555300819BB6 /* 莫文蔚-慢慢喜欢你.lrc in Resources */,
 				F95478551F892DD700D85D46 /* 许嵩(Vae)-有何不可.lrc in Resources */,
 				F9037BF61FB482320002F98C /* ihoudf-dfplayer.lrc in Resources */,
@@ -537,14 +533,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		06B33B3B1F725814003A559C /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				06B33B3C1F725814003A559C /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		06B33B401F725814003A559C /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

@@ -150,6 +150,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param currentLineLrcFont 当前行歌词字体
  @param otherLineLrcFont 其他行歌词字体
  @param superView 父视图
+ @param block 返回当前正在播放的歌词
  @return 歌词tableView
  */
 

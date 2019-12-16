@@ -102,11 +102,27 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
     _netGroupQueue  = dispatch_group_create();
     _dataGroupQueue = dispatch_group_create();
     
-    //添加观察者
+    [self addNetObserver];
+    
     [self addPlayerObserver];
     
-    //远程控制（锁屏控制和线控）
     [self addRemoteControlHandler];
+}
+
+- (void)addNetObserver{
+    static dispatch_once_t token1;
+    dispatch_once(&token1, ^{
+        dispatch_group_enter(self->_netGroupQueue);
+    });
+    dispatch_group_async(_netGroupQueue, DFPlayerDefaultGlobalQueue, ^{
+        [DFPlayerTool startMonitoringNetworkStatus:^(DFPlayerNetworkStatus networkStatus) {
+//            NSLog(@"-- DFPlayer： 网络状态：%ld",(long)networkStatus);
+            static dispatch_once_t token2;
+            dispatch_once(&token2, ^{
+                dispatch_group_leave(self->_netGroupQueue);
+            });
+        }];
+    });
 }
 
 - (void)addPlayerObserver{
@@ -189,7 +205,7 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
 }
 
 - (void)df_playerSecondaryAudioHint:(NSNotification *)notification{
-//    NSInteger type = [notification.userInfo[AVAudioSessionSilenceSecondaryAudioHintTypeKey] integerValue];
+    //    NSInteger type = [notification.userInfo[AVAudioSessionSilenceSecondaryAudioHintTypeKey] integerValue];
 }
 
 -(void)df_playerDidPlayToEndTime:(NSNotification *)notification{
@@ -323,13 +339,13 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
     }
     
     if ([DFPlayerTool isLocalAudio:self.currentAudioModel.audioUrl]) {
-//        NSLog(@"-- DFPlayer：本地音频，Id：%ld",(unsigned long)self.currentAudioModel.audioId);
+        //        NSLog(@"-- DFPlayer：本地音频，Id：%ld",(unsigned long)self.currentAudioModel.audioId);
         _isCached = YES;
         [self loadPlayerItemWithURL:self.currentAudioModel.audioUrl];
     }else{
         NSString *cachePath = [DFPlayerFileManager df_cachePath:self.currentAudioModel.audioUrl];
         _isCached = cachePath ? YES : NO;
-//        NSLog(@"-- DFPlayer：网络音频，Id：%ld 缓存：%@",(unsigned long)self.currentAudioModel.audioId, cachePath ? @"有" : @"无");
+        //        NSLog(@"-- DFPlayer：网络音频，Id：%ld 缓存：%@",(unsigned long)self.currentAudioModel.audioId, cachePath ? @"有" : @"无");
         
         dispatch_group_notify(_netGroupQueue, DFPlayerDefaultGlobalQueue, ^{
             if ([DFPlayerTool networkStatus] == DFPlayerNetworkStatusUnknown ||
@@ -761,27 +777,6 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
 
 - (void)setCategory:(AVAudioSessionCategory)category{
     [[AVAudioSession sharedInstance] setCategory:category error:nil];
-}
-
-- (void)setIsObserveWWAN:(BOOL)isObserveWWAN{
-    _isObserveWWAN = isObserveWWAN;
-    if (isObserveWWAN) {
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            dispatch_group_enter(self->_netGroupQueue);
-        });
-        dispatch_group_async(_netGroupQueue, DFPlayerDefaultGlobalQueue, ^{
-            [DFPlayerTool startMonitoringNetworkStatus:^(DFPlayerNetworkStatus networkStatus) {
-//                NSLog(@"-- DFPlayer： 网络状态：%ld",(long)networkStatus);
-                static dispatch_once_t onceToken1;
-                dispatch_once(&onceToken1, ^{
-                    dispatch_group_leave(self->_netGroupQueue);
-                });
-            }];
-        });
-    }else{
-        [DFPlayerTool stopMonitoringNetwork];
-    }
 }
 
 - (void)setPlayerItem:(AVPlayerItem *)playerItem{

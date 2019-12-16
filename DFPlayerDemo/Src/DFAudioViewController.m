@@ -12,7 +12,6 @@
 #import "NSObject+Extentions.h"
 
 #define topH SCREEN_HEIGHT - self.tabBarController.tabBar.frame.size.height-DFHeight(200)
-
 @interface DFAudioViewController ()
 <UITableViewDelegate,UITableViewDataSource,DFPlayerDelegate,DFPlayerDataSource>
 {
@@ -23,7 +22,6 @@
     UILabel *_noticeLabel;
     BOOL _stopUpdate;
 }
-
 
 @property (nonatomic, strong) NSMutableArray<YourModel *> *yourModelArray;
 @property (nonatomic, strong) NSArray<YourModel *> *yourModelAddArray;
@@ -51,6 +49,34 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self tableViewReloadData];
+}
+
+- (void)handleRightBarButtonItemAction{
+    if (self.addIndex >= self.yourModelAddArray.count) {
+        [self showAlert:@"添加完毕，已无更多音频"];
+        return;
+    }
+    YourModel *yourModel = self.yourModelAddArray[self.addIndex];
+    [self.yourModelArray insertObject:yourModel atIndex:0];//这里将数据加到第一个
+    self.addIndex++;
+    [self tableViewReloadData];
+    [[DFPlayer sharedPlayer] df_reloadData];
+}
+
+- (void)handleLeftBarButtonItemAction{
+    if (_stopUpdate) {
+        [[DFPlayerControlManager sharedManager] df_resumeUpdate];
+        _stopUpdate = NO;
+    }else{
+        [[DFPlayerControlManager sharedManager] df_stopUpdate];
+        _stopUpdate = YES;
+    }
+}
+
+- (void)tableViewReloadData{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self->_tableView reloadData];
+    });
 }
 
 - (void)initData{
@@ -114,7 +140,21 @@
     _noticeLabel.textAlignment = NSTextAlignmentCenter;
     _noticeLabel.font = DFSystemFont(18);
     [_bgView addSubview:_noticeLabel];
+    
+    CGRect rateRect = (CGRect){SCREEN_WIDTH-DFWidth(103), topH+DFHeight(100), DFWidth(63), DFHeight(45)};
+    UIButton *button = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    button.frame = rateRect;
+    [button setTitle:@"倍速" forState:(UIControlStateNormal)];
+    [button setTitleColor:DFGreenColor forState:(UIControlStateNormal)];
+    [button addTarget:self action:@selector(rateAction) forControlEvents:(UIControlEventTouchUpInside)];
+    [_bgView addSubview:button];
 }
+- (void)rateAction{
+    [self showRateAlertSheetBlock:^(CGFloat rate) {
+        [[DFPlayer sharedPlayer] df_setRate:rate];
+    }];
+}
+
 #pragma mark  - tableview
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return _yourModelArray.count;
@@ -123,7 +163,6 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellId"];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleSubtitle) reuseIdentifier:@"cellId"];
-        cell.backgroundColor = [UIColor clearColor];
     }
     YourModel *model = _yourModelArray[indexPath.row];
     NSString *audioType = @"网络音频";
@@ -131,8 +170,8 @@
         audioType = @"本地音频";
     }
     cell.textLabel.text = [NSString stringWithFormat:@"%ld--%@-%@(%@)",(long)indexPath.row,audioType,model.yourName,model.yourSinger];
-    NSURL *url = [self getAvailableURL:model.yourUrl];
-    if ([[DFPlayer sharedPlayer] df_cachePath:url]) {
+
+    if ([[DFPlayer sharedPlayer] df_cachePath:[self getAvailableURL:model.yourUrl]]) {
         cell.tintColor = DFGreenColor;
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }else{
@@ -151,13 +190,14 @@
     }
 }
 
+#pragma mark - 以下代码与DFPlayer库有关
 #pragma mark - 初始化DFPlayer
 - (void)initDFPlayer{
     [[DFPlayer sharedPlayer] df_initPlayerWithUserId:nil];
     [DFPlayer sharedPlayer].dataSource  = self;
     [DFPlayer sharedPlayer].delegate    = self;
-    [DFPlayer sharedPlayer].isObserveWWAN = YES;
     [DFPlayer sharedPlayer].playMode    = DFPlayerModeSingleCycle;
+    [DFPlayer sharedPlayer].isObserveWWAN = YES;
     [[DFPlayer sharedPlayer] df_reloadData];//需在传入数据源后调用
     
     CGRect buffRect = (CGRect){DFWidth(104), topH+DFHeight(28), DFWidth(542), DFHeight(4)};
@@ -169,13 +209,11 @@
     CGRect lastRect = (CGRect){DFWidth(180), topH+DFHeight(84), DFWidth(80), DFWidth(80)};
     CGRect typeRect = (CGRect){DFWidth(40), topH+DFHeight(100), DFWidth(63), DFHeight(45)};
 
-    CGRect rateRect = (CGRect){SCREEN_WIDTH -DFWidth(103), topH+DFHeight(100), DFWidth(63), DFHeight(45)};
-
     DFPlayerControlManager *mgr = [DFPlayerControlManager sharedManager];
     //缓冲条
     [mgr df_bufferProgressViewWithFrame:buffRect trackTintColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.5] progressTintColor:[UIColor colorWithWhite:1 alpha:0.5] superView:_bgView];
     //进度条
-    [mgr df_sliderWithFrame:proRect minimumTrackTintColor:DFGreenColor maximumTrackTintColor:DFRGBAColor(204.0, 204.0, 204.0, 0.0) trackHeight:DFHeight(4) thumbSize:(CGSize){DFWidth(34), DFWidth(34)} superView:_bgView];
+    [mgr df_sliderWithFrame:proRect minimumTrackTintColor:DFGreenColor maximumTrackTintColor:DFGrayColor trackHeight:DFHeight(4) thumbSize:(CGSize){DFWidth(34), DFWidth(34)} superView:_bgView];
     //当前时间
     UILabel *curLabel = [mgr df_currentTimeLabelWithFrame:currRect superView:_bgView];
     curLabel.textColor = [UIColor whiteColor];
@@ -190,19 +228,6 @@
     [mgr df_nextAudioBtnWithFrame:nextRext superView:_bgView block:nil];
     //上一首按钮
     [mgr df_lastAudioBtnWithFrame:lastRect superView:_bgView block:nil];
-    
-    UIButton *button = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    button.frame = rateRect;
-    [button setTitle:@"倍速" forState:(UIControlStateNormal)];
-    [button setTitleColor:DFGreenColor forState:(UIControlStateNormal)];
-    [button addTarget:self action:@selector(rateAction) forControlEvents:(UIControlEventTouchUpInside)];
-    [_bgView addSubview:button];
-}
-
-- (void)rateAction{
-    [self showRateAlertSheetBlock:^(NSString *rate) {
-        [[DFPlayer sharedPlayer] df_setRate:[rate floatValue]];
-    }];
 }
 
 #pragma mark - DFPLayer dataSource
@@ -226,7 +251,7 @@
         }
         [_dataArray addObject:model];
     }
-    return _dataArray;
+    return [_dataArray copy];
 }
 - (DFPlayerInfoModel *)df_audioInfoForPlayer:(DFPlayer *)player{
     YourModel *yourModel = _yourModelArray[player.currentAudioModel.audioId];
@@ -247,16 +272,9 @@
 - (void)df_playerAudioAddToPlayQueue:(DFPlayer *)player{
     [self tableViewReloadData];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        UIImage *audioImage = player.currentAudioInfoModel.audioImage;
-        if (audioImage) {
-            CGFloat imgW = audioImage.size.height*SCREEN_WIDTH/SCREEN_HEIGHT;
-            CGRect imgRect = CGRectMake((audioImage.size.width-imgW)/2, 0, imgW, audioImage.size.height);
-            audioImage = [audioImage getSubImage:imgRect];
-        }
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSString *audioName = player.currentAudioInfoModel.audioName;
-            self.navigationItem.title = audioName;
-            self->_bgView.image = audioImage;
+            self.navigationItem.title = player.currentAudioInfoModel.audioName;
+            self->_bgView.image = [self getBackgroundImage:player.currentAudioInfoModel.audioImage];
             self->_noticeLabel.text = player.currentAudioInfoModel.audioLyrics ? @"" : @"无可用歌词";
         });
     });
@@ -299,35 +317,5 @@
     cell.detailTextLabel.text = text;
     cell.detailTextLabel.hidden = NO;
 }
-
-#pragma mark - action
-- (void)handleRightBarButtonItemAction{
-    if (self.addIndex >= self.yourModelAddArray.count) {
-        [self showAlert:@"添加完毕，已无更多音频"];
-        return;
-    }
-    YourModel *yourModel = self.yourModelAddArray[self.addIndex];
-    [self.yourModelArray insertObject:yourModel atIndex:0];//这里将数据加到第一个
-    self.addIndex++;
-    [self tableViewReloadData];
-    [[DFPlayer sharedPlayer] df_reloadData];
-}
-
-- (void)handleLeftBarButtonItemAction{
-    if (_stopUpdate) {
-        [[DFPlayerControlManager sharedManager] df_resumeUpdate];
-        _stopUpdate = NO;
-    }else{
-        [[DFPlayerControlManager sharedManager] df_stopUpdate];
-        _stopUpdate = YES;
-    }
-}
-
-- (void)tableViewReloadData{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self->_tableView reloadData];
-    });
-}
-
 
 @end

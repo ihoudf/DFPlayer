@@ -6,7 +6,7 @@
 <a href="https://github.com/ihoudf/DFPlayer" target="blank"><img src="https://img.shields.io/badge/lauguage-Objective--C-orange.svg"></a>
 
 
-# DFPlayer2.0.0版本来啦！使用更简单、代码更清晰
+# DFPlayer2.0.1版本来啦！使用更简单、代码更清晰
 
 #### 简单灵活的iOS音频播放组件。基于AVPlayer，支持本地和远程音频播放，具有缓存、耳机线控、锁屏和控制中心信息展示、单曲顺序随机播放、倍速播放、歌词同步等音频播放器功能，DFPlayer封装了缓冲条、进度条、播放暂停按钮、下一首按钮、上一首按钮、播放模式按钮、歌词同步的tableview等UI控件，一行代码布局即可实现相应功能。
 

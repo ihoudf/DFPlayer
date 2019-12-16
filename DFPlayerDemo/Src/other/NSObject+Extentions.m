@@ -11,7 +11,7 @@
 @implementation NSObject (Extentions)
 
 - (NSURL *)getAvailableURL:(NSString *)URLString{
-    //如果链接中存在中文或某些特殊字符，需要通过以下代码转译
+    //如果链接中存在中文或某些特殊字符，需要通过以下代码转译。如果确认没有，可直接构造NSURL
     NSString *encodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)URLString, (CFStringRef)@"!NULL,'()*+,-./:;=?@_~%#[]", NULL, kCFStringEncodingUTF8));
     //    NSString *encodedString = [yourUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     return [NSURL URLWithString:encodedString];
@@ -44,13 +44,20 @@
     return array;
 }
 
-
+- (UIImage *)getBackgroundImage:(UIImage *)image{
+    if (image) {
+        CGFloat imgW = image.size.height*SCREEN_WIDTH/SCREEN_HEIGHT;
+        CGRect imgRect = CGRectMake((image.size.width-imgW) / 2, 0, imgW, image.size.height);
+        image = [image getSubImage:imgRect];
+    }
+    return image;
+}
 
 @end
 
 @implementation UIImage (Blur)
 
--(UIImage *)getSubImage:(CGRect)rect{
+- (UIImage *)getSubImage:(CGRect)rect{
     if (rect.origin.x+rect.size.width > self.size.width || rect.origin.y+rect.size.height > self.size.height) {
         return self;
     }
@@ -69,45 +76,49 @@
 @implementation UIViewController (Extensions)
 
 - (void)showAlert:(NSString *)title{
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:(UIAlertControllerStyleAlert)];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
-        
-    }];
-    [alert addAction:cancelAction];
-    [self presentViewController:alert animated:YES completion:nil];
+    if (@available(iOS 8.0,*)) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        [alert addAction:cancelAction];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
 }
 
 - (void)showAlert:(NSString *)title okBlock:(void(^)(void))okBlock{
-    
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:@"" preferredStyle:(UIAlertControllerStyleAlert)];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:NULL];
-    
-    UIAlertAction *certainAction = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
-        if (okBlock) {
-            okBlock();
-        }
-    }];
-    [alert addAction:cancelAction];
-    [alert addAction:certainAction];
-    [self presentViewController:alert animated:YES completion:nil];
-}
-
-- (void)showRateAlertSheetBlock:(void(^)(NSString *rate))block{
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"选择倍速" message:@"" preferredStyle:(UIAlertControllerStyleActionSheet)];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:NULL];
-    
-    NSArray *array = @[@"0.5",@"0.67",@"0.80",@"1.0",@"1.25",@"1.50",@"2.0"];
-    for (int i = 0; i < 7; i++) {
-        UIAlertAction *act = [UIAlertAction actionWithTitle:array[i] style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
-            if (block) {
-                block(array[i]);
+    if (@available(iOS 8.0,*)) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:@"" preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:NULL];
+        
+        UIAlertAction *certainAction = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+            if (okBlock) {
+                okBlock();
             }
         }];
-        [alert addAction:act];
+        [alert addAction:cancelAction];
+        [alert addAction:certainAction];
+        [self presentViewController:alert animated:YES completion:nil];
     }
-    
-    [alert addAction:cancelAction];
-    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)showRateAlertSheetBlock:(void(^)(CGFloat rate))block{
+    if (@available(iOS 8.0,*)) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"选择倍速" message:@"beisu" preferredStyle:(UIAlertControllerStyleActionSheet)];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:NULL];
+        
+        NSArray *array = @[@"0.5",@"0.67",@"0.80",@"1.0",@"1.25",@"1.50",@"2.0"];
+        for (int i = 0; i < array.count; i++) {
+            UIAlertAction *act = [UIAlertAction actionWithTitle:array[i] style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+                if (block) {
+                    block([array[i] floatValue]);
+                }
+            }];
+            [alert addAction:act];
+        }
+        [alert addAction:cancelAction];
+        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:nil];
+    }
 }
 
 @end
