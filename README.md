@@ -115,9 +115,9 @@ DFPlayer的使用十分简单。
 <br>
 
 ## THANKS!
-如果您对DFPlayer有业务需求改进或发现bug，欢迎在<a href="https://github.com/ihoudf/DFPlayer/issues" target="blank">这里</a>提交。
+如果您对DFPlayer有业务需求改进或发现bug，以及其他关于DFPlayer的问题，请直接在<a href="https://github.com/ihoudf/DFPlayer/issues" target="blank">这里</a>提交。
 <br>
-<font color="#42C485">合作qq：188816190</font>
+<font color="#42C485">工作合作qq：188816190</font>
 <br>
 <br>
 
