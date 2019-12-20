@@ -42,7 +42,7 @@
 ###### CocoaPods
 ```
     1、在Podfile中添加: pod 'DFPlayer'
-    2、执行pod install DFPlayer
+    2、执行pod install 或 pod update
     3、import "DFPlayer.h"
 ```
 <br>
@@ -52,13 +52,13 @@ DFPlayer的使用十分简单。
 ##### 详细文档：<a href="https://github.com/ihoudf/DFPlayer/blob/master/Document.md" target="blank">查看所有API点击这里</a>
 
 ##### 简要说明：
-1、初始化DFPlayer，设置数据源（必须）
+1、初始化DFPlayer，并设置数据源（必须）
 ```
     [[DFPlayer sharedPlayer] df_initPlayerWithUserId:nil];//初始化
     [DFPlayer sharedPlayer].dataSource = self;//设置数据源
     [[DFPlayer sharedPlayer] df_reloadData];//刷新数据源
 ```
-2、实现数据源，将音频数据传给DFPlayer（必须）
+2、实现数据源，传数据给DFPlayer（必须）
 ```
     //（必须）
     - (NSArray<DFPlayerModel *> *)df_audioDataForPlayer:(DFPlayer *)player{
@@ -67,10 +67,10 @@ DFPlayer的使用十分简单。
 
     //（可选）
     - (DFPlayerInfoModel *)df_audioInfoForPlayer:(DFPlayer *)player{
-        //DFPlayer收到某个音频的播放请求时，会调用这个方法请求该音频的音频名、歌手、专辑名、歌词、配图等信息。
+        //DFPlayer收到播放请求时，会调用此方法请求该音频的音频名、歌手、专辑名、歌词、配图等信息。
     }
 ```
-3、选择AudioId对应的音频加入播放队列准备播放(必须)
+3、传入audioId准备播放(必须)
 ```
     [[DFPlayer sharedPlayer] df_playWithAudioId:audioId];
 ```
@@ -78,9 +78,9 @@ DFPlayer的使用十分简单。
 > DFPlayer封装了歌词tableview、缓冲条、进度条、播放暂停按钮、下一首按钮、上一首按钮、播放模式按钮（单曲、顺序、随机）、当前时间Label、总时间Label。
 >> 你只需要<br>
 （1）同名更换DFPlayer.bundle中的图片<br>
-（2）调用DFPlayerControlManager.h中暴露出来的方法，布局到自己的页面，即可实现相应的功能，无需其他代码。
+（2）调用DFPlayerControlManager.h中暴露的方法布局到页面，即可实现相应功能，无需其他代码。
 
-使用示例：
+示例：
 ```
     DFPlayerControlManager *mgr = [DFPlayerControlManager sharedManager];
 
@@ -93,7 +93,7 @@ DFPlayer的使用十分简单。
     //上一首按钮
     [mgr df_lastAudioBtnWithFrame:frame3 superView:superView block:nil];
 
-    ...等，详细查看详细文档。
+    ...等，详查"详细文档"。
 ```
 
 <br>
@@ -115,7 +115,7 @@ DFPlayer的使用十分简单。
 <br>
 
 ## THANKS!
-如果您对DFPlayer有业务需求改进或发现bug，以及其他关于DFPlayer的问题，请直接在<a href="https://github.com/ihoudf/DFPlayer/issues" target="blank">这里</a>提交。
+DFPlayer业务需求改进、bug反馈及其他关于DFPlayer的问题，请直接在<a href="https://github.com/ihoudf/DFPlayer/issues" target="blank">这里</a>提交。
 <br>
 <font color="#42C485">工作合作qq：188816190</font>
 <br>
