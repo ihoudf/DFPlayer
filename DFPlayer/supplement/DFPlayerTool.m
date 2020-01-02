@@ -100,7 +100,7 @@ static DFPlayerNetworkStatus _networkStatus;
     return [str stringByReplacingOccurrencesOfString:@" " withString:@""];
 }
 
-- (BOOL)isEmptyString{
+- (BOOL)isEmpty{
     if(!self || [self isEqualToString:@"(null)"] || [self isKindOfClass:[NSNull class]] || [self isEqual:[NSNull null]]){
         return YES;
     }

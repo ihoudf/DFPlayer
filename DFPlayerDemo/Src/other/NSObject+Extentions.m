@@ -104,7 +104,7 @@
 
 - (void)showRateAlertSheetBlock:(void(^)(CGFloat rate))block{
     if (@available(iOS 8.0,*)) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"选择倍速" message:@"beisu" preferredStyle:(UIAlertControllerStyleActionSheet)];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"选择倍速" message:@"" preferredStyle:(UIAlertControllerStyleActionSheet)];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:NULL];
         
         NSArray *array = @[@"0.5",@"0.67",@"0.80",@"1.0",@"1.25",@"1.50",@"2.0"];

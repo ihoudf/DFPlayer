@@ -40,7 +40,8 @@
 @property (nonatomic, strong) NSURLSessionDataTask  *dataTask;
 @property (nonatomic, strong) NSURL                 *requestUrl;
 @property (nonatomic, strong) NSMutableArray        *archiverArray;
-@property (nonatomic, assign) BOOL  isNewAudio;
+@property (nonatomic, strong) NSOperationQueue      *operationQueue;
+@property (nonatomic, assign) BOOL isNewAudio;
 
 @end
 
@@ -66,6 +67,8 @@
         
         [DFPlayerFileManager df_createTempFile];
         self.requestUrl = [DFPlayerTool originalURL:url];
+        self.operationQueue = [[NSOperationQueue alloc] init];
+        self.operationQueue.maxConcurrentOperationCount = 1;
     }
     return self;
 }
@@ -112,7 +115,7 @@
 
 - (void)requestDataTask{
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    self.session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:[NSOperationQueue mainQueue]];
+    self.session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:self.operationQueue];
     self.dataTask = [self.session dataTaskWithRequest:self.request];
     [self.dataTask resume];
 }
@@ -126,7 +129,7 @@
 #pragma mark - NSURLSessionDataDelegate
 //服务器响应
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler {
-    if (self.cancel) {
+    if (_cancel) {
         return;
     }
     completionHandler(NSURLSessionResponseAllow);
@@ -148,7 +151,7 @@
     }else if(statusCode == 206){//带有Range请求头的返回
         
     }else{
-        self.cancel = YES;
+        _cancel = YES;
     }
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(requestManagerDidReceiveResponseWithStatusCode:)]) {
@@ -159,7 +162,7 @@
 
 //服务器返回数据 可能会调用多次
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
-    if (self.cancel){
+    if (_cancel){
         return;
     }
     self.cacheLength += data.length;
@@ -172,7 +175,7 @@
 
 //请求完成会调用该方法，请求失败则error有值
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
-    if (self.cancel) {
+    if (_cancel) {
         return;
     }
     if (error) {

@@ -11,24 +11,37 @@
 #import "DFPlayerFileManager.h"
 
 @interface DFPlayerResourceLoader ()
+
 @property (nonatomic, strong) NSMutableArray<AVAssetResourceLoadingRequest *> *requestList;
 @property (nonatomic, strong) DFPlayerRequestManager *requestManager;
+
 @end
 
 @implementation DFPlayerResourceLoader
 
 - (instancetype)init {
     if (self = [super init]) {
-        self.requestList = [NSMutableArray array];
+        if (_requestList.count >= 0) {
+            [_requestList removeAllObjects];
+        }
     }
     return self;
 }
 
-- (void)stopLoading{
-    self.requestManager.cancel = YES;
+- (NSMutableArray<AVAssetResourceLoadingRequest *> *)requestList{
+    if (!_requestList) {
+        _requestList = [NSMutableArray array];
+    }
+    return _requestList;
 }
 
-#pragma mark - SURequestTaskDelegate
+- (void)stopDownload{
+    if (self.requestManager) {
+        self.requestManager.cancel = YES;
+    }
+}
+
+#pragma mark - RequestTaskDelegate
 - (void)requestManagerDidReceiveResponseWithStatusCode:(NSInteger)statusCode{
     if (self.checkStatusBlock) {
         self.checkStatusBlock(statusCode);
@@ -91,7 +104,7 @@
     }
     self.requestManager.delegate = self;
     
-    self.requestManager.isHaveCache = self.isHaveCache;
+    self.requestManager.isHaveCache = self.isCached;
     self.requestManager.isObserveFileModifiedTime = self.isObserveFileModifiedTime;
     
     [self.requestManager requestStart];

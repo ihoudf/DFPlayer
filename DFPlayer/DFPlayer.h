@@ -93,9 +93,8 @@ typedef NS_ENUM(NSUInteger, DFPlayerStatusCode) {
  
  @param player DFPlayer
  @param bufferProgress 缓冲进度
- @param totalTime 音频总时长
  */
-- (void)df_player:(DFPlayer *)player bufferProgress:(CGFloat)bufferProgress totalTime:(CGFloat)totalTime;
+- (void)df_player:(DFPlayer *)player bufferProgress:(CGFloat)bufferProgress;
 
 /**
  代理4：播放进度代理 （属性isObserveProgress(默认YES)为YES时有效）
@@ -103,9 +102,8 @@ typedef NS_ENUM(NSUInteger, DFPlayerStatusCode) {
  @param player DFPlayer
  @param progress 播放进度
  @param currentTime 当前播放到的时间
- @param totalTime 音频总时长
  */
-- (void)df_player:(DFPlayer *)player progress:(CGFloat)progress currentTime:(CGFloat)currentTime totalTime:(CGFloat)totalTime;
+- (void)df_player:(DFPlayer *)player progress:(CGFloat)progress currentTime:(CGFloat)currentTime;
 
 /**
  代理5：播放结束代理

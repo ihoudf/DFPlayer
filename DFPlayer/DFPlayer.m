@@ -103,9 +103,7 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
     _dataGroupQueue = dispatch_group_create();
     
     [self addNetObserver];
-    
     [self addPlayerObserver];
-    
     [self addRemoteControlHandler];
 }
 
@@ -116,7 +114,7 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
     });
     dispatch_group_async(_netGroupQueue, DFPlayerDefaultGlobalQueue, ^{
         [DFPlayerTool startMonitoringNetworkStatus:^(DFPlayerNetworkStatus networkStatus) {
-//            NSLog(@"-- DFPlayer： 网络状态：%ld",(long)networkStatus);
+            //            NSLog(@"-- DFPlayer： 网络状态：%ld",(long)networkStatus);
             static dispatch_once_t token2;
             dispatch_once(&token2, ^{
                 dispatch_group_leave(self->_netGroupQueue);
@@ -294,7 +292,6 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
     }
 }
 
-
 #pragma mark - 播放 IMPORTANT
 
 - (void)df_playWithAudioId:(NSUInteger)audioId{
@@ -311,6 +308,11 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
     
     if (self.state == DFPlayerStatePlaying) {
         [self df_pause];
+    }
+    
+    //停止下载
+    if (self.resourceLoader) {
+        [self.resourceLoader stopDownload];
     }
     
     //重置
@@ -382,11 +384,12 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
 }
 
 - (void)loadAudioWithCachePath:(NSString *)cachePath{
-    if (self.resourceLoader) {
-        [self.resourceLoader stopLoading];
-    }
+    
     self.resourceLoader = [[DFPlayerResourceLoader alloc] init];
     self.resourceLoader.delegate = self;
+    self.resourceLoader.isCached = _isCached;
+    self.resourceLoader.isObserveFileModifiedTime = self.isObserveFileModifiedTime;
+    
     NSURL *customUrl = [DFPlayerTool customURL:self.currentAudioModel.audioUrl];
     if (!customUrl) {
         return;
@@ -396,15 +399,12 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
     [asset loadValuesAsynchronouslyForKeys:@[DFPlayableKey] completionHandler:^{
         dispatch_async( dispatch_get_main_queue(),^{
             if (!asset.playable) {
-                [self.resourceLoader stopLoading];
                 self.state = DFPlayerStateFailed;
+                [self.resourceLoader stopDownload];
                 [asset cancelLoading];
             }
         });
     }];
-    self.resourceLoader.isHaveCache = _isCached;
-    self.resourceLoader.isObserveFileModifiedTime = self.isObserveFileModifiedTime;
-    
     DFPlayerWeakSelf
     self.resourceLoader.checkStatusBlock = ^(NSInteger statusCode){
         DFPlayerStrongSelf
@@ -506,8 +506,8 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
     if (self.totalTime != 0) {//避免出现inf
         self.bufferProgress = (startSeconds + durationSeconds) / self.totalTime;
     }
-    if (self.delegate && [self.delegate respondsToSelector:@selector(df_player:bufferProgress:totalTime:)]) {
-        [self.delegate df_player:self bufferProgress:self.bufferProgress totalTime:self.totalTime];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(df_player:bufferProgress:)]) {
+        [self.delegate df_player:self bufferProgress:self.bufferProgress];
     }
     
     if (_isSeekWaiting) {
@@ -541,8 +541,8 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
             if (sSelf.totalTime != 0) {//避免出现inf
                 sSelf.progress = CMTimeGetSeconds([currentItem currentTime]) / sSelf.totalTime;
             }
-            if (sSelf.delegate && [sSelf.delegate respondsToSelector:@selector(df_player:progress:currentTime:totalTime:)]) {
-                [sSelf.delegate df_player:sSelf progress:sSelf.progress currentTime:currentT totalTime:sSelf.totalTime];
+            if (sSelf.delegate && [sSelf.delegate respondsToSelector:@selector(df_player:progress:currentTime:)]) {
+                [sSelf.delegate df_player:sSelf progress:sSelf.progress currentTime:currentT];
             }
             
             [sSelf updatePlayingCenterInfo];
@@ -640,7 +640,7 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
     }
     
     if (self.resourceLoader) {
-        [self.resourceLoader stopLoading];
+        [self.resourceLoader stopDownload];
     }
     if (_isOtherPlaying) {
         [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
@@ -742,11 +742,14 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
     NSInteger endIndex = startIndex+length;
     NSMutableArray *arr = [NSMutableArray arrayWithCapacity:length];
     NSMutableArray *arr1 = [NSMutableArray arrayWithCapacity:length];
-    @autoreleasepool{
-        for (NSInteger i = startIndex; i < endIndex; i++) {
-            [arr1 addObject:[NSString stringWithFormat:@"%ld",(long)i]];
+    for (NSInteger i = startIndex; i < endIndex; i++) {
+        @autoreleasepool {
+            NSString *str = [NSString stringWithFormat:@"%ld",(long)i];
+            [arr1 addObject:str];
         }
-        for (NSInteger i = startIndex; i < endIndex; i++) {
+    }
+    for (NSInteger i = startIndex; i < endIndex; i++) {
+        @autoreleasepool {
             int index = arc4random()%arr1.count;
             int radom = [arr1[index] intValue];
             NSNumber *num = [NSNumber numberWithInt:radom];

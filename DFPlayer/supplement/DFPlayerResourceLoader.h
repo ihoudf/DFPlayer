@@ -31,11 +31,11 @@
 
 @property (nonatomic, copy) void(^checkStatusBlock)(NSInteger statusCode);
 
-@property (nonatomic, assign) BOOL isHaveCache;// 是否有缓存
+@property (nonatomic, assign) BOOL isCached;// 是否有缓存
 
 @property (nonatomic, assign) BOOL isObserveFileModifiedTime;// 是否观察修改时间
 
-- (void)stopLoading;// 退出播放器和切换歌曲时调用该方法
+- (void)stopDownload; // 停止下载
 
 @end
 

@@ -281,15 +281,15 @@
 }
 
 //缓冲进度代理
-- (void)df_player:(DFPlayer *)player bufferProgress:(CGFloat)bufferProgress totalTime:(CGFloat)totalTime{
+- (void)df_player:(DFPlayer *)player bufferProgress:(CGFloat)bufferProgress{
     [self congfigCell:player.currentAudioModel.audioId
       detailTextLabel:[NSString stringWithFormat:@"正在缓冲%lf",bufferProgress]];
 }
 
 //播放进度代理
-- (void)df_player:(DFPlayer *)player progress:(CGFloat)progress currentTime:(CGFloat)currentTime totalTime:(CGFloat)totalTime{
+- (void)df_player:(DFPlayer *)player progress:(CGFloat)progress currentTime:(CGFloat)currentTime{
     [self congfigCell:player.currentAudioModel.audioId
-      detailTextLabel:[NSString stringWithFormat:@"当前进度%lf--当前时间%.0f--总时长%.0f",progress,currentTime,totalTime]];
+      detailTextLabel:[NSString stringWithFormat:@"当前进度%lf--当前时间%.0f",progress,currentTime]];
 }
 
 //状态信息代理

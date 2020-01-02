@@ -68,7 +68,7 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
 - (NSString *)removeEmptyString;
 
 // 判断是否为空
-- (BOOL)isEmptyString;
+- (BOOL)isEmpty;
 
 // 是否包含字母
 - (BOOL)isContainLetter;
