@@ -41,11 +41,13 @@
 ```
 ###### CocoaPods
 ```
-    注意：DFPlayer当前版本是2.0.1（pod同步2.0.1版本），多位同学反应使用pod拉取不到最新版本，这是cocoapods的问题，解决办法自行度娘。目前使用pod拉取代码的同学，搜索查看有没有df_setRate方法，如果有则是最新的。下次更新时会在库里增加版本号标识。
     1、在Podfile中添加: pod 'DFPlayer'
     2、执行pod install 或 pod update
     3、import "DFPlayer.h"
 ```
+
+注意：DFPlayer当前版本是2.0.1（pod同步2.0.1版本），多位同学反应使用pod拉取不到最新版本，这是cocoapods的问题，解决办法自行度娘。目前使用pod拉取代码的同学，搜索查看有没有df_setRate方法，如果有则是最新的。下次更新时会在库里增加版本号标识。   
+
 <br>
 
 ## -- 使用
