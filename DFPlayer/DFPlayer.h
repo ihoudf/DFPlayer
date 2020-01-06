@@ -5,6 +5,9 @@
 //  Created by ihoudf on 2017/7/18.
 //  Copyright © 2017年 ihoudf. All rights reserved.
 //
+//
+//  DFPlayer当前版本：2.0.2
+//
 
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>

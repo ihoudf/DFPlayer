@@ -80,7 +80,7 @@ static DFPlayerNetworkStatus _networkStatus;
 
 @implementation UIImage (DFPlayerImageExtensions)
 
-- (UIImage *)imageByResizeToSize:(CGSize)size {
+- (UIImage *)df_imageByResizeToSize:(CGSize)size {
     if (size.width <= 0 || size.height <= 0){
         return nil;
     }
@@ -95,19 +95,19 @@ static DFPlayerNetworkStatus _networkStatus;
 
 @implementation NSString (DFPlayerStringExtensions)
 
-- (NSString *)removeEmptyString{
+- (NSString *)df_removeEmpty{
     NSString *str = [NSString stringWithFormat:@"%@",self];
     return [str stringByReplacingOccurrencesOfString:@" " withString:@""];
 }
 
-- (BOOL)isEmpty{
+- (BOOL)df_isEmpty{
     if(!self || [self isEqualToString:@"(null)"] || [self isKindOfClass:[NSNull class]] || [self isEqual:[NSNull null]]){
         return YES;
     }
-    return [self removeEmptyString].length == 0;
+    return [self df_removeEmpty].length == 0;
 }
 
-- (BOOL)isContainLetter{
+- (BOOL)df_isContainLetter{
     NSRegularExpression *numberRegular = [NSRegularExpression regularExpressionWithPattern:@"[A-Za-z]" options:NSRegularExpressionCaseInsensitive error:nil];
     NSInteger count = [numberRegular numberOfMatchesInString:self options:NSMatchingReportProgress range:NSMakeRange(0, self.length)];
     return count > 0;

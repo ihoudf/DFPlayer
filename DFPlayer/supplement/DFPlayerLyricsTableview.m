@@ -273,9 +273,9 @@ static NSString *DFPlayerLyricsConstMark = @"####";
         if (!self->_isSeekEnd) {
             //如果当前行无歌词，记录位置并返回
 
-            NSString *lyrics = [cell.foregroundLrcLabel.text removeEmptyString];
+            NSString *lyrics = [cell.foregroundLrcLabel.text df_removeEmpty];
 
-            if ([lyrics isEmpty] || [lyrics isEqualToString:DFPlayerLyricsConstMark]) {
+            if ([lyrics df_isEmpty] || [lyrics isEqualToString:DFPlayerLyricsConstMark]) {
                 if (self.waitResetIndexpath) {
 
                     [self setOtherLineLyricsTextStatus:self.waitResetIndexpath];
@@ -320,7 +320,7 @@ static NSString *DFPlayerLyricsConstMark = @"####";
             if (self->_currentIndex < self.timeArray.count - 1) {
                 duration = fabsf([self.timeArray[self->_currentIndex+1] floatValue]-[self.timeArray[self->_currentIndex] floatValue]);
             }else{//最后一句歌词
-                if (![self.lyricsArray.lastObject isEmpty]) {//如果最后一句不为空
+                if (![self.lyricsArray.lastObject df_isEmpty]) {//如果最后一句不为空
                     duration = fabs([DFPlayer sharedPlayer].totalTime - [self.timeArray[self->_currentIndex] floatValue]-0.2);
                 }
             }
@@ -430,8 +430,8 @@ static NSString *DFPlayerLyricsConstMark = @"####";
     
     if (indexPath.row < self.lyricsArray.count) {//安全性判断
         NSString *lrc = self.lyricsArray[indexPath.row];
-        cell.hidden = [lrc isEmpty];
-        if([[lrc removeEmptyString] isEqualToString:DFPlayerLyricsConstMark]){
+        cell.hidden = [lrc df_isEmpty];
+        if([[lrc df_removeEmpty] isEqualToString:DFPlayerLyricsConstMark]){
             lrc = @"";
         }
         cell.foregroundLrcLabel.text = cell.backgroundLrcLabel.text = lrc;
@@ -462,7 +462,7 @@ static NSString *DFPlayerLyricsConstMark = @"####";
         [self.otherLyricsFrameArray removeAllObjects];
 
         NSString *lyrics = [DFPlayer sharedPlayer].currentAudioInfoModel.audioLyrics;
-        if (!url || [lyrics isEmpty]) { // 不可用时，直接复位
+        if (!url || [lyrics df_isEmpty]) { // 不可用时，直接复位
             [self checkLyricsAvailability];
             return;
         }
@@ -478,7 +478,7 @@ static NSString *DFPlayerLyricsConstMark = @"####";
         NSArray <NSString *> *arr = [lyrics componentsSeparatedByString:@"\n"];
         [arr enumerateObjectsUsingBlock:^(NSString * _Nonnull lrc, NSUInteger idx, BOOL * _Nonnull stop) {
             //如果该行为空不继续解析
-            if ([lrc isEmpty]) {
+            if ([lrc df_isEmpty]) {
                 return;
             }
             //开始解析（这里只解析时间信息，不解析音频头部信息，如：ar：ti：等）
@@ -542,11 +542,11 @@ static NSString *DFPlayerLyricsConstMark = @"####";
 
 // 时间转换
 - (CGFloat)getLyricsTime:(NSString *)time{
-    if ([time isContainLetter]) {
+    if ([time df_isContainLetter]) {
         return -1;
     }
     if ([time rangeOfString:@"["].location != NSNotFound) {
-        time = [[time componentsSeparatedByString:@"["].lastObject removeEmptyString];
+        time = [[time componentsSeparatedByString:@"["].lastObject df_removeEmpty];
     }
     //时间转换成秒
     CGFloat second = -1.0;
@@ -597,7 +597,7 @@ static NSString *DFPlayerLyricsConstMark = @"####";
 }
 
 - (CGRect)getLyricsFrame:(NSString *)lyrics font:(UIFont *)font{
-    if ([lyrics isEmpty]) {
+    if ([lyrics df_isEmpty]) {
         return CGRectZero;
     }
     CGFloat W = [lyrics boundingRectWithSize:(CGSize){MAXFLOAT, self.cellRowHeight}

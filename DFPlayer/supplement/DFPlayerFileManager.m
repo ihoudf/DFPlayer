@@ -40,7 +40,7 @@ static NSString * DFArchiverPath(){
 
 + (void)df_saveUserId:(NSString *)userId{
     NSString *uniqueId = @"public";
-    if (![userId isEmpty]) {
+    if (![userId df_isEmpty]) {
         uniqueId = userId;
     }
     [[NSUserDefaults standardUserDefaults] setObject:uniqueId forKey:DFPlayer_UserId];

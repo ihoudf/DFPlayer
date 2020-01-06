@@ -6,7 +6,7 @@
 <a href="https://github.com/ihoudf/DFPlayer" target="blank"><img src="https://img.shields.io/badge/lauguage-Objective--C-orange.svg"></a>
 
 
-# DFPlayer2.0.1版本来啦！使用更简单、代码更清晰
+# DFPlayer2.0.2版本来啦！使用更简单、代码更清晰
 
 #### 简单灵活的iOS音频播放组件。基于AVPlayer，支持本地和远程音频播放，具有缓存、耳机线控、锁屏和控制中心信息展示、单曲顺序随机播放、倍速播放、歌词同步等音频播放器功能，DFPlayer封装了缓冲条、进度条、播放暂停按钮、下一首按钮、上一首按钮、播放模式按钮、歌词同步的tableview等UI控件，一行代码布局即可实现相应功能。
 
@@ -20,8 +20,8 @@
 <br>
 
 ## -- 支持
-- 支持本地和远程音频播放
-- 适配最新系统，缓冲时播放
+- 本地和远程音频播放
+- 边下边播
 - 分账户缓存（根据不同用户建立不同缓存地址）、清除缓存
 - 耳机线控
 - 锁屏和控制中心信息展示及控制
@@ -46,7 +46,9 @@
     3、import "DFPlayer.h"
 ```
 
-注意：DFPlayer当前版本是2.0.1（pod同步2.0.1版本），多位同学反应使用pod拉取不到最新版本，这是cocoapods的问题，解决办法自行度娘。目前使用pod拉取代码的同学，搜索查看有没有df_setRate方法，如果有则是最新的。下次更新时会在库里增加版本号标识。   
+注意：当前版本2.0.2。pod拉取代码的同学首先核查DFPlayer.h文件头版本号。（没有或不是2.0.2都不是最新的）
+<br>
+<img width="180" src="https://github.com/ihoudf/DFPlayer/blob/master/version.jpg">
 
 <br>
 
@@ -118,7 +120,7 @@ DFPlayer的使用十分简单。
 <br>
 
 ## THANKS!
-DFPlayer业务需求改进、bug反馈及其他关于DFPlayer的问题，请直接在<a href="https://github.com/ihoudf/DFPlayer/issues" target="blank">这里</a>提交。
+关于DFPlayer的业务需求改进、bug反馈等，在<a href="https://github.com/ihoudf/DFPlayer/issues" target="blank">这里</a>提交。
 <br>
 <font color="#42C485">工作合作qq：188816190</font>
 <br>

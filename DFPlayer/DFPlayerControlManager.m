@@ -261,7 +261,7 @@ typedef void(^DFPlayerLyricsBlock)(NSString *onPlayingLyrics);
                        superView:(UIView *)superView{
     self.progressSlider = [[DFPlayerSlider alloc] initWithFrame:frame];
     self.progressSlider.trackHeight = trackHeight;
-    UIImage *img = [DFPlayer_ovalImage imageByResizeToSize:thumbSize];
+    UIImage *img = [DFPlayer_ovalImage df_imageByResizeToSize:thumbSize];
     [self.progressSlider setThumbImage:img forState:UIControlStateNormal];
     self.progressSlider.minimumValue = 0;
     self.progressSlider.maximumValue = 1;
