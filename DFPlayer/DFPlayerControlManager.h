@@ -29,55 +29,69 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)df_resumeUpdate;
 
 /**
- 播放暂停按钮(背景图片在DFPlayer.bundle中同名替换相应的图片即可)
+ 播放暂停按钮
  
  @param frame 按钮frame
+ @param playImage 播放状态时显示的image
+ @param pauseImage 暂停播放时显示的image
  @param superView 按钮父视图
- @param block 按钮action 若无其他操作需求，传nil即可
+ @param block 按钮action
  @return 播放暂停按钮
  */
 - (UIButton *)df_playPauseBtnWithFrame:(CGRect)frame
+                             playImage:(UIImage *)playImage
+                            pauseImage:(UIImage *)pauseImage
                              superView:(UIView *)superView
                                  block:(nullable void (^)(void))block;
 
 /**
- 上一首按钮(背景图片在DFPlayer.bundle中同名替换相应的图片即可)
+ 上一首按钮
  
  @param frame 按钮frame
+ @param image 按钮image
  @param superView 按钮父视图
- @param block 按钮action 若无其他操作需求，传nil即可
+ @param block 按钮action
  @return 上一首按钮
  */
-- (UIButton *)df_lastAudioBtnWithFrame:(CGRect)frame
-                             superView:(UIView *)superView
-                                 block:(nullable void (^)(void))block;
+- (UIButton *)df_lastBtnWithFrame:(CGRect)frame
+                            image:(UIImage *)image
+                        superView:(UIView *)superView
+                            block:(nullable void (^)(void))block;
 
 /**
- 下一首按钮(背景图片在DFPlayer.bundle中同名替换相应的图片即可)
+ 下一首按钮
  
  @param frame 按钮frame
+ @param image 按钮image
  @param superView 按钮父视图
- @param block 按钮action 若无其他操作需求，传nil即可
+ @param block 按钮action
  @return 下一首按钮
  */
-- (UIButton *)df_nextAudioBtnWithFrame:(CGRect)frame
-                             superView:(UIView *)superView
-                                 block:(nullable void (^)(void))block;
+- (UIButton *)df_nextBtnWithFrame:(CGRect)frame
+                            image:(UIImage *)image
+                        superView:(UIView *)superView
+                            block:(nullable void (^)(void))block;
 
 /**
  播放模式按钮(DFPlayerMode不是DFPlayerModeOnlyOnce时有效。）
  
  @param frame 按钮frame
+ @param singleImage 按钮singleImage
+ @param circleImage 按钮circleImage
+ @param shuffleImage 按钮shuffleImage
  @param superView 按钮父视图
- @param block 按钮action 若无其他操作需求，传nil即可
- @return 播放模式设置按钮
+ @param block 按钮action,若无其他操作需求，传nil即可
+ @return 播放模式按钮
  */
-- (UIButton *)df_typeControlBtnWithFrame:(CGRect)frame
-                               superView:(UIView *)superView
-                                   block:(nullable void (^)(void))block;
+- (UIButton *)df_typeBtnWithFrame:(CGRect)frame
+                      singleImage:(UIImage *)singleImage
+                      circleImage:(UIImage *)circleImage
+                     shuffleImage:(UIImage *)shuffleImage
+                        superView:(UIView *)superView
+                            block:(nullable void (^)(void))block;
 
 /**
- 缓冲进度条
+ 缓冲条
  
  @param frame frame
  @param trackTintColor 未缓冲部分进度条颜色
@@ -85,10 +99,10 @@ NS_ASSUME_NONNULL_BEGIN
  @param superView 进度条父视图
  @return 进度条
  */
-- (UIProgressView *)df_bufferProgressViewWithFrame:(CGRect)frame
-                                    trackTintColor:(UIColor *)trackTintColor
-                                 progressTintColor:(UIColor *)progressTintColor
-                                         superView:(UIView *)superView;
+- (UIProgressView *)df_bufferViewWithFrame:(CGRect)frame
+                            trackTintColor:(UIColor *)trackTintColor
+                         progressTintColor:(UIColor *)progressTintColor
+                                 superView:(UIView *)superView;
 
 /**
  播放进度条
@@ -112,20 +126,32 @@ NS_ASSUME_NONNULL_BEGIN
  音频当前时间label
  
  @param frame frame
+ @param textColor textColor
+ @param textAlignment textAlignment
+ @param font font
  @param superView label父视图
  @return label
  */
 - (UILabel *)df_currentTimeLabelWithFrame:(CGRect)frame
+                                textColor:(UIColor *)textColor
+                            textAlignment:(NSTextAlignment)textAlignment
+                                     font:(UIFont *)font
                                 superView:(UIView *)superView;
 
 /**
  音频总时长label
  
  @param frame frame
+ @param textColor textColor
+ @param textAlignment textAlignment
+ @param font font
  @param superView label父视图
  @return label
  */
 - (UILabel *)df_totalTimeLabelWithFrame:(CGRect)frame
+                              textColor:(UIColor *)textColor
+                          textAlignment:(NSTextAlignment)textAlignment
+                                   font:(UIFont *)font
                               superView:(UIView *)superView;
 
 /**

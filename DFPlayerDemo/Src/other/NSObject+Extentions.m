@@ -17,7 +17,6 @@
     return [NSURL URLWithString:encodedString];
 }
 
-
 - (NSMutableArray<YourModel *> *)getYourModelArray{
     return [self getArray:@"AudioData"];
 }
@@ -53,9 +52,26 @@
     return image;
 }
 
+- (UIImageView *)bgView:(UIView *)superView{
+    UIImageView *view = [[UIImageView alloc] initWithFrame:superView.bounds];
+    view.backgroundColor = [UIColor whiteColor];
+    view.image = [UIImage imageNamed:@"default_bg.jpg"];
+    view.userInteractionEnabled = YES;
+    [superView addSubview:view];
+    if (@available(iOS 8.0,*)) {
+        UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
+        effectView.frame = view.frame;
+        [view addSubview:effectView];
+    }
+    return view;
+}
+
+
 @end
 
-@implementation UIImage (Blur)
+
+
+@implementation UIImage (Extentions)
 
 - (UIImage *)getSubImage:(CGRect)rect{
     if (rect.origin.x+rect.size.width > self.size.width || rect.origin.y+rect.size.height > self.size.height) {
@@ -72,6 +88,7 @@
 }
 
 @end
+
 
 @implementation UIViewController (Extensions)
 

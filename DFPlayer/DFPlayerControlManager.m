@@ -69,14 +69,6 @@ NSString * const DFTotalTimeKey      = @"totalTime";
 #define DFPlayerFrameworkSrcName(file) [@"Frameworks/DFPlayer.framework/DFPlayer.bundle" stringByAppendingPathComponent:file]
 #define DFPlayerImage(file) [UIImage imageNamed:DFPlayerSrcName(file)] ? :[UIImage imageNamed:DFPlayerFrameworkSrcName(file)]
 
-#define DFPlayer_playImage      DFPlayerImage(@"dfplayer_play")
-#define DFPlayer_pauseImage     DFPlayerImage(@"dfplayer_pause")
-#define DFPlayer_airplayImage   DFPlayerImage(@"dfplayer_airplay")
-#define DFPlayer_lastImage      DFPlayerImage(@"dfplayer_last")
-#define DFPlayer_nextImage      DFPlayerImage(@"dfplayer_next")
-#define DFPlayer_singleImage    DFPlayerImage(@"dfplayer_single")
-#define DFPlayer_circleImage    DFPlayerImage(@"dfplayer_circle")
-#define DFPlayer_shuffleImage   DFPlayerImage(@"dfplayer_shuffle")
 #define DFPlayer_ovalImage      DFPlayerImage(@"dfplayer_oval")
 
 typedef void(^DFPlayerLyricsBlock)(NSString *onPlayingLyrics);
@@ -95,6 +87,12 @@ typedef void(^DFPlayerLyricsBlock)(NSString *onPlayingLyrics);
 @property (nonatomic, strong) UILabel           *totalTimeLabel;
 @property (nonatomic, strong) DFPlayerLyricsTableview *lyricsTableView;
 @property (nonatomic, copy) DFPlayerLyricsBlock lyricsBlock;
+
+@property (nonatomic, strong) UIImage *playImage;
+@property (nonatomic, strong) UIImage *pauseImage;
+@property (nonatomic, strong) UIImage *singleImage;
+@property (nonatomic, strong) UIImage *circleImage;
+@property (nonatomic, strong) UIImage *shuffleImage;
 
 @end
 
@@ -130,13 +128,16 @@ typedef void(^DFPlayerLyricsBlock)(NSString *onPlayingLyrics);
 }
 
 - (UILabel *)label:(CGRect)frame
+         textColor:(UIColor *)textColor
+     textAlignment:(NSTextAlignment)textAlignment
+              font:(UIFont *)font
          superView:(UIView *)superView
        observerKey:(NSString *)observerKey{
     UILabel *label = [[UILabel alloc] initWithFrame:frame];
     label.text = @"00:00";
-    label.textColor = [UIColor blackColor];
-    label.textAlignment = NSTextAlignmentLeft;
-    label.font = [UIFont systemFontOfSize:DF_FONTSIZE(24)];
+    label.textColor = textColor;
+    label.textAlignment = textAlignment;
+    label.font = font;
     [superView addSubview:label];
     [[DFPlayer sharedPlayer] addObserver:self forKeyPath:observerKey options:NSKeyValueObservingOptionNew context:nil];
     return label;
@@ -155,9 +156,13 @@ typedef void(^DFPlayerLyricsBlock)(NSString *onPlayingLyrics);
 
 #pragma mark - 播放暂停按钮
 - (UIButton *)df_playPauseBtnWithFrame:(CGRect)frame
+                             playImage:(UIImage *)playImage
+                            pauseImage:(UIImage *)pauseImage
                              superView:(UIView *)superView
                                  block:(nullable void (^)(void))block{
-    UIImage *img = [DFPlayer sharedPlayer].state == DFPlayerStatePlaying ? DFPlayer_playImage : DFPlayer_pauseImage;
+    self.playImage = playImage;
+    self.pauseImage = pauseImage;
+    UIImage *img = [DFPlayer sharedPlayer].state == DFPlayerStatePlaying ? self.playImage : self.pauseImage;
     self.playBtn = [self button:frame image:img superView:superView block:block action:^{
         if ([DFPlayer sharedPlayer].state == DFPlayerStatePlaying) {
             [[DFPlayer sharedPlayer] df_pause];
@@ -170,53 +175,62 @@ typedef void(^DFPlayerLyricsBlock)(NSString *onPlayingLyrics);
 }
 
 #pragma mark - 上一首按钮
-- (UIButton *)df_lastAudioBtnWithFrame:(CGRect)frame
-                             superView:(UIView *)superView
-                                 block:(nullable void (^)(void))block{
-    return [self button:frame image:DFPlayer_lastImage superView:superView block:block action:^{
+- (UIButton *)df_lastBtnWithFrame:(CGRect)frame
+                            image:(UIImage *)image
+                        superView:(UIView *)superView
+                            block:(void (^)(void))block{
+    return [self button:frame image:image superView:superView block:block action:^{
         [[DFPlayer sharedPlayer] df_last];
     }];
 }
 
 #pragma mark - 下一首按钮
-- (UIButton *)df_nextAudioBtnWithFrame:(CGRect)frame
-                             superView:(UIView *)superView
-                                 block:(nullable void (^)(void))block{
-    return [self button:frame image:DFPlayer_nextImage superView:superView block:block action:^{
+- (UIButton *)df_nextBtnWithFrame:(CGRect)frame
+                            image:(UIImage *)image
+                        superView:(UIView *)superView
+                            block:(void (^)(void))block{
+    return [self button:frame image:image superView:superView block:block action:^{
         [[DFPlayer sharedPlayer] df_next];
     }];
 }
 
 #pragma mark - 播放模式设置按钮
-- (UIButton *)df_typeControlBtnWithFrame:(CGRect)frame
-                               superView:(UIView *)superView
-                                   block:(nullable void (^)(void))block{
+- (UIButton *)df_typeBtnWithFrame:(CGRect)frame
+                      singleImage:(UIImage *)singleImage
+                      circleImage:(UIImage *)circleImage
+                     shuffleImage:(UIImage *)shuffleImage
+                        superView:(UIView *)superView
+                            block:(void (^)(void))block{
     
     if ([DFPlayer sharedPlayer].playMode == DFPlayerModeOnlyOnce) {
         return nil;
     }
+    self.singleImage = singleImage;
+    self.circleImage = circleImage;
+    self.shuffleImage = shuffleImage;
+    
     UIImage *img = [UIImage new];
     if ([DFPlayer sharedPlayer].playMode == DFPlayerModeSingleCycle) {
-        img = DFPlayer_singleImage;
+        img = self.singleImage;
     }else if ([DFPlayer sharedPlayer].playMode == DFPlayerModeOrderCycle){
-        img = DFPlayer_circleImage;
+        img = self.circleImage;
     }else{
-        img = DFPlayer_shuffleImage;
+        img = self.shuffleImage;
     }
     UIButton *btn = [self button:frame image:img superView:superView block:block action:nil];
     btn.handleButtonActionBlock = ^(UIButton * _Nullable sender) {
         switch ([DFPlayer sharedPlayer].playMode) {
             case DFPlayerModeSingleCycle:
                 [DFPlayer sharedPlayer].playMode = DFPlayerModeOrderCycle;
-                [sender setBackgroundImage:DFPlayer_circleImage forState:(UIControlStateNormal)];
+                [sender setBackgroundImage:self.circleImage forState:(UIControlStateNormal)];
                 break;
             case DFPlayerModeOrderCycle:
                 [DFPlayer sharedPlayer].playMode = DFPlayerModeShuffleCycle;
-                [sender setBackgroundImage:DFPlayer_shuffleImage forState:(UIControlStateNormal)];
+                [sender setBackgroundImage:self.shuffleImage forState:(UIControlStateNormal)];
                 break;
             case DFPlayerModeShuffleCycle:
                 [DFPlayer sharedPlayer].playMode = DFPlayerModeSingleCycle;
-                [sender setBackgroundImage:DFPlayer_singleImage forState:(UIControlStateNormal)];
+                [sender setBackgroundImage:self.singleImage forState:(UIControlStateNormal)];
                 break;
             default:
                 break;
@@ -227,23 +241,29 @@ typedef void(^DFPlayerLyricsBlock)(NSString *onPlayingLyrics);
 
 #pragma mark - 音频当前时间
 - (UILabel *)df_currentTimeLabelWithFrame:(CGRect)frame
+                                textColor:(UIColor *)textColor
+                            textAlignment:(NSTextAlignment)textAlignment
+                                     font:(UIFont *)font
                                 superView:(UIView *)superView{
-    self.currentTimeLabel = [self label:frame superView:superView observerKey:DFCurrentTimeKey];
+    self.currentTimeLabel = [self label:frame textColor:textColor textAlignment:textAlignment font:font superView:superView observerKey:DFCurrentTimeKey];
     return self.currentTimeLabel;
 }
 
 #pragma mark - 音频总时长
 - (UILabel *)df_totalTimeLabelWithFrame:(CGRect)frame
+                              textColor:(UIColor *)textColor
+                          textAlignment:(NSTextAlignment)textAlignment
+                                   font:(UIFont *)font
                               superView:(UIView *)superView{
-    self.totalTimeLabel = [self label:frame superView:superView observerKey:DFTotalTimeKey];
+    self.totalTimeLabel = [self label:frame textColor:textColor textAlignment:textAlignment font:font superView:superView observerKey:DFTotalTimeKey];
     return self.totalTimeLabel;
 }
 
 #pragma mark - 缓冲进度条
-- (UIProgressView *)df_bufferProgressViewWithFrame:(CGRect)frame
-                                    trackTintColor:(UIColor *)trackTintColor
-                                 progressTintColor:(UIColor *)progressTintColor
-                                         superView:(UIView *)superView{
+- (UIProgressView *)df_bufferViewWithFrame:(CGRect)frame
+                            trackTintColor:(UIColor *)trackTintColor
+                         progressTintColor:(UIColor *)progressTintColor
+                                 superView:(UIView *)superView{
     self.bufferProgressView = [[UIProgressView alloc] initWithFrame:frame];
     self.bufferProgressView.trackTintColor = trackTintColor;
     self.bufferProgressView.progressTintColor = progressTintColor;
@@ -319,7 +339,7 @@ typedef void(^DFPlayerLyricsBlock)(NSString *onPlayingLyrics);
         dispatch_async(dispatch_get_main_queue(), ^{
             if ([keyPath isEqualToString:DFStateKey]) {
                 if (!self->_isSeek) {
-                    UIImage *img = [DFPlayer sharedPlayer].state == (DFPlayerStateBuffering | DFPlayerStatePlaying) ? DFPlayer_pauseImage : DFPlayer_playImage;
+                    UIImage *img = [DFPlayer sharedPlayer].state == (DFPlayerStateBuffering | DFPlayerStatePlaying) ? self.pauseImage : self.playImage;
                     [self.playBtn setBackgroundImage:img forState:(UIControlStateNormal)];
                 }
             }else{

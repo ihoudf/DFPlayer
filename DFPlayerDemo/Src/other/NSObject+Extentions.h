@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 //系统字体
 #define DFSystemFont(size)  [UIFont systemFontOfSize:size]
 
+
 @interface NSObject (Extentions)
 
 - (NSURL *)getAvailableURL:(NSString *)URLString;
@@ -37,14 +38,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSArray<YourModel *> *)getYourModelAddArray;
 
+- (UIImageView *)bgView:(UIView *)superView;
+
 @end
 
 
-@interface UIImage (Blur)
+@interface UIImage (Extentions)
 
 - (UIImage *)getSubImage:(CGRect)rect;
 
 @end
+
 
 @interface UIViewController (Extensions)
 

@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface DFPlayerModel : NSObject
 
-@property (nonatomic, assign) NSUInteger audioId; // 音频Id（从0开始，仅标识当前音频在数组中的位置）
+@property (nonatomic, assign) NSUInteger audioId; // 音频Id（必须从0开始，仅标识当前音频在数组中的位置）
 
 @property (nonatomic, strong) NSURL *audioUrl; // 音频地址
 

@@ -1,5 +1,5 @@
 //
-//  DFAudioViewController.h
+//  DFPlayerViewController.h
 //  DFPlayerDemo
 //
 //  Created by ihoudf on 2017/10/7.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DFAudioViewController : UIViewController
+@interface DFPlayerViewController : UIViewController
 
 @end

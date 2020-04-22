@@ -35,7 +35,7 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
     NSInteger _playIndex1; // 播放顺序标识
     NSInteger _playIndex2; // 播放顺序标识
     CGFloat _seekValue; // seek value
-    NSMutableDictionary *_remoteInfoDictionary;//控制中心信息
+    NSMutableDictionary *_remoteInfoDictionary; // 控制中心信息
 }
 /** player */
 @property (nonatomic, strong) AVPlayer          *player;
@@ -318,13 +318,13 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
     }
 
     if ([DFPlayerTool isLocalAudio:self.currentAudioModel.audioUrl]) {
-        //        NSLog(@"-- DFPlayer：本地音频，Id：%ld",(unsigned long)self.currentAudioModel.audioId);
+//        NSLog(@"-- DFPlayer：本地音频，Id：%ld",(unsigned long)self.currentAudioModel.audioId);
         _isCached = YES;
         [self loadPlayerItemWithURL:self.currentAudioModel.audioUrl];
     }else{
         NSString *cachePath = [DFPlayerFileManager df_cachePath:self.currentAudioModel.audioUrl];
         _isCached = cachePath ? YES : NO;
-        //        NSLog(@"-- DFPlayer：网络音频，Id：%ld 缓存：%@",(unsigned long)self.currentAudioModel.audioId, cachePath ? @"有" : @"无");
+//        NSLog(@"-- DFPlayer：网络音频，Id：%ld 缓存：%@",(unsigned long)self.currentAudioModel.audioId, cachePath ? @"有" : @"无");
         dispatch_group_notify(_netGroupQueue, DFPlayerDefaultGlobalQueue, ^{
             if ([DFPlayerTool networkStatus] == DFPlayerNetworkStatusUnknown ||
                 [DFPlayerTool networkStatus] == DFPlayerNetworkStatusNotReachable){
@@ -408,7 +408,6 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
     if (@available(iOS 10.0,*)) {
         self.player.automaticallyWaitsToMinimizeStalling = NO;
     }
-    
     [self df_play];
     [self addProgressObserver];
     [self addPlayingCenterInfo];

@@ -39,11 +39,11 @@ static NSString * DFArchiverPath(){
 @implementation DFPlayerFileManager
 
 + (void)df_saveUserId:(NSString *)userId{
-    NSString *uniqueId = @"public";
+    NSString *ids = @"public";
     if (![userId df_isEmpty]) {
-        uniqueId = userId;
+        ids = userId;
     }
-    [[NSUserDefaults standardUserDefaults] setObject:uniqueId forKey:DFPlayer_UserId];
+    [[NSUserDefaults standardUserDefaults] setObject:ids forKey:DFPlayer_UserId];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -76,9 +76,9 @@ static NSString * DFArchiverPath(){
         [mgr createDirectoryAtPath:path withIntermediateDirectories:YES attributes:@{NSFileOwnerAccountID:numberId} error:nil];
     }
     NSString *audioName = [audioUrl.path lastPathComponent];
-    NSString *cacheFilePath = [path stringByAppendingPathComponent:audioName];
+    NSString *cachePath = [path stringByAppendingPathComponent:audioName];
     NSError *error;
-    BOOL success = [mgr moveItemAtPath:DFTempPath() toPath:cacheFilePath error:&error];
+    BOOL success = [mgr moveItemAtPath:DFTempPath() toPath:cachePath error:&error];
     if (!success) {//安全性处理 如果没有保存成功，删除归档文件中的对应键值对
         [DFPlayerArchiverManager deleteKeyValueIfHaveArchivedWithUrl:audioUrl];
     }

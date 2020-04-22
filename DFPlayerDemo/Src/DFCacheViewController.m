@@ -12,7 +12,7 @@
 
 @interface DFCacheViewController ()
 {
-    UILabel *_currentL;
+    UILabel *_currL;
     UILabel *_allL;
 }
 @end
@@ -21,7 +21,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _currentL = [self ui:200 tag:100 title:@"清除当前用户缓存"];
+    _currL = [self ui:200 tag:100 title:@"清除当前用户缓存"];
     _allL = [self ui:320 tag:200 title:@"清除所有用户缓存"];
 }
 - (void)viewWillAppear:(BOOL)animated{
@@ -40,7 +40,7 @@
 }
 
 - (void)refreshData{
-    _currentL.text = [NSString stringWithFormat:@"当前用户缓存:%.2lfM",[[DFPlayer sharedPlayer] df_cacheSize:YES]];
+    _currL.text = [NSString stringWithFormat:@"当前用户缓存:%.2lfM",[[DFPlayer sharedPlayer] df_cacheSize:YES]];
     _allL.text = [NSString stringWithFormat:@"所有用户缓存:%.2lfM",[[DFPlayer sharedPlayer] df_cacheSize:NO]];
 }
 

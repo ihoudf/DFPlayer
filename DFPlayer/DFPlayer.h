@@ -6,7 +6,7 @@
 //  Copyright © 2017年 ihoudf. All rights reserved.
 //
 //
-//  DFPlayer当前版本：2.0.2
+//  DFPlayer当前版本：2.0.3
 //
 
 #import <Foundation/Foundation.h>
@@ -109,24 +109,22 @@ typedef NS_ENUM(NSUInteger, DFPlayerStatusCode) {
 - (void)df_player:(DFPlayer *)player progress:(CGFloat)progress currentTime:(CGFloat)currentTime;
 
 /**
- 代理5：播放结束代理
- （默认播放结束后调用df_next，如果实现此代理，播放结束逻辑由您处理）
+ 代理5：播放结束代理（默认播放结束后调用df_next。如果实现此代理，播放结束逻辑由您处理）
  
  @param player FPlayer
  */
 - (void)df_playerDidPlayToEndTime:(DFPlayer *)player;
 
 /**
- 代理6：播放状态码代理
+ 代理6：播放状态码代理(统一在主线程返回)
  
  @param player DFPlayer
- @param statusCode 状态码(统一在主线程返回)
+ @param statusCode 状态码
  */
 - (void)df_player:(DFPlayer *)player didGetStatusCode:(DFPlayerStatusCode)statusCode;
 
 /**
- 代理7：播放器被系统打断代理
- （默认被系统打断暂停播放，打断结束检测能够播放则恢复播放，如果实现此代理，打断逻辑由您处理）
+ 代理7：播放器被系统打断代理（默认被系统打断暂停播放，打断结束检测能够播放则恢复播放。如果实现此代理，打断逻辑由您处理）
  
  @param player DFPlayer
  @param isInterrupted YES:被系统打断开始  NO:被系统打断结束
@@ -134,7 +132,7 @@ typedef NS_ENUM(NSUInteger, DFPlayerStatusCode) {
 - (void)df_player:(DFPlayer *)player isInterrupted:(BOOL)isInterrupted;
 
 /**
- 代理8：监听耳机插入拔出代理
+ 代理8：监听耳机插入拔出代理（默认拨出耳机暂停播放，插入耳机不恢复播放。如果实现此代理，耳机插拔逻辑由您处理）
  
  @param player DFPlayer
  @param isHeadphone YES:插入 NO:拔出
@@ -247,7 +245,7 @@ typedef NS_ENUM(NSUInteger, DFPlayerStatusCode) {
 /**
  音频跳转
  
- @param value 时间百分比
+ @param value 时间百分比（要跳转到的时间/总时间）
  @param completionBlock seek结束
  */
 - (void)df_seekToTime:(CGFloat)value completionBlock:(void(^)(void))completionBlock;

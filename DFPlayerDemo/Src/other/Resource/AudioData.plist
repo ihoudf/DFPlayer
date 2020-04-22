@@ -360,9 +360,9 @@
 		<key>audioUrl</key>
 		<string>http://152.136.133.149/audio/TheSaltwaterRoom.mp3</string>
 		<key>audioName</key>
-		<string>The Saltwater Room</string>
+		<string>Saltwater Room</string>
 		<key>audioSinger</key>
-		<string>Owl City/Breanne Düren</string>
+		<string>Owl City</string>
 		<key>audioImage</key>
 		<string>http://152.136.133.149/img/TheSaltwaterRoom.jpg</string>
 		<key>audioAlbum</key>
@@ -374,7 +374,7 @@
 		<key>audioName</key>
 		<string>Nothing on you</string>
 		<key>audioSinger</key>
-		<string>B.o.B / Bruno Mars</string>
+		<string>B.o.B</string>
 		<key>audioImage</key>
 		<string>http://152.136.133.149/img/nothingonyou.jpg</string>
 		<key>audioAlbum</key>
@@ -396,7 +396,7 @@
 		<key>audioUrl</key>
 		<string>http://data.5sing.kgimg.com/中国/dsd.mp3</string>
 		<key>audioName</key>
-		<string>错误测试-该地址非标准链接</string>
+		<string>错误测试-非法链接</string>
 		<key>audioSinger</key>
 		<string>DF</string>
 		<key>audioImage</key>
@@ -408,7 +408,7 @@
 		<key>audioUrl</key>
 		<string>http://data.5sing.kgimg.com/ddsds/dsd.mp3</string>
 		<key>audioName</key>
-		<string>错误测试--该地址无对应资源</string>
+		<string>错误测试--无资源</string>
 		<key>audioSinger</key>
 		<string>DF</string>
 		<key>audioImage</key>

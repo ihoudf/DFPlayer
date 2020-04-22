@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
     s.name         = 'DFPlayer'
-    s.version      = '2.0.2'
+    s.version      = '2.0.3'
     s.summary      = 'A simple and flexible iOS audio playback module.'
     s.homepage     = 'https://github.com/ihoudf/DFPlayer'
     s.license      = 'MIT'

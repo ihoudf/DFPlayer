@@ -19,6 +19,19 @@
 		06E3FE911F8E07E90063577B /* 阿悄-死皮赖脸.lrc in Resources */ = {isa = PBXBuildFile; fileRef = 06E3FE901F8E07E90063577B /* 阿悄-死皮赖脸.lrc */; };
 		E0033C852238CFFD00F086EB /* NSObject+Extentions.m in Sources */ = {isa = PBXBuildFile; fileRef = E0033C842238CFFD00F086EB /* NSObject+Extentions.m */; };
 		E0033C882238D05B00F086EB /* DFPlayer_AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E0033C862238D05A00F086EB /* DFPlayer_AFNetworkReachabilityManager.m */; };
+		E00A6CFA244EE6A2005D42E2 /* dfplayer_last@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E00A6CF8244EE6A2005D42E2 /* dfplayer_last@3x.png */; };
+		E00A6CFB244EE6A2005D42E2 /* dfplayer_last@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E00A6CF9244EE6A2005D42E2 /* dfplayer_last@2x.png */; };
+		E00A6CFE244EE73B005D42E2 /* dfplayer_next@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E00A6CFC244EE73B005D42E2 /* dfplayer_next@2x.png */; };
+		E00A6CFF244EE73B005D42E2 /* dfplayer_next@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E00A6CFD244EE73B005D42E2 /* dfplayer_next@3x.png */; };
+		E00A6D0C244EECE9005D42E2 /* dfplayer_pause@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E00A6D08244EECE8005D42E2 /* dfplayer_pause@3x.png */; };
+		E00A6D0D244EECE9005D42E2 /* dfplayer_pause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E00A6D09244EECE8005D42E2 /* dfplayer_pause@2x.png */; };
+		E00A6D0E244EECE9005D42E2 /* dfplayer_play@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E00A6D0A244EECE8005D42E2 /* dfplayer_play@3x.png */; };
+		E00A6D0F244EECE9005D42E2 /* dfplayer_play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E00A6D0B244EECE9005D42E2 /* dfplayer_play@2x.png */; };
+		E00A6D21244EF02E005D42E2 /* dfplayer_single@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E00A6D1C244EF02D005D42E2 /* dfplayer_single@3x.png */; };
+		E00A6D22244EF02E005D42E2 /* dfplayer_circle@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E00A6D1D244EF02D005D42E2 /* dfplayer_circle@3x.png */; };
+		E00A6D23244EF02E005D42E2 /* dfplayer_single@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E00A6D1E244EF02D005D42E2 /* dfplayer_single@2x.png */; };
+		E00A6D24244EF02E005D42E2 /* dfplayer_circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E00A6D1F244EF02D005D42E2 /* dfplayer_circle@2x.png */; };
+		E00A6D25244EF02E005D42E2 /* dfplayer_shuffle@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E00A6D20244EF02E005D42E2 /* dfplayer_shuffle@3x.png */; };
 		E03C789623824C0700C31BB6 /* 梦涵-17岁.lrc in Resources */ = {isa = PBXBuildFile; fileRef = E03C789523824C0700C31BB6 /* 梦涵-17岁.lrc */; };
 		E052269F23924CA300819BB6 /* 陈芳语-爱你.lrc in Resources */ = {isa = PBXBuildFile; fileRef = E052269E23924CA300819BB6 /* 陈芳语-爱你.lrc */; };
 		E05226A12392555300819BB6 /* 莫文蔚-慢慢喜欢你.lrc in Resources */ = {isa = PBXBuildFile; fileRef = E05226A02392555300819BB6 /* 莫文蔚-慢慢喜欢你.lrc */; };
@@ -41,7 +54,7 @@
 		F94493A11FA24423006C605F /* DFPlayerRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F94493941FA24423006C605F /* DFPlayerRequestManager.m */; };
 		F94493A21FA24423006C605F /* DFPlayerResourceLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F94493961FA24423006C605F /* DFPlayerResourceLoader.m */; };
 		F94493A31FA24423006C605F /* DFPlayerTool.m in Sources */ = {isa = PBXBuildFile; fileRef = F94493981FA24423006C605F /* DFPlayerTool.m */; };
-		F954784B1F88D07A00D85D46 /* DFAudioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F954784A1F88D07A00D85D46 /* DFAudioViewController.m */; };
+		F954784B1F88D07A00D85D46 /* DFPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F954784A1F88D07A00D85D46 /* DFPlayerViewController.m */; };
 		F954784E1F88D15400D85D46 /* DFCacheViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F954784D1F88D15400D85D46 /* DFCacheViewController.m */; };
 		F95478511F88DAB900D85D46 /* 权志龙-MISSING YOU.lrc in Resources */ = {isa = PBXBuildFile; fileRef = F95478501F88DAB900D85D46 /* 权志龙-MISSING YOU.lrc */; };
 		F95478531F88DBF800D85D46 /* 王若琳-迷宫.lrc in Resources */ = {isa = PBXBuildFile; fileRef = F95478521F88DBF800D85D46 /* 王若琳-迷宫.lrc */; };
@@ -91,6 +104,19 @@
 		E0033C842238CFFD00F086EB /* NSObject+Extentions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Extentions.m"; sourceTree = "<group>"; };
 		E0033C862238D05A00F086EB /* DFPlayer_AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFPlayer_AFNetworkReachabilityManager.m; sourceTree = "<group>"; };
 		E0033C872238D05A00F086EB /* DFPlayer_AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPlayer_AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
+		E00A6CF8244EE6A2005D42E2 /* dfplayer_last@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dfplayer_last@3x.png"; sourceTree = "<group>"; };
+		E00A6CF9244EE6A2005D42E2 /* dfplayer_last@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dfplayer_last@2x.png"; sourceTree = "<group>"; };
+		E00A6CFC244EE73B005D42E2 /* dfplayer_next@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dfplayer_next@2x.png"; sourceTree = "<group>"; };
+		E00A6CFD244EE73B005D42E2 /* dfplayer_next@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dfplayer_next@3x.png"; sourceTree = "<group>"; };
+		E00A6D08244EECE8005D42E2 /* dfplayer_pause@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dfplayer_pause@3x.png"; sourceTree = "<group>"; };
+		E00A6D09244EECE8005D42E2 /* dfplayer_pause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dfplayer_pause@2x.png"; sourceTree = "<group>"; };
+		E00A6D0A244EECE8005D42E2 /* dfplayer_play@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dfplayer_play@3x.png"; sourceTree = "<group>"; };
+		E00A6D0B244EECE9005D42E2 /* dfplayer_play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dfplayer_play@2x.png"; sourceTree = "<group>"; };
+		E00A6D1C244EF02D005D42E2 /* dfplayer_single@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dfplayer_single@3x.png"; sourceTree = "<group>"; };
+		E00A6D1D244EF02D005D42E2 /* dfplayer_circle@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dfplayer_circle@3x.png"; sourceTree = "<group>"; };
+		E00A6D1E244EF02D005D42E2 /* dfplayer_single@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dfplayer_single@2x.png"; sourceTree = "<group>"; };
+		E00A6D1F244EF02D005D42E2 /* dfplayer_circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dfplayer_circle@2x.png"; sourceTree = "<group>"; };
+		E00A6D20244EF02E005D42E2 /* dfplayer_shuffle@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dfplayer_shuffle@3x.png"; sourceTree = "<group>"; };
 		E03C789523824C0700C31BB6 /* 梦涵-17岁.lrc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "梦涵-17岁.lrc"; sourceTree = "<group>"; };
 		E052269E23924CA300819BB6 /* 陈芳语-爱你.lrc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "陈芳语-爱你.lrc"; sourceTree = "<group>"; };
 		E05226A02392555300819BB6 /* 莫文蔚-慢慢喜欢你.lrc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "莫文蔚-慢慢喜欢你.lrc"; sourceTree = "<group>"; };
@@ -121,8 +147,8 @@
 		F94493961FA24423006C605F /* DFPlayerResourceLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFPlayerResourceLoader.m; sourceTree = "<group>"; };
 		F94493971FA24423006C605F /* DFPlayerTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFPlayerTool.h; sourceTree = "<group>"; };
 		F94493981FA24423006C605F /* DFPlayerTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFPlayerTool.m; sourceTree = "<group>"; };
-		F95478491F88D07A00D85D46 /* DFAudioViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFAudioViewController.h; sourceTree = "<group>"; };
-		F954784A1F88D07A00D85D46 /* DFAudioViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DFAudioViewController.m; sourceTree = "<group>"; };
+		F95478491F88D07A00D85D46 /* DFPlayerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFPlayerViewController.h; sourceTree = "<group>"; };
+		F954784A1F88D07A00D85D46 /* DFPlayerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DFPlayerViewController.m; sourceTree = "<group>"; };
 		F954784C1F88D15400D85D46 /* DFCacheViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFCacheViewController.h; sourceTree = "<group>"; };
 		F954784D1F88D15400D85D46 /* DFCacheViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DFCacheViewController.m; sourceTree = "<group>"; };
 		F95478501F88DAB900D85D46 /* 权志龙-MISSING YOU.lrc */ = {isa = PBXFileReference; lastKnownFileType = text; path = "权志龙-MISSING YOU.lrc"; sourceTree = "<group>"; };
@@ -222,10 +248,10 @@
 			children = (
 				06B33B8A1F72582F003A559C /* AppDelegate.h */,
 				06B33B8B1F72582F003A559C /* AppDelegate.m */,
+				F95478491F88D07A00D85D46 /* DFPlayerViewController.h */,
+				F954784A1F88D07A00D85D46 /* DFPlayerViewController.m */,
 				F954784C1F88D15400D85D46 /* DFCacheViewController.h */,
 				F954784D1F88D15400D85D46 /* DFCacheViewController.m */,
-				F95478491F88D07A00D85D46 /* DFAudioViewController.h */,
-				F954784A1F88D07A00D85D46 /* DFAudioViewController.m */,
 				06B33B921F72582F003A559C /* other */,
 			);
 			path = Src;
@@ -246,13 +272,34 @@
 		06B33B9F1F72582F003A559C /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				E0F683BE23A3CD210071A285 /* default_bg.jpg */,
 				F95478431F88CE6C00D85D46 /* Audio */,
-				F95478451F88CE7300D85D46 /* LRC */,
-				06B33BA01F72582F003A559C /* AudioDataAdd.plist */,
 				06B33BA61F72582F003A559C /* AudioData.plist */,
+				06B33BA01F72582F003A559C /* AudioDataAdd.plist */,
+				E0F683BE23A3CD210071A285 /* default_bg.jpg */,
+				E00A6CF7244EE68E005D42E2 /* Image */,
+				F95478451F88CE7300D85D46 /* LRC */,
 			);
 			path = Resource;
+			sourceTree = "<group>";
+		};
+		E00A6CF7244EE68E005D42E2 /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				E00A6D1F244EF02D005D42E2 /* dfplayer_circle@2x.png */,
+				E00A6D1D244EF02D005D42E2 /* dfplayer_circle@3x.png */,
+				E00A6D20244EF02E005D42E2 /* dfplayer_shuffle@3x.png */,
+				E00A6D1E244EF02D005D42E2 /* dfplayer_single@2x.png */,
+				E00A6D1C244EF02D005D42E2 /* dfplayer_single@3x.png */,
+				E00A6D09244EECE8005D42E2 /* dfplayer_pause@2x.png */,
+				E00A6D08244EECE8005D42E2 /* dfplayer_pause@3x.png */,
+				E00A6D0B244EECE9005D42E2 /* dfplayer_play@2x.png */,
+				E00A6D0A244EECE8005D42E2 /* dfplayer_play@3x.png */,
+				E00A6CFC244EE73B005D42E2 /* dfplayer_next@2x.png */,
+				E00A6CFD244EE73B005D42E2 /* dfplayer_next@3x.png */,
+				E00A6CF9244EE6A2005D42E2 /* dfplayer_last@2x.png */,
+				E00A6CF8244EE6A2005D42E2 /* dfplayer_last@3x.png */,
+			);
+			name = Image;
 			sourceTree = "<group>";
 		};
 		F94493821FA24423006C605F /* DFPlayer */ = {
@@ -438,26 +485,39 @@
 				06E3FE911F8E07E90063577B /* 阿悄-死皮赖脸.lrc in Resources */,
 				F94493991FA24423006C605F /* DFPlayer.bundle in Resources */,
 				F9FA4F5E1F9CC44C0026C284 /* 汪苏泷-追光者.lrc in Resources */,
+				E00A6D25244EF02E005D42E2 /* dfplayer_shuffle@3x.png in Resources */,
+				E00A6CFF244EE73B005D42E2 /* dfplayer_next@3x.png in Resources */,
+				E00A6D24244EF02E005D42E2 /* dfplayer_circle@2x.png in Resources */,
 				F94493711FA1D7C3006C605F /* 911-I Do.mp3 in Resources */,
 				06B33B421F725814003A559C /* LaunchScreen.storyboard in Resources */,
+				E00A6CFE244EE73B005D42E2 /* dfplayer_next@2x.png in Resources */,
 				06B33BBA1F725830003A559C /* AudioData.plist in Resources */,
 				F95478531F88DBF800D85D46 /* 王若琳-迷宫.lrc in Resources */,
 				F95478511F88DAB900D85D46 /* 权志龙-MISSING YOU.lrc in Resources */,
 				06B33B3F1F725814003A559C /* Assets.xcassets in Resources */,
+				E00A6CFA244EE6A2005D42E2 /* dfplayer_last@3x.png in Resources */,
+				E00A6CFB244EE6A2005D42E2 /* dfplayer_last@2x.png in Resources */,
 				F944937B1FA1DC0F006C605F /* Flo Rida-Can't Believe It.mp3 in Resources */,
 				06B33BB41F725830003A559C /* AudioDataAdd.plist in Resources */,
 				E05226A12392555300819BB6 /* 莫文蔚-慢慢喜欢你.lrc in Resources */,
 				F95478551F892DD700D85D46 /* 许嵩(Vae)-有何不可.lrc in Resources */,
+				E00A6D0F244EECE9005D42E2 /* dfplayer_play@2x.png in Resources */,
 				F9037BF61FB482320002F98C /* ihoudf-dfplayer.lrc in Resources */,
+				E00A6D22244EF02E005D42E2 /* dfplayer_circle@3x.png in Resources */,
 				E05226A7239271E800819BB6 /* en-嚣张.lrc in Resources */,
 				F944936B1FA1CD6D006C605F /* 陈冠希-战争.mp3 in Resources */,
 				E052269F23924CA300819BB6 /* 陈芳语-爱你.lrc in Resources */,
 				F95BD25C1FA0982400388ED8 /* 音阙诗听-红昭愿.lrc in Resources */,
 				F9D6E97D1F8A37C300069376 /* 徐良-321对不起.lrc in Resources */,
 				E03C789623824C0700C31BB6 /* 梦涵-17岁.lrc in Resources */,
+				E00A6D23244EF02E005D42E2 /* dfplayer_single@2x.png in Resources */,
+				E00A6D0C244EECE9005D42E2 /* dfplayer_pause@3x.png in Resources */,
 				E0F683BF23A3CD210071A285 /* default_bg.jpg in Resources */,
+				E00A6D21244EF02E005D42E2 /* dfplayer_single@3x.png in Resources */,
 				E05226A92392778500819BB6 /* 九块钱-颓.lrc in Resources */,
 				F94493791FA1DA29006C605F /* Frankmusik-Wrecking Ball.mp3 in Resources */,
+				E00A6D0D244EECE9005D42E2 /* dfplayer_pause@2x.png in Resources */,
+				E00A6D0E244EECE9005D42E2 /* dfplayer_play@3x.png in Resources */,
 				E05226A5239268D500819BB6 /* 苏琛-拾忆.lrc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -495,7 +555,7 @@
 				F94493A21FA24423006C605F /* DFPlayerResourceLoader.m in Sources */,
 				F944939A1FA24423006C605F /* DFPlayer.m in Sources */,
 				F94493A11FA24423006C605F /* DFPlayerRequestManager.m in Sources */,
-				F954784B1F88D07A00D85D46 /* DFAudioViewController.m in Sources */,
+				F954784B1F88D07A00D85D46 /* DFPlayerViewController.m in Sources */,
 				F94493A31FA24423006C605F /* DFPlayerTool.m in Sources */,
 				F954784E1F88D15400D85D46 /* DFCacheViewController.m in Sources */,
 			);

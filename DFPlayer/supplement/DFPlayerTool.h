@@ -17,10 +17,6 @@ static NSString *DFPlayerNotificationSeekEnd = @"DFPlayerNotificationSeekEnd";
 #define DFPlayerHighGlobalQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
 #define DFPlayerDefaultGlobalQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
 
-#define DF_SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
-#define DF_FONTSIZE(size) ((size) / 1334.0) * DF_SCREEN_HEIGHT
-
-
 // 网络状态
 typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
     DFPlayerNetworkStatusUnknown          = -1, //未知
