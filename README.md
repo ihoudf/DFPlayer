@@ -35,10 +35,10 @@
 
 ## -- 版本
   
-  本次更新：
-  <br>1、减小包体积，将图片资源移入外部传入
+  本次更新(2020.4.26)：
+  <br>1、减小包体积（UI控件图片资源改为外部传入）
   <br>2、优化代码
-  <br><a href="https://github.com/ihoudf/DFPlayer/blob/master/Document.md" target="blank">查看历史版本点击这里</a>
+  <br><a href="https://github.com/ihoudf/DFPlayer/releases" target="blank">查看历史版本点击这里</a>
 
   <br>
 
