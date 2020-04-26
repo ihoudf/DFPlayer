@@ -35,7 +35,7 @@
 
 @property (nonatomic, assign) BOOL isObserveFileModifiedTime;// 是否观察修改时间
 
-- (void)stopDownload; // 停止下载
+- (void)stopDownload;// 停止下载
 
 @end
 

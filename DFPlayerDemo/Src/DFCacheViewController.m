@@ -24,6 +24,7 @@
     _currL = [self ui:200 tag:100 title:@"清除当前用户缓存"];
     _allL = [self ui:320 tag:200 title:@"清除所有用户缓存"];
 }
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self refreshData];

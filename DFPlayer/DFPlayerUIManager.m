@@ -1,12 +1,12 @@
 //
-//  DFPlayerControlManager.m
+//  DFPlayerUIManager.m
 //  DFPlayer
 //
 //  Created by ihoudf on 2017/7/20.
 //  Copyright © 2017年 ihoudf. All rights reserved.
 //
 
-#import "DFPlayerControlManager.h"
+#import "DFPlayerUIManager.h"
 #import "DFPlayer.h"
 #import <objc/runtime.h>
 #import "DFPlayerTool.h"
@@ -65,15 +65,9 @@ NSString * const DFProgressKey       = @"progress";
 NSString * const DFCurrentTimeKey    = @"currentTime";
 NSString * const DFTotalTimeKey      = @"totalTime";
 
-#define DFPlayerSrcName(file) [@"DFPlayer.bundle" stringByAppendingPathComponent:file]
-#define DFPlayerFrameworkSrcName(file) [@"Frameworks/DFPlayer.framework/DFPlayer.bundle" stringByAppendingPathComponent:file]
-#define DFPlayerImage(file) [UIImage imageNamed:DFPlayerSrcName(file)] ? :[UIImage imageNamed:DFPlayerFrameworkSrcName(file)]
-
-#define DFPlayer_ovalImage      DFPlayerImage(@"dfplayer_oval")
-
 typedef void(^DFPlayerLyricsBlock)(NSString *onPlayingLyrics);
 
-@interface DFPlayerControlManager() <DFPlayerLyricsTableviewDelegate>
+@interface DFPlayerUIManager() <DFPlayerLyricsTableviewDelegate>
 {
     BOOL _stopUpdate;
     BOOL _isSeek;
@@ -96,10 +90,10 @@ typedef void(^DFPlayerLyricsBlock)(NSString *onPlayingLyrics);
 
 @end
 
-@implementation DFPlayerControlManager
+@implementation DFPlayerUIManager
 
-+ (DFPlayerControlManager *)sharedManager{
-    static DFPlayerControlManager *manager = nil;
++ (DFPlayerUIManager *)sharedManager{
+    static DFPlayerUIManager *manager = nil;
     static dispatch_once_t predicate;
     dispatch_once(&predicate, ^{
         manager = [[[self class] alloc] init];
@@ -277,12 +271,11 @@ typedef void(^DFPlayerLyricsBlock)(NSString *onPlayingLyrics);
            minimumTrackTintColor:(UIColor *)minimumTrackTintColor
            maximumTrackTintColor:(UIColor *)maximumTrackTintColor
                      trackHeight:(CGFloat)trackHeight
-                       thumbSize:(CGSize)thumbSize
+                      thumbImage:(UIImage *)thumbImage
                        superView:(UIView *)superView{
     self.progressSlider = [[DFPlayerSlider alloc] initWithFrame:frame];
     self.progressSlider.trackHeight = trackHeight;
-    UIImage *img = [DFPlayer_ovalImage df_imageByResizeToSize:thumbSize];
-    [self.progressSlider setThumbImage:img forState:UIControlStateNormal];
+    [self.progressSlider setThumbImage:thumbImage forState:UIControlStateNormal];
     self.progressSlider.minimumValue = 0;
     self.progressSlider.maximumValue = 1;
     self.progressSlider.minimumTrackTintColor = minimumTrackTintColor;

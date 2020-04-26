@@ -47,6 +47,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (UIImage *)getSubImage:(CGRect)rect;
 
+// 裁剪图片
+- (UIImage *)imageByResizeToSize:(CGSize)size;
+
 @end
 
 

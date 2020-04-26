@@ -50,15 +50,6 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
 
 @end
 
-
-@interface UIImage (DFPlayerImageExtensions)
-
-// 裁剪图片
-- (UIImage *)df_imageByResizeToSize:(CGSize)size;
-
-@end
-
-
 @interface NSString (DFPlayerStringExtensions)
 
 // 字符串去空字符
@@ -69,7 +60,6 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
 
 // 是否包含字母
 - (BOOL)df_isContainLetter;
-
 
 @end
 

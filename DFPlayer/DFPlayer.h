@@ -12,7 +12,6 @@
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
 #import "DFPlayerModel.h"
-#import "DFPlayerControlManager.h"
 
 //播放器状态
 typedef NS_ENUM(NSInteger, DFPlayerState) {

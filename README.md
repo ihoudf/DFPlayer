@@ -24,7 +24,7 @@
 - 边下边播
 - 分账户缓存（根据不同用户建立不同缓存地址）、清除缓存
 - 耳机线控
-- 锁屏和控制中心信息展示及控制
+- 锁屏和控制中心音频信息展示及控制
 - 单曲顺序随机播放
 - 歌词同步（提供逐句和逐字两种模式的基于Lrc的歌词同步）
 - 倍速播放
@@ -33,10 +33,19 @@
 
 <br>
 
+## -- 版本
+  
+  本次更新：
+  <br>1、减小包体积，将图片资源移入外部传入
+  <br>2、优化代码
+  <br><a href="https://github.com/ihoudf/DFPlayer/blob/master/Document.md" target="blank">查看历史版本点击这里</a>
+
+  <br>
+
 ## -- 安装（最低支持 iOS 7.1）
 ###### 手动安装
 ```
-    1、下载并将DFPlayer文件夹拖放到工程
+    1、下载并将DFPlayer文件夹拖进工程
     2、import "DFPlayer.h"
 ```
 ###### CocoaPods
@@ -44,7 +53,7 @@
     1、在Podfile中添加: pod 'DFPlayer'
     2、执行pod install 或 pod update
     3、import "DFPlayer.h"
-    PS：当前版本2.0.3。pod拉取代码的同学首先核查DFPlayer.h文件中注明的版本号，没有或不是2.0.3都不是最新的
+    Ps:pod拉取代码的同学，首先核查DFPlayer.h中注明的版本号，没有或不是2.0.3都不是最新的。
 ```
 
 <br>
@@ -73,22 +82,20 @@ DFPlayer的使用十分简单。
 ```
 4、选择DFPLayer中提供的UI控件，布局到页面（可选）
 > DFPlayer封装了歌词tableview、缓冲条、进度条、播放暂停按钮、下一首按钮、上一首按钮、播放模式按钮（单曲、顺序、随机）、当前时间Label、总时间Label。
->> 你只需要<br>
-（1）同名更换DFPlayer.bundle中的图片<br>
-（2）调用DFPlayerControlManager.h中暴露的方法布局到页面，即可实现相应功能，无需其他代码。
+>> 只需调用DFPlayerUIManager.h中暴露的方法布局到页面，即可实现相应功能，无需其他代码。
 
 示例：
 ```
-    DFPlayerControlManager *mgr = [DFPlayerControlManager sharedManager];
+    DFPlayerUIManager *mgr = [DFPlayerUIManager sharedManager];
 
     //播放暂停按钮
-    [mgr df_playPauseBtnWithFrame:frame1 superView:superView block:nil];
+    [mgr df_playPauseBtnWithFrame:playRect playImage:playImage pauseImage:pauseImage superView:_bgView block:nil];
 
     //下一首按钮
-    [mgr df_nextAudioBtnWithFrame:frame2 superView:superView block:nil];
+    [mgr df_nextBtnWithFrame:nextRext image:nextImage superView:_bgView block:nil];
 
     //上一首按钮
-    [mgr df_lastAudioBtnWithFrame:frame3 superView:superView block:nil];
+    [mgr df_lastBtnWithFrame:lastRect image:lastImage superView:_bgView block:nil];
 
     ...等，详查"详细文档"。
 ```
@@ -98,18 +105,6 @@ DFPlayer的使用十分简单。
 ## -- 许可证
 使用 MIT 许可证，详见<a href="https://github.com/ihoudf/DFPlayer/blob/master/LICENSE">LICENSE</a> 文件。
 <br>
-<br>
-
-## -- 赞赏
-由于音频资源限制，原来demo中的音频已无法播放。<br>
-
-为了有稳定的音频源，本人特意买了云服务器（当然也有别的小用途）。<br>
-
-如果DFPlayer有幸帮您解决了一点问题，加快了开发进度，欢迎打赏以便我续费服务器和持续维护本项目，感谢🙏
-
-在此感谢@rails 、@wal2s 、@addiasios的支持
-
-<img width="220" src="https://github.com/ihoudf/DFPlayer/blob/master/shoukuanma.png">
 
 <br>
 

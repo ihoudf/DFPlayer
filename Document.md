@@ -1,6 +1,6 @@
 > ## 只需关注三个类即可：
 >>#### [1、DFPlayer：播放能力管理器](#first)
->>#### [2、DFPlayerControlManager：播放控件管理器](#second)
+>>#### [2、DFPlayerUIManager：播放控件管理器](#second)
 >>#### [3、DFPlayerModel：数据model类](#third)
 >为了显示清晰，以下只列举了方法，具体参数要求下载工程查看
 
@@ -147,10 +147,10 @@
 ```
 
 
-## <a id="second">二、DFPlayerControlManager</a>
+## <a id="second">二、DFPlayerUIManager</a>
 ```
-// 单例
-+ (DFPlayerControlManager *)sharedManager;
+// 单利
++ (DFPlayerUIManager *)sharedManager;
 
 // 停止所有进度类控件的刷新
 - (void)df_stopUpdate;
@@ -160,47 +160,60 @@
 
 // 播放暂停按钮
 - (UIButton *)df_playPauseBtnWithFrame:(CGRect)frame
+                             playImage:(UIImage *)playImage
+                            pauseImage:(UIImage *)pauseImage
                              superView:(UIView *)superView
                                  block:(nullable void (^)(void))block;
 
 // 上一首按钮
-- (UIButton *)df_lastAudioBtnWithFrame:(CGRect)frame
-                             superView:(UIView *)superView
-                                 block:(nullable void (^)(void))block;
+- (UIButton *)df_lastBtnWithFrame:(CGRect)frame
+                            image:(UIImage *)image
+                        superView:(UIView *)superView
+                            block:(nullable void (^)(void))block;
 
 // 下一首按钮
-- (UIButton *)df_nextAudioBtnWithFrame:(CGRect)frame
-                             superView:(UIView *)superView
-                                 block:(nullable void (^)(void))block;
+- (UIButton *)df_nextBtnWithFrame:(CGRect)frame
+                            image:(UIImage *)image
+                        superView:(UIView *)superView
+                            block:(nullable void (^)(void))block;
 
 // 播放模式按钮
-- (UIButton *)df_typeControlBtnWithFrame:(CGRect)frame
-                               superView:(UIView *)superView
-                                   block:(nullable void (^)(void))block;
+- (UIButton *)df_typeBtnWithFrame:(CGRect)frame
+                      singleImage:(UIImage *)singleImage
+                      circleImage:(UIImage *)circleImage
+                     shuffleImage:(UIImage *)shuffleImage
+                        superView:(UIView *)superView
+                            block:(nullable void (^)(void))block;
 
-// 缓冲进度条
-- (UIProgressView *)df_bufferProgressViewWithFrame:(CGRect)frame
-                                    trackTintColor:(UIColor *)trackTintColor
-                                 progressTintColor:(UIColor *)progressTintColor
-                                         superView:(UIView *)superView;
+// 缓冲条
+- (UIProgressView *)df_bufferViewWithFrame:(CGRect)frame
+                            trackTintColor:(UIColor *)trackTintColor
+                         progressTintColor:(UIColor *)progressTintColor
+                                 superView:(UIView *)superView;
 
 // 播放进度条
 - (UISlider *)df_sliderWithFrame:(CGRect)frame
            minimumTrackTintColor:(UIColor *)minimumTrackTintColor
            maximumTrackTintColor:(UIColor *)maximumTrackTintColor
                      trackHeight:(CGFloat)trackHeight
-                       thumbSize:(CGSize)thumbSize
+                      thumbImage:(UIImage *)thumbImage
                        superView:(UIView *)superView;
 
 // 音频当前时间label
 - (UILabel *)df_currentTimeLabelWithFrame:(CGRect)frame
+                                textColor:(UIColor *)textColor
+                            textAlignment:(NSTextAlignment)textAlignment
+                                     font:(UIFont *)font
                                 superView:(UIView *)superView;
 
 // 音频总时长label
 - (UILabel *)df_totalTimeLabelWithFrame:(CGRect)frame
+                              textColor:(UIColor *)textColor
+                          textAlignment:(NSTextAlignment)textAlignment
+                                   font:(UIFont *)font
                               superView:(UIView *)superView;
 
-// 歌词Tableview
+// 歌词tableview
 - (UITableView *)df_lyricTableViewWithFrame:(CGRect)frame
                               cellRowHeight:(CGFloat)cellRowHeight
                         cellBackgroundColor:(UIColor *)cellBackgroundColor

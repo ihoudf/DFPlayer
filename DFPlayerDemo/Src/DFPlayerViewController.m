@@ -7,9 +7,11 @@
 //
 
 #import "DFPlayerViewController.h"
-#import "DFPlayer.h"
 #import "YourModel.h"
 #import "NSObject+Extentions.h"
+
+#import "DFPlayer.h"
+#import "DFPlayerUIManager.h"
 
 #define topH SCREEN_HEIGHT - self.tabBarController.tabBar.frame.size.height - DFHeight(270)
 
@@ -66,10 +68,10 @@
 
 - (void)handleLeftBarButtonItemAction{
     if (_stopUpdate) {
-        [[DFPlayerControlManager sharedManager] df_resumeUpdate];
+        [[DFPlayerUIManager sharedManager] df_resumeUpdate];
         _stopUpdate = NO;
     }else{
-        [[DFPlayerControlManager sharedManager] df_stopUpdate];
+        [[DFPlayerUIManager sharedManager] df_stopUpdate];
         _stopUpdate = YES;
     }
 }
@@ -104,16 +106,16 @@
     
     //歌词tableview
     _lyricsTableView =
-    [[DFPlayerControlManager sharedManager] df_lyricTableViewWithFrame:(CGRect){SCREEN_WIDTH, 0, SCREEN_WIDTH, topH}
-                                                         cellRowHeight:DFHeight(90)
-                                                   cellBackgroundColor:[UIColor clearColor]
-                                     currentLineLrcForegroundTextColor:DFGreenColor
-                                     currentLineLrcBackgroundTextColor:[UIColor whiteColor]
-                                       otherLineLrcBackgroundTextColor:[UIColor whiteColor]
-                                                    currentLineLrcFont:DFSystemFont(18)
-                                                      otherLineLrcFont:DFSystemFont(16)
-                                                             superView:_scrollView
-                                                                 block:^(NSString * _Nonnull onPlayingLyrics) {
+    [[DFPlayerUIManager sharedManager] df_lyricTableViewWithFrame:(CGRect){SCREEN_WIDTH, 0, SCREEN_WIDTH, topH}
+                                                    cellRowHeight:DFHeight(90)
+                                              cellBackgroundColor:[UIColor clearColor]
+                                currentLineLrcForegroundTextColor:DFGreenColor
+                                currentLineLrcBackgroundTextColor:[UIColor whiteColor]
+                                  otherLineLrcBackgroundTextColor:[UIColor whiteColor]
+                                               currentLineLrcFont:DFSystemFont(18)
+                                                 otherLineLrcFont:DFSystemFont(16)
+                                                        superView:_scrollView
+                                                            block:^(NSString * _Nonnull onPlayingLyrics) {
         self->_noticeLabel.text = onPlayingLyrics;
     }];
     _lyricsTableView.backgroundColor = [UIColor clearColor];
@@ -206,8 +208,9 @@
     UIImage *singleImage = [UIImage imageNamed:@"dfplayer_single"];
     UIImage *circleImage = [UIImage imageNamed:@"dfplayer_circle"];
     UIImage *shuffleImage = [UIImage imageNamed:@"dfplayer_shuffle"];
+    UIImage *ovalImage = [UIImage imageNamed:@"dfplayer_oval"];
 
-    DFPlayerControlManager *mgr = [DFPlayerControlManager sharedManager];
+    DFPlayerUIManager *mgr = [DFPlayerUIManager sharedManager];
     //缓冲条
     [mgr df_bufferViewWithFrame:buffRect
                  trackTintColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.5]
@@ -218,7 +221,7 @@
       minimumTrackTintColor:DFGreenColor
       maximumTrackTintColor:DFGrayColor
                 trackHeight:DFHeight(4)
-                  thumbSize:(CGSize){DFWidth(34), DFWidth(34)}
+                 thumbImage:[ovalImage imageByResizeToSize:(CGSize){DFWidth(34),DFHeight(34)}]
                   superView:_bgView];
     //当前时间
     [mgr df_currentTimeLabelWithFrame:currRect

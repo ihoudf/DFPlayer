@@ -1,5 +1,5 @@
 //
-//  DFPlayerControlManager.h
+//  DFPlayerUIManager.h
 //  DFPlayer
 //
 //  Created by ihoudf on 2017/7/20.
@@ -14,9 +14,12 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  DFPlayer控制管理器
  */
-@interface DFPlayerControlManager : NSObject
+@interface DFPlayerUIManager : NSObject
 
-+ (DFPlayerControlManager *)sharedManager;
+/**
+ 单利
+ */
++ (DFPlayerUIManager *)sharedManager;
 
 /**
  停止所有进度类控件的刷新
@@ -111,7 +114,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param minimumTrackTintColor 滑块左边滑动条的颜色
  @param maximumTrackTintColor 滑块右边滑动条的颜色
  @param trackHeight 滑动条的高度(长度采用frame的width)
- @param thumbSize 滑块的大小
+ @param thumbImage 滑块图片
  @param superView 进度条父视图
  @return 进度条
  */
@@ -119,7 +122,7 @@ NS_ASSUME_NONNULL_BEGIN
            minimumTrackTintColor:(UIColor *)minimumTrackTintColor
            maximumTrackTintColor:(UIColor *)maximumTrackTintColor
                      trackHeight:(CGFloat)trackHeight
-                       thumbSize:(CGSize)thumbSize
+                      thumbImage:(UIImage *)thumbImage
                        superView:(UIView *)superView;
 
 /**
@@ -155,7 +158,7 @@ NS_ASSUME_NONNULL_BEGIN
                               superView:(UIView *)superView;
 
 /**
- lyricTableview
+ 歌词tableview
  ①采用lrc标准格式编写，即"[00:00.00]歌词" 或 "[00:00]歌词" 或 "[00:00:00]歌词"
  ②根据lrc歌词软件开发标准，凡具有“[*:*]”形式的都应认为是标签（注意：其中的冒号并非全角字符“：”）。凡是标签都不应显示。
  ③支持单句歌词多个时间的格式，如“[00:10.00][00:50.00][00:70.00]歌词”
@@ -190,6 +193,8 @@ NS_ASSUME_NONNULL_BEGIN
                            otherLineLrcFont:(UIFont *)otherLineLrcFont
                                   superView:(UIView *)superView
                                       block:(nullable void (^)(NSString * onPlayingLyrics))block;
+
+
 
 @end
 
