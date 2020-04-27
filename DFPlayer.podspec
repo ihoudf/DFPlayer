@@ -10,7 +10,6 @@ Pod::Spec.new do |s|
     s.ios.deployment_target = '7.1'
     s.source       = { :git => "https://github.com/ihoudf/DFPlayer.git", :tag => s.version }
     s.source_files = 'DFPlayer/**/*.{h,m}'
-    s.resource     = 'DFPlayer/DFPlayer.bundle'
     s.requires_arc = true
     s.frameworks = 'UIKit','AVFoundation','MediaPlayer'
     # s.subspec 'supplement' do |ss|

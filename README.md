@@ -71,7 +71,6 @@ DFPlayer的使用十分简单。
 ```
 2、实现数据源，传数据给DFPlayer（必须）
 ```
-    //（必须）
     - (NSArray<DFPlayerModel *> *)df_audioDataForPlayer:(DFPlayer *)player{
         //在这里将音频数据传给DFPlayer
     }
