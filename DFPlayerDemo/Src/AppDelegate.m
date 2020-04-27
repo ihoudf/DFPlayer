@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "NSObject+Extentions.h"
 #import "DFPlayerViewController.h"
 #import "DFCacheViewController.h"
 
@@ -17,25 +18,27 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    DFPlayerViewController *playerVC = [[DFPlayerViewController alloc] init];
-    UINavigationController *playerNav = [[UINavigationController alloc] initWithRootViewController:playerVC];
-    playerNav.title = @"音频";
 
+    UINavigationController *nav1 = [self nav:[DFPlayerViewController class] title:@"音频"];
+    UINavigationController *nav3 = [self nav:[DFCacheViewController class] title:@"缓存"];
     
-    DFCacheViewController *mineVC = [[DFCacheViewController alloc] init];
-    UINavigationController *mineNav = [[UINavigationController alloc] initWithRootViewController:mineVC];
-    mineVC.title = @"缓存";
-    
-    [[UITabBarItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName:[UIColor colorWithRed:66.0/255.0 green:196.0/255.0 blue:133.0/255.0 alpha:1]} forState:UIControlStateNormal];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName:DFGreenColor}
+                                             forState:UIControlStateNormal];
     UITabBarController *tabbarVC = [[UITabBarController alloc] init];
-
-    tabbarVC.viewControllers = @[playerNav,mineNav];
+    tabbarVC.viewControllers = @[nav1,nav3];
     
     self.window.rootViewController = tabbarVC;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
 
     return YES;
+}
+
+- (UINavigationController *)nav:(Class)viewController title:(NSString *)title{
+    UIViewController *vc = (UIViewController *)[[viewController alloc] init];
+    vc.view.backgroundColor = [UIColor whiteColor];
+    vc.title = title;
+    return [[UINavigationController alloc] initWithRootViewController:vc];
 }
 
 @end

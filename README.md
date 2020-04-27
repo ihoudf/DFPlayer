@@ -79,7 +79,7 @@ DFPlayer的使用十分简单。
 ```
     [[DFPlayer sharedPlayer] df_playWithAudioId:audioId];
 ```
-4、选择DFPLayer中提供的UI控件，布局到页面（可选）
+4、选择DFPlayer中提供的UI控件，布局到页面（可选）
 > DFPlayer封装了歌词tableview、缓冲条、进度条、播放暂停按钮、下一首按钮、上一首按钮、播放模式按钮（单曲、顺序、随机）、当前时间Label、总时间Label。
 >> 只需调用DFPlayerUIManager.h中暴露的方法布局到页面，即可实现相应功能，无需其他代码。
 

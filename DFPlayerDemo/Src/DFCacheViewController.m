@@ -22,7 +22,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _currL = [self ui:200 tag:100 title:@"清除当前用户缓存"];
-    _allL = [self ui:320 tag:200 title:@"清除所有用户缓存"];
+    _allL = [self ui:300 tag:200 title:@"清除所有用户缓存"];
+    
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -48,8 +50,8 @@
 - (UILabel *)ui:(CGFloat)Y tag:(NSInteger)tag title:(NSString *)title{
     UILabel *label = [[UILabel alloc] init];
     label.frame = CGRectMake(25, Y, 160, 40);
-    label.backgroundColor = DFGreenColor;
-    label.textColor = [UIColor whiteColor];
+    label.backgroundColor = [UIColor whiteColor];
+    label.textColor = [UIColor blackColor];
     label.textAlignment = NSTextAlignmentCenter;
     label.font = [UIFont systemFontOfSize:15];
     [self.view addSubview:label];
