@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+NS_ASSUME_NONNULL_BEGIN
 
-static NSString *DFPlayerNotificationSeekEnd = @"DFPlayerNotificationSeekEnd";
+static NSString * DFPlayerNotificationSeekEnd = @"DFPlayerNotificationSeekEnd";
 
 #define DFPlayerWeakSelf __weak __typeof(&*self) wSelf = self;
 #define DFPlayerStrongSelf __strong __typeof(&*self) sSelf = wSelf;
@@ -50,7 +51,7 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
 
 @end
 
-@interface NSString (DFPlayerStringExtensions)
+@interface NSString (DFPlayerNSStringExtensions)
 
 // 字符串去空字符
 - (NSString *)df_removeEmpty;
@@ -63,6 +64,12 @@ typedef NS_ENUM(NSInteger, DFPlayerNetworkStatus) {
 
 @end
 
+@interface UIButton (DFPlayerUIButtonExtensions)
 
+@property(copy, nonatomic) void(^ _Nullable handleButtonActionBlock)(UIButton * _Nullable sender);
+
+@end
+
+NS_ASSUME_NONNULL_END
 
 

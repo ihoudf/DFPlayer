@@ -8,39 +8,9 @@
 
 #import "DFPlayerUIManager.h"
 #import "DFPlayer.h"
-#import <objc/runtime.h>
 #import "DFPlayerTool.h"
 #import "DFPlayerLyricsTableview.h"
 #import <MediaPlayer/MediaPlayer.h>
-
-static NSString * key_ActionBlock = @"key_ActionBlock";
-#define WeakPointer(weakSelf) __weak __typeof(&*self)weakSelf = self
-
-@interface UIButton (EBlock)
-@property(copy, nonatomic) void(^ _Nullable handleButtonActionBlock)(UIButton * _Nullable sender);
-@end
-
-@implementation UIButton(EBlock)
-
-- (void)setHandleButtonActionBlock:(void (^)(UIButton * _Nullable))handleButtonActionBlock{
-    objc_setAssociatedObject(self, (__bridge const void *)key_ActionBlock, handleButtonActionBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    if (handleButtonActionBlock) {
-        [self addTarget:self action:@selector(actionHandler) forControlEvents:UIControlEventTouchUpInside];
-    }
-}
-
-- (void)actionHandler{
-    if (self.handleButtonActionBlock) {
-        self.handleButtonActionBlock(self);
-    }
-}
-
--  (void (^)(UIButton * _Nullable))handleButtonActionBlock{
-    return objc_getAssociatedObject(self, (__bridge const void *)key_ActionBlock);
-}
-
-@end
-
 
 #pragma mark - DFPlayerSlider
 

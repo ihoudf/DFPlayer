@@ -13,7 +13,7 @@
 #import "DFPlayer.h"
 #import "DFPlayerUIManager.h"
 
-#define topH SCREEN_HEIGHT - self.tabBarController.tabBar.frame.size.height - DFHeight(270)
+#define topH SCREEN_HEIGHT - self.tabBarController.tabBar.frame.size.height - DFHeight(370)
 
 @interface DFPlayerViewController ()
 <UITableViewDelegate,UITableViewDataSource,DFPlayerDelegate,DFPlayerDataSource>

@@ -7,6 +7,7 @@
 //
 
 #import "DFPlayerTool.h"
+#import <objc/runtime.h>
 #import "DFPlayer_AFNetworkReachabilityManager.h"
 
 static DFPlayerNetworkStatus _networkStatus;
@@ -78,7 +79,7 @@ static DFPlayerNetworkStatus _networkStatus;
 
 @end
 
-@implementation NSString (DFPlayerStringExtensions)
+@implementation NSString (DFPlayerNSStringExtensions)
 
 - (NSString *)df_removeEmpty{
     NSString *str = [NSString stringWithFormat:@"%@",self];
@@ -98,6 +99,30 @@ static DFPlayerNetworkStatus _networkStatus;
     return count > 0;
 }
 
+
+@end
+
+
+static NSString * key_ActionBlock = @"key_ActionBlock";
+
+@implementation UIButton(DFPlayerUIButtonExtensions)
+
+- (void)setHandleButtonActionBlock:(void (^)(UIButton * _Nullable))handleButtonActionBlock{
+    objc_setAssociatedObject(self, (__bridge const void *)key_ActionBlock, handleButtonActionBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    if (handleButtonActionBlock) {
+        [self addTarget:self action:@selector(actionHandler) forControlEvents:UIControlEventTouchUpInside];
+    }
+}
+
+- (void)actionHandler{
+    if (self.handleButtonActionBlock) {
+        self.handleButtonActionBlock(self);
+    }
+}
+
+-  (void (^)(UIButton * _Nullable))handleButtonActionBlock{
+    return objc_getAssociatedObject(self, (__bridge const void *)key_ActionBlock);
+}
 
 @end
 
