@@ -537,8 +537,17 @@ NSString * const DFPlaybackLikelyToKeepUpKey    = @"playbackLikelyToKeepUp";
         _remoteInfoDictionary[MPMediaItemPropertyArtist] = self.currentAudioInfoModel.audioSinger;
     }
     if ([self.currentAudioInfoModel.audioImage isKindOfClass:[UIImage class]] && self.currentAudioInfoModel.audioImage) {
-        MPMediaItemArtwork *artwork = [[MPMediaItemArtwork alloc] initWithImage:self.currentAudioInfoModel.audioImage];
-        _remoteInfoDictionary[MPMediaItemPropertyArtwork] = artwork;
+        if (@available(iOS 10.0, *)) {
+            DFPlayerWeakSelf
+            MPMediaItemArtwork *artwork = [[MPMediaItemArtwork alloc] initWithBoundsSize:[self.currentAudioInfoModel.audioImage size]
+                                                                          requestHandler:^UIImage * _Nonnull(CGSize size) {
+                return wSelf.currentAudioInfoModel.audioImage;
+            }];
+            _remoteInfoDictionary[MPMediaItemPropertyArtwork] = artwork;
+        } else {
+            MPMediaItemArtwork *artwork = [[MPMediaItemArtwork alloc] initWithImage:self.currentAudioInfoModel.audioImage];
+            _remoteInfoDictionary[MPMediaItemPropertyArtwork] = artwork;
+        }
     }
     _remoteInfoDictionary[MPNowPlayingInfoPropertyPlaybackRate] = [NSNumber numberWithFloat:1.0];
     [MPNowPlayingInfoCenter defaultCenter].nowPlayingInfo = _remoteInfoDictionary;
