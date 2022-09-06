@@ -13,9 +13,9 @@
 
 - ##### DFPlayer：关于iOS音频播放，传音频数据给我就好了🙃
 - ##### 截图展示：
-<a href=""><img width="275" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerImage1.png?raw=true"></a>
-<a href=""><img width="275" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerImage2.png?raw=true"></a>
-<a href=""><img width="275" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerImage3.png?raw=true"></a>
+<a href=""><img width="240" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerImage1.png?raw=true"></a>
+<a href=""><img width="240" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerImage2.png?raw=true"></a>
+<a href=""><img width="240" src="https://github.com/ihoudf/DFPlayer/blob/master/DFPlayerImage3.png?raw=true"></a>
 
 <br>
 
